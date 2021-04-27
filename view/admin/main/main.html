@@ -1,0 +1,172 @@
+{{define "main/main.html"}}
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../assets/css/layui.css">
+    <link rel="stylesheet" href="../assets/css/admin.css">
+    <link rel="icon" href="/favicon.ico">
+    <title>管理后台</title>
+</head>
+
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header custom-header">
+
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item slide-sidebar" lay-unselect>
+                    <a href="javascript:;" class="icon-font"><i class="ai ai-menufold"></i></a>
+                </li>
+            </ul>
+
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">Admin</a>
+                    <dl class="layui-nav-child">
+                        <dd><a id="main_cpw">修改密码</a></dd>
+                        <dd><a href="logout">退出</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+
+        <div class="layui-side custom-admin">
+            <div class="layui-side-scroll">
+
+                <div class="custom-logo">
+                    <img src="../assets/images/logo.png" alt="" />
+                    <h1>Admin Pro</h1>
+                </div>
+                <ul id="Nav" class="layui-nav layui-nav-tree">
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">
+                            <i class="layui-icon">&#xe609;</i>
+                            <em>主页</em>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="console">控制台</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">
+                            <i class="layui-icon">&#xe857;</i>
+                            <em>组件</em>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="form">表单</a></dd>
+                            <dd>
+                                <a href="javascript:;">页面</a>
+                                <dl class="layui-nav-child">
+                                    <dd>
+                                        <a href="login">登录页</a>
+                                    </dd>
+                                </dl>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">
+                            <i class="layui-icon">&#xe612;</i>
+                            <em>用户</em>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="users">用户组</a></dd>
+                            <dd><a href="operaterule">权限配置</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">
+                            <i class="layui-icon">&#xe614;</i>
+                            <em>系统配置</em>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="params/view">系统参数</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+
+        <div class="layui-body">
+            <div class="layui-tab app-container" lay-allowClose="true" lay-filter="tabs">
+                <ul id="appTabs" class="layui-tab-title custom-tab"></ul>
+                <div id="appTabPage" class="layui-tab-content"></div>
+            </div>
+        </div>
+
+        <div class="layui-footer">
+            <p>copyright@2021 AdminPro Powered by: <a href="http://www.layui.com" target="_blank">Layui</a></p>
+        </div>
+
+        <div class="mobile-mask"></div>
+    </div>
+
+</body>
+
+<script src="../assets/layui.all.js"></script>
+<script src="../assets/js/index.js" data-main="home"></script>
+<script src="../assets/js/jquery-3.3.1.min.js"></script>
+<!-- 修改密码view -->
+<div id="main_cpw_view" style="margin: 5%;" hidden>
+    <form class="layui-form layui-form-pane" id="main_cpw_form" method="post" lay-filter="example">
+        <div class="layui-form-item">
+            <label class="layui-form-label">原密码</label>
+            <div class="layui-input-block">
+                <input type="password" id="pwd1" name="pwd1" lay-verify="required" autocomplete="off" placeholder="请输入原密码" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">新密码</label>
+            <div class="layui-input-block">
+                <input type="password" id="pwd2" name="pwd2" lay-verify="required" autocomplete="off" placeholder="请输入新密码" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">确认密码</label>
+            <div class="layui-input-block">
+                <input type="password" id="pwd3" name="pwd3" lay-verify="required" autocomplete="off" placeholder="请输入确认密码" class="layui-input">
+            </div>
+        </div>
+    </form>
+</div>
+<!-- 修改密码 -->
+<script>
+    var layer = layui.layer;
+    var form = layui.form;
+    $("#main_cpw").click(function () {
+        layer.open({
+            type: 1,
+            title: "修改密码",
+            area: ['350px', '280px'],
+            shade: 0,
+            maxmin: true,
+            content: $('#main_cpw_view'),
+            btn: ['确定', '取消'],
+            yes: function (index, layero) {
+                $.ajax({
+                    url: "/admin/cpw",
+                    type: "POST",
+                    dataType: "json",
+                    data: $('#main_cpw_form').serialize(),
+                    success: function (result) {
+                        layer.msg(result.msg);
+                    },
+                    error: function () {
+                        layer.msg("系统异常！");
+                    }
+                });
+            },
+            end: function () {
+                $('#main_cpw_view').hide();//隐藏div
+                $('#main_cpw_form')[0].reset();//重置表单
+            },
+        });
+    });
+</script>
+
+</html>
+{{end}}

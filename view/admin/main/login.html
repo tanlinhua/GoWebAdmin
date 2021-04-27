@@ -1,0 +1,80 @@
+{{define "main/login.html"}}
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../assets/css/layui.css">
+    <link rel="stylesheet" href="../assets/css/login.css">
+    <link rel="icon" href="/favicon.ico">
+    <title>Login</title>
+</head>
+
+<body class="login-wrap">
+    <div class="login-container">
+        <form class="login-form">
+            <div class="input-group">
+                <input type="text" id="username" class="input-field">
+                <label for="username" class="input-label">
+                    <span class="label-title">用户名</span>
+                </label>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" class="input-field">
+                <label for="password" class="input-label">
+                    <span class="label-title">密码</span>
+                </label>
+            </div>
+            <div class="input-group">
+                <input type="text" id="captcha" class="input-field">
+                <label for="captcha" class="input-label">
+                    <span class="label-title">验证码</span>
+                </label>
+            </div>
+            <button type="button" id="btn_submit" onclick="login();return false;" class="login-button">登录<i class="ai ai-enter"></i></button>
+        </form>
+    </div>
+</body>
+
+<script src="../assets/layui.js"></script>
+<script src="../assets/js/jquery-3.3.1.min.js"></script>
+<script src="../assets/js/index.js" data-main="login"></script>
+<script>
+    layui.use('layer', function () {
+        var layer = layui.layer;
+    });
+
+    document.onkeydown = function (e) {
+        if (!e) e = window.event;
+        if ((e.keyCode || e.which) === 13) {
+            document.getElementById("btn_submit").click();
+        }
+    };
+
+    function login() {
+        $.ajax({
+            url: '/admin/check',
+            method: 'post',
+            data: { user_name: $('#username').val(), password: $('#password').val(), captcha: $('#captcha').val() },
+            dataType: 'JSON',
+            success: function (res) {
+                if (res.code === 0) {
+                    window.location.href = "/admin/main";
+                } else {
+                    layer.msg(res.msg);
+                    $("#captcha_img").click();
+                }
+            },
+            error: function (data) {
+                layer.msg('联系管理员检查错误');
+                console.log(data);
+            }
+        });
+    }
+</script>
+
+</html>
+{{end}}

@@ -1,0 +1,181 @@
+{{define "params/index.html"}}
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../assets/css/layui.css">
+    <link rel="stylesheet" href="../../assets/css/view.css" />
+    <link rel="icon" href="/favicon.ico">
+    <title>管理后台</title>
+</head>
+
+<body class="layui-view-body">
+    <div class="layui-content">
+
+        <div class="layui-page-header">
+            <div class="pagewrap">
+                <span class="layui-breadcrumb">
+                    <a href="">首页</a>
+                    <a href="">系统配置</a>
+                    <a><cite>系统参数</cite></a>
+                </span>
+            </div>
+        </div>
+
+        <div class="layui-row">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div class="form-box">
+
+                        <div class="layui-form layui-form-item">
+                            <div class="layui-inline">
+                                <div class="layui-form-mid">键:</div>
+                                <div class="layui-input-inline">
+                                    <input type="text" placeholder="支持模糊查询" autocomplete="off" class="layui-input" id="paramsKey" name="paramsKey">
+                                </div>
+                                <button class="layui-btn layui-btn-blue" onclick="return false;" data-type="reload" id="searchParams">查询</button>
+                                <button onclick="javascript:location.reload();" class="layui-btn layui-btn-primary">刷新</button>
+                            </div>
+                        </div>
+
+                        <table id="sys_params" lay-filter="sys_params"></table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 行工具栏 -->
+    <script type="text/html" id="barSysParams">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
+
+</body>
+
+<script src="../../assets/layui.all.js"></script>
+<script>
+    var element = layui.element;
+    var table = layui.table;
+    var form = layui.form;
+
+    //表格渲染
+    table.render({
+        elem: '#sys_params',
+        url: '/admin/params/list',
+        cols: [[
+            { field: 'id', title: 'ID', sort: true },
+            { field: 'key', title: '键' },
+            { field: 'value', title: '值', edit: 'text' },
+            { field: 'remarks', title: '备注' },
+            { fixed: 'right', title: '操作', toolbar: '#barSysParams' }
+        ]],
+        page: true,
+        limits: [10, 20, 50, 100, 500],
+        limit: 10,
+        id: 'paramsReload',
+    });
+
+    //查询并表格重载
+    var $ = layui.$, active = {
+        reload: function () {
+            var paramsKey = $('#paramsKey');
+            let currpage = $('.layui-laypage-em').next().text(); //当前页
+            //执行重载
+            table.reload('paramsReload', {
+                page: {
+                    curr: currpage
+                }
+                , where: {
+                    search: paramsKey.val() //附加检索条件
+                }
+            });
+        }
+    };
+    $('#searchParams').on('click', function () {
+        var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+    });
+
+    //监听单元格编辑
+    table.on('edit(sys_params)', function (obj) {
+        var val = obj.value       //修改后的值
+            , data = obj.data       //所在行所有键值
+            , field = obj.field;    //字段名
+
+        $.ajax({
+            url: "/admin/params/update",
+            type: "POST",
+            dataType: "json",
+            data: { id: data.id, value: val },
+            success: function (result) {
+                layer.msg(result.msg);
+                reloadTable();
+            },
+            error: function () {
+                layer.msg("系统异常！");
+            }
+        });
+    });
+
+    //监听行工具事件
+    table.on('tool(sys_params)', function (obj) {
+        var data = obj.data;
+        if (obj.event === 'del') {
+            layer.confirm('真的删除么', function (index) {
+                $.ajax({
+                    url: "/admin/params/del",
+                    type: "GET",
+                    dataType: "json",
+                    data: { id: data.id },
+                    success: function (result) {
+                        layer.msg(result.msg);
+                        reloadTable();
+                    },
+                    error: function () {
+                        layer.msg("系统异常！");
+                    }
+                });
+            });
+        } else if (obj.event === 'edit') {
+            layer.prompt({
+                formType: 2,
+                title: '修改值',
+                value: data.value
+            }, function (val, index) {
+                $.ajax({
+                    url: "/admin/params/update",
+                    type: "POST",
+                    dataType: "json",
+                    data: { id: data.id, value: val },
+                    success: function (result) {
+                        layer.msg(result.msg);
+                        reloadTable();
+                    },
+                    error: function () {
+                        layer.msg("系统异常！");
+                    }
+                });
+                layer.close(index);
+            });
+        }
+    });
+
+    //重载表格
+    function reloadTable() {
+        let currpage = $('.layui-laypage-em').next().text();
+        table.reload('paramsReload', {
+            page: {
+                curr: currpage
+            }
+        });
+    }
+</script>
+
+</html>
+{{end}}
