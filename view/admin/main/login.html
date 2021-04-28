@@ -28,11 +28,12 @@
                     <span class="label-title">密码</span>
                 </label>
             </div>
-            <div class="input-group">
-                <input type="text" id="captcha" class="input-field" autocomplete="off">
-                <label for="captcha" class="input-label">
+            <div class="input-group" style="display: flex; padding-right: 0;">
+                <input type="text" id="code" class="input-field" style="flex:1">
+                <label for="code" class="input-label">
                     <span class="label-title">验证码</span>
                 </label>
+                <image src="" onclick="getCaptcha();return false;" id="captcha" style="width:145px;z-index:999;"></image>
             </div>
             <button type="button" id="btn_submit" onclick="login();return false;" class="login-button">登录<i class="ai ai-enter"></i></button>
         </form>
@@ -54,18 +55,37 @@
         }
     };
 
+    var curCaptId = "";
+    getCaptcha();
+    function getCaptcha() {
+        $.ajax({
+            type: "GET",
+            url: "/admin/captcha",
+            data: {},
+            dataType: "JSON",
+            success: function (result) {
+                if (result.code != 0) {
+                    layer.msg(result.msg);
+                    return;
+                }
+                curCaptId = result.data.id;
+                document.getElementById("captcha").src = result.data.base64;
+            }
+        });
+    }
+
     function login() {
         $.ajax({
             url: '/admin/check',
             method: 'post',
-            data: { user_name: $('#username').val(), password: $('#password').val(), captcha: $('#captcha').val() },
+            data: { user_name: $('#username').val(), password: $('#password').val(), code: $('#code').val(), cid: curCaptId },
             dataType: 'JSON',
             success: function (res) {
                 if (res.code === 0) {
                     window.location.href = "/admin/main";
                 } else {
                     layer.msg(res.msg);
-                    $("#captcha_img").click();
+                    $("#captcha").click();
                 }
             },
             error: function (data) {

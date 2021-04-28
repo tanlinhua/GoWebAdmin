@@ -9,7 +9,7 @@ import (
 	"github.com/tanlinhua/go-web-admin/middleware"
 )
 
-// 初始化HTTP服务
+// 初始化Admin HTTP服务
 func InitAdmServer() {
 	gin.SetMode(config.AppMode)
 	engine := gin.New()
@@ -39,6 +39,7 @@ func initAdmResources(e *gin.Engine) {
 // 路由配置 -> ADMIN
 func initAdmRouter(e *gin.Engine) {
 	e.GET("admin/login", admin.AdminLogin)       //登录页面
+	e.GET("admin/captcha", admin.Captcha)        //获取图形验证码
 	e.POST("admin/check", admin.AdminLoginCheck) //登录校验
 	e.GET("admin/logout", admin.AdminLogout)     //退出登录
 

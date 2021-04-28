@@ -8,12 +8,34 @@ import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/tanlinhua/go-web-admin/model"
+	"github.com/tanlinhua/go-web-admin/pkg/captcha"
 	"github.com/tanlinhua/go-web-admin/pkg/response"
+	"github.com/tanlinhua/go-web-admin/pkg/utils"
 )
+
+// Admin模型
+
+// 验证码
+type CaptchaResult struct {
+	Id     string `json:"id"`
+	Base64 string `json:"base64"`
+}
 
 // 登录页面
 func AdminLogin(c *gin.Context) {
 	c.HTML(http.StatusOK, "main/login.html", nil)
+}
+
+// 生成图形验证码
+func Captcha(c *gin.Context) {
+	resp := response.New(c)
+	id, b64, err := captcha.CaptchaMake()
+	if err != nil {
+		resp.Error(-1, err.Error())
+		return
+	}
+	capt := CaptchaResult{Id: id, Base64: b64}
+	resp.Success(capt, 0)
 }
 
 // 后台首页
@@ -39,10 +61,23 @@ func AdminLogout(c *gin.Context) {
 
 // 校验管理员用户名密码
 func AdminLoginCheck(c *gin.Context) {
+	resp := response.New(c)
+
 	user_name := c.PostForm("user_name")
 	password := c.PostForm("password")
-	captcha := c.PostForm("captcha")
-	fmt.Println(user_name, password, captcha)
+	code := c.PostForm("code")
+	cid := c.PostForm("cid")
+
+	if utils.Empty(user_name) || utils.Empty(password) || utils.Empty(code) || utils.Empty(cid) {
+		resp.Error(-1, "检查输入")
+		return
+	}
+
+	capt_ok := captcha.CaptchaVerify(cid, code)
+	if !capt_ok {
+		resp.Error(-1, "验证码错误")
+		return
+	}
 
 	r, id := model.AdminLogin(user_name, password)
 	if r {
@@ -50,10 +85,10 @@ func AdminLoginCheck(c *gin.Context) {
 		session.Set("adminLoginTime", time.Now().Unix())
 		session.Set("adminId", id)
 		session.Save()
-		response.New(c).Success(nil, 0)
+		resp.Success(nil, 0)
 		return
 	}
-	response.New(c).Error(-1, "fail")
+	resp.Error(-1, "用户名或密码错误")
 }
 
 // 修改密码
