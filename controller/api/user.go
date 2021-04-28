@@ -2,6 +2,7 @@ package api
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/tanlinhua/go-web-admin/middleware"
@@ -9,7 +10,9 @@ import (
 
 // 用户登录
 func UserLogin(c *gin.Context) {
-	_, token := middleware.GetJWT("Test", "1")
+	u := c.Query("u")
+	id, _ := strconv.Atoi(c.Query("id"))
+	_, token := middleware.GetJWT(u, id)
 	c.String(http.StatusOK, token)
 }
 
