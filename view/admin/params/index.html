@@ -114,8 +114,12 @@
             dataType: "json",
             data: { id: data.id, value: val },
             success: function (result) {
-                layer.msg(result.msg);
-                reloadTable();
+                if (result.code == 0) {
+                    layer.msg("成功");
+                    reloadTable();
+                } else {
+                    layer.msg(result.msg);
+                }
             },
             error: function () {
                 layer.msg("系统异常！");
@@ -134,8 +138,12 @@
                     dataType: "json",
                     data: { id: data.id },
                     success: function (result) {
-                        layer.msg(result.msg);
-                        reloadTable();
+                        if (result.code == 0) {
+                            layer.msg("成功")
+                            reloadTable();
+                        } else {
+                            layer.msg(result.msg);
+                        }
                     },
                     error: function () {
                         layer.msg("系统异常！");
@@ -154,8 +162,12 @@
                     dataType: "json",
                     data: { id: data.id, value: val },
                     success: function (result) {
-                        layer.msg(result.msg);
-                        reloadTable();
+                        if (result.code == 0) {
+                            layer.msg("修改成功");
+                            reloadTable();
+                        } else {
+                            layer.msg(result.msg);
+                        }
                     },
                     error: function () {
                         layer.msg("系统异常！");
