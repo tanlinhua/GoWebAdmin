@@ -20,35 +20,31 @@ func ParamsGet(c *gin.Context) {
 	limit, _ := strconv.Atoi(c.Query("limit"))
 	search := c.Query("search")
 
-	result, count := model.ParamsGet(page, limit, search)
+	datas, total := model.ParamsGet(page, limit, search)
 
-	obj := response.Success("success", count, result)
-	c.JSON(http.StatusOK, obj)
+	response.New(c).Success(datas, total)
 }
 
 // 修改配置数据
 func ParamsUpdate(c *gin.Context) {
-	var rsp map[string]interface{}
-
 	id, _ := strconv.Atoi(c.PostForm("id"))
 	value := c.PostForm("value")
 
-	result, msg := model.ParamsUpdate(id, value)
+	r, msg := model.ParamsUpdate(id, value)
 
-	if result {
-		rsp = response.Success(msg, 0, nil)
+	if r {
+		response.New(c).Success(nil, 0)
 	} else {
-		rsp = response.Error(msg, 0, nil)
+		response.New(c).Error(-1, msg)
 	}
-	c.JSON(http.StatusOK, rsp)
 }
 
 // 删除配置数据
 func ParamsDelete(c *gin.Context) {
-	c.JSON(http.StatusOK, response.Error("暂不支持后台删除系统配置参数", 0, nil))
+	response.New(c).Error(-1, "暂不支持后台删除系统配置参数")
 }
 
 // 新增配置数据
 func ParamsAdd(c *gin.Context) {
-	c.JSON(http.StatusOK, response.Error("暂不支持后台添加系统配置参数", 0, nil))
+	response.New(c).Error(-1, "暂不支持后台添加系统配置参数")
 }

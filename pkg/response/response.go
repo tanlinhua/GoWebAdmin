@@ -1,53 +1,48 @@
 package response
 
-// const (
-// 	SUCCSE = 1
-// 	ERROR  = 0
+import (
+	"net/http"
 
-// 	ERROR_USERNAME_USED  = 1001
-// 	ERROR_PASSWORD_WRONG = 1002
-// 	ERROR_USER_NOT_EXIST = 1003
-// 	ERROR_TOKEN_EXIST    = 1004
-// 	ERROR_TOKEN_ERROR    = 1005
-// 	ERROR_USER_NO_RIGHT  = 1008
-// )
+	"github.com/gin-gonic/gin"
+)
 
-// var statusMsg = map[int]string{
-// 	SUCCSE:               "SUCCESS",
-// 	ERROR:                "FAIL",
-// 	ERROR_USERNAME_USED:  "用户名已存在！",
-// 	ERROR_PASSWORD_WRONG: "密码错误",
-// 	ERROR_USER_NOT_EXIST: "用户不存在",
-// 	ERROR_TOKEN_EXIST:    "TOKEN不存在",
-// 	ERROR_TOKEN_ERROR:    "TOKEN_ERROR",
-// 	ERROR_USER_NO_RIGHT:  "权限不足",
-// }
-
-// func getMsgContent(status int) string {
-// 	return statusMsg[status]
-// }
-
-// func ResponseMeta(status int) map[string]interface{} {
-// 	var meta = make(map[string]interface{})
-// 	meta["code"] = status
-// 	meta["msg"] = getMsgContent(status)
-// 	return meta
-// }
-
-func Success(msg string, count int, data interface{}) map[string]interface{} {
-	var meta = make(map[string]interface{})
-	meta["code"] = 0
-	meta["msg"] = msg
-	meta["count"] = count
-	meta["data"] = data
-	return meta
+type Result struct {
+	Ctx *gin.Context
 }
 
-func Error(msg string, count int, data interface{}) map[string]interface{} {
-	var meta = make(map[string]interface{})
-	meta["code"] = 1
-	meta["msg"] = msg
-	meta["count"] = count
-	meta["data"] = data
-	return meta
+// 返回的结果
+type ResultData struct {
+	Code  int         `json:"code"`  //提示代码
+	Msg   string      `json:"msg"`   //提示信息
+	Total int         `json:"count"` //data total,count for layui
+	Data  interface{} `json:"data"`  //数据
+}
+
+func New(ctx *gin.Context) *Result {
+	return &Result{Ctx: ctx}
+}
+
+// 成功
+func (r *Result) Success(data interface{}, total int) {
+	if data == nil {
+		data = gin.H{}
+	}
+	res := ResultData{}
+
+	res.Code = 0
+	res.Msg = "SUCCESS"
+	res.Total = total
+	res.Data = data
+	r.Ctx.JSON(http.StatusOK, res)
+}
+
+// 失败
+func (r *Result) Error(code int, msg string) {
+	res := ResultData{}
+
+	res.Code = code
+	res.Msg = msg
+	res.Total = 0
+	res.Data = gin.H{}
+	r.Ctx.JSON(http.StatusOK, res)
 }

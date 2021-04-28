@@ -19,37 +19,32 @@ func Login(c *gin.Context) {
 // 退出登录
 func Logout(c *gin.Context) {
 	session := sessions.Default(c)
-	session.Set("adminLoginTime", nil)
-	session.Set("adminId", 0)
+	session.Clear()
 	session.Save()
-
 	c.Redirect(http.StatusFound, "login")
 }
 
 // 校验管理员用户名密码
 func Check(c *gin.Context) {
-	rsp := response.Error("fail", 0, nil)
-
 	user_name := c.PostForm("user_name")
 	password := c.PostForm("password")
 	captcha := c.PostForm("captcha")
 	fmt.Println(user_name, password, captcha)
 
-	result, id := model.Login(user_name, password)
-	if result {
+	r, id := model.Login(user_name, password)
+	if r {
 		session := sessions.Default(c)
 		session.Set("adminLoginTime", time.Now().Unix())
 		session.Set("adminId", id)
 		session.Save()
-		rsp = response.Success("success", 0, nil)
+		response.New(c).Success(nil, 0)
+		return
 	}
-	c.JSON(http.StatusOK, rsp)
+	response.New(c).Error(-1, "fail")
 }
 
 // 修改密码
 func Cpw(c *gin.Context) {
-	var rsp map[string]interface{}
-
 	pwd1 := c.PostForm("pwd1")
 	pwd2 := c.PostForm("pwd2")
 	pwd3 := c.PostForm("pwd3")
@@ -59,11 +54,10 @@ func Cpw(c *gin.Context) {
 
 	r, msg := model.Cpw(adminId.(int), pwd1, pwd2, pwd3)
 	if r {
-		rsp = response.Success(msg, 0, nil)
-	} else {
-		rsp = response.Error(msg, 0, nil)
+		response.New(c).Success(nil, 0)
+		return
 	}
-	c.JSON(http.StatusOK, rsp)
+	response.New(c).Error(-1, msg)
 }
 
 // 后台首页
