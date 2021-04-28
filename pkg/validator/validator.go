@@ -12,7 +12,7 @@ import (
 )
 
 // 验证器
-func Validate(data interface{}) (string, int) {
+func Validate(data interface{}) (bool, string) {
 	validate := validator.New()
 
 	validate.RegisterTagNameFunc(func(field reflect.StructField) string {
@@ -26,19 +26,21 @@ func Validate(data interface{}) (string, int) {
 	if err != nil {
 		trace.Error("zhTrans err:" + err.Error())
 	}
+
 	//自定义校验字段及翻译方法
 	validate.RegisterValidation("phone", checkPhone)
 	validate.RegisterTranslation("phone", trans, registerTranslator("phone", "{0}格式不符合要求"), customTranslate)
-	validate.RegisterValidation("state", checkState)
-	validate.RegisterTranslation("state", trans, registerTranslator("state", "{0}不符合要求"), customTranslate)
+
+	validate.RegisterValidation("status", checkStatus)
+	validate.RegisterTranslation("status", trans, registerTranslator("status", "{0}不符合要求"), customTranslate)
 
 	err = validate.Struct(data)
 	if err != nil {
 		for _, err := range err.(validator.ValidationErrors) {
-			return err.Translate(trans), 0
+			return false, err.Translate(trans)
 		}
 	}
-	return "SUCCSE", 1
+	return true, "SUCCSE"
 }
 
 // 为自定义字段添加翻译功能
@@ -60,14 +62,16 @@ func customTranslate(trans unTrans.Translator, fe validator.FieldError) string {
 	return msg
 }
 
+// 自定义校验手机号码
 func checkPhone(fl validator.FieldLevel) bool {
 	ok, _ := regexp.MatchString(`^1[3-9][0-9]{9}$`, fl.Field().String())
 	return ok
 }
 
-func checkState(fl validator.FieldLevel) bool {
-	state := fl.Field().Int()
-	if state != 0 && state != 1 {
+// 自定义校验状态码
+func checkStatus(fl validator.FieldLevel) bool {
+	status := fl.Field().Int()
+	if status != 0 && status != 1 {
 		return false
 	}
 	return true
