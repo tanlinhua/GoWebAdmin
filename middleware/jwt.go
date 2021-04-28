@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"net/http"
+	"fmt"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -14,16 +14,16 @@ var JwtKey = []byte(config.JwtKey)
 
 type Claims struct {
 	UserName string
-	Flag     string
+	Id       int
 	jwt.StandardClaims
 }
 
 // 生成token
-func GetJWT(username, flag string) (bool, string) {
+func GetJWT(username string, id int) (bool, string) {
 	expireTime := time.Now().Add(24 * time.Hour)
 	claims := &Claims{
 		UserName: username,
-		Flag:     flag,
+		Id:       id,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expireTime.Unix(), //过期时间
 			IssuedAt:  time.Now().Unix(), //生成时间
@@ -44,27 +44,31 @@ func CheckJWT() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tokenString := c.Request.Header.Get("Authorization")
 		if len(tokenString) == 0 {
-			c.JSON(http.StatusOK, response.Error("TOKEN不存在", 0, nil))
+			response.New(c).Error(0, "TOKEN不存在")
 			c.Abort()
 			return
 		}
 
 		token, claims, err := parseToken(tokenString)
 		if err != nil || !token.Valid {
-			c.JSON(http.StatusOK, response.Error("TOKEN错误", 0, nil))
+			response.New(c).Error(0, "TOKEN错误")
 			c.Abort()
 			return
 		}
 
-		if config.AdminName == claims.Flag {
+		fmt.Println(config.AdminName, claims.UserName, claims.Id)
+
+		if config.AdminName != claims.UserName {
 			ok, msg := CheckPermission(claims.UserName, c.Request.RequestURI, c.Request.Method)
+
+			fmt.Println(ok, msg)
+
 			if !ok {
-				c.JSON(http.StatusOK, response.Error("权限不足:"+msg, 0, nil))
+				response.New(c).Error(0, msg)
 				c.Abort()
 			}
 		}
-		c.Set("username", claims.UserName)
-
+		c.Set("id", claims.Id)
 		c.Next()
 	}
 }
@@ -81,5 +85,5 @@ func parseToken(tokenString string) (*jwt.Token, *Claims, error) {
 // 验证用户是否有该uri操作权限
 func CheckPermission(username, uri, method string) (bool, string) {
 	// return model.CheckPermission(username, uri, method)
-	return false, ""
+	return false, "权限不足"
 }
