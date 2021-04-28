@@ -24,8 +24,16 @@ func (m *Admin) BeforeSave() {
 	m.Password = utils.Md5(m.Password)
 }
 
+// 增
+
+// 删
+
+// 改
+
+// 查
+
 // 管理登录
-func Login(user_name, password string) (bool, int) {
+func AdminLogin(user_name, password string) (bool, int) {
 	result := false
 	var admin Admin
 
@@ -36,8 +44,12 @@ func Login(user_name, password string) (bool, int) {
 	return result, admin.Id
 }
 
+// 记录最后登录时间及IP
+func AdminLoginTimeAndIp() {
+}
+
 // 修改密码
-func Cpw(adminId int, pwd1, pwd2, pwd3 string) (result bool, msg string) {
+func AdminCpw(adminId int, pwd1, pwd2, pwd3 string) (result bool, msg string) {
 	var admin Admin
 
 	if pwd2 != pwd3 {

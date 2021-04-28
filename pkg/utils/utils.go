@@ -7,6 +7,7 @@ import (
 	"io"
 	"math/rand"
 	"reflect"
+	"strings"
 )
 
 // md5加密
@@ -47,6 +48,20 @@ func String_in_array(items []string, item string) bool {
 		}
 	}
 	return false
+}
+
+// 数组解析成字符串
+func Implode(glue string, pieces []string) string {
+	return strings.Join(pieces, glue)
+}
+
+// 字符串解析成数组
+func Explode(delimiter, text string) []string {
+	if len(delimiter) > len(text) {
+		return strings.Split(delimiter, text)
+	} else {
+		return strings.Split(text, delimiter)
+	}
 }
 
 // In_array for php2golang.com

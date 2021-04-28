@@ -44,14 +44,14 @@ func CheckJWT() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tokenString := c.Request.Header.Get("Authorization")
 		if len(tokenString) == 0 {
-			response.New(c).Error(0, "TOKEN不存在")
+			response.New(c).Error(-1, "TOKEN不存在")
 			c.Abort()
 			return
 		}
 
 		token, claims, err := parseToken(tokenString)
 		if err != nil || !token.Valid {
-			response.New(c).Error(0, "TOKEN错误")
+			response.New(c).Error(-2, "TOKEN错误")
 			c.Abort()
 			return
 		}
@@ -64,7 +64,7 @@ func CheckJWT() gin.HandlerFunc {
 			fmt.Println(ok, msg)
 
 			if !ok {
-				response.New(c).Error(0, msg)
+				response.New(c).Error(-3, msg)
 				c.Abort()
 			}
 		}
