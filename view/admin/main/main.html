@@ -126,7 +126,7 @@
     var layer = layui.layer;
     var form = layui.form;
     $("#main_cpw").click(function () {
-        layer.open({
+        index = layer.open({
             type: 1,
             title: "修改密码",
             area: ['350px', '280px'],
@@ -141,6 +141,11 @@
                     dataType: "json",
                     data: $('#main_cpw_form').serialize(),
                     success: function (result) {
+                        if (result.code == 0) {
+                            layer.msg("修改成功");
+                            layer.close(index);
+                            return
+                        }
                         layer.msg(result.msg);
                     },
                     error: function () {
