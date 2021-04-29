@@ -23,7 +23,9 @@ CREATE TABLE `go_role` (
   `role_name` varchar(40) NOT NULL COMMENT '角色名称',
   `role_desc` varchar(40) DEFAULT NULL COMMENT '角色描述',
   `per_id` varchar(255) DEFAULT NULL COMMENT '权限ids: 1,2,5'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='角色表';
+
+INSERT INTO `go_role` VALUES ('1', '运营', '运营部门', '1,2,3,4,8');
 
 -- 角色权限表
 DROP TABLE IF EXISTS `go_permission`;
@@ -34,7 +36,16 @@ CREATE TABLE `go_permission` (
   `uri` varchar(50) NOT NULL DEFAULT '' COMMENT 'API路由',
   `method` varchar(10) NOT NULL DEFAULT '' COMMENT '路由请求方法(GET/POST)',
   `level` int NOT NULL DEFAULT '1' COMMENT '权限等级[1,2]'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='权限表';
+
+INSERT INTO `go_permission` VALUES ('1', '后台首页', '0', '/admin/main', 'GET', '1');
+INSERT INTO `go_permission` VALUES ('2', '首页控制台', '0', '/admin/console', 'GET', '1');
+INSERT INTO `go_permission` VALUES ('3', '修改密码', '0', '/admin/cpw', 'POST', '1');
+INSERT INTO `go_permission` VALUES ('4', '参数配置', '0', '/admin/params/view', 'GET', '1');
+INSERT INTO `go_permission` VALUES ('5', '增加参数配置', '4', '/admin/params/add', 'POST', '2');
+INSERT INTO `go_permission` VALUES ('6', '删除参数配置', '4', '/admin/params/del', 'GET', '2');
+INSERT INTO `go_permission` VALUES ('7', '修改参数配置', '4', '/admin/params/update', 'POST', '2');
+INSERT INTO `go_permission` VALUES ('8', '查询参数配置', '4', '/admin/params/list', 'GET', '2');
 
 -- 系统配置表
 DROP TABLE IF EXISTS `go_sys_params`;

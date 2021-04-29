@@ -1,5 +1,7 @@
 package model
 
+import "fmt"
+
 // 角色模型
 type Role struct {
 	Id       int    `json:"id"`
@@ -8,9 +10,17 @@ type Role struct {
 	PerId    string `json:"per_id"`
 }
 
-// 根据adminId得到角色ID
-func RoleGetRoleIdByAdminId(admId int) int {
-	return 0
+// 根据adminId得到PerId
+func RoleGetPerIdsByAdminId(admId int) string {
+	type result struct{ PerId string }
+	var r result
+	err := db.Table("go_role").Select("go_role.per_id").
+		Joins("left join go_admin on go_admin.role=go_role.id").
+		Where("go_admin.id=?", admId).Scan(&r).Error
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	return r.PerId
 }
 
 // 增

@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 
@@ -38,7 +37,6 @@ func CheckSession() gin.HandlerFunc {
 
 		// 2.校验后台操作权限
 		adminId := session.Get("adminId")
-		fmt.Println("CheckSession----> adminId =", adminId, ",config.AdminId = ", config.AdminId)
 		if utils.Empty(adminId) {
 			c.Redirect(http.StatusFound, "login")
 			c.Abort()
@@ -46,7 +44,6 @@ func CheckSession() gin.HandlerFunc {
 		}
 		if adminId != config.AdminId { //管理员ID不受权限约束
 			ok, msg := checkAdminPermission(adminId.(int), c.Request.RequestURI, c.Request.Method)
-			fmt.Println("CheckSession---->", ok, msg)
 			if !ok {
 				response.New(c).Error(-1, msg)
 				c.Abort()
@@ -60,7 +57,8 @@ func CheckSession() gin.HandlerFunc {
 
 // 验证管理用户是否有该uri操作权限
 func checkAdminPermission(adminId int, uri string, method string) (bool, string) {
-	ok := model.PerCheck(adminId, uri, method) //校验权限
+	newUri := utils.Strstr(uri, "?", true)
+	ok := model.PerCheck(adminId, newUri, method) //校验权限
 	if ok {
 		return true, "SUCCESS"
 	}

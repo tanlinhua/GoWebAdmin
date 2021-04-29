@@ -115,3 +115,19 @@ func Empty(val interface{}) bool {
 	}
 	return reflect.DeepEqual(val, reflect.Zero(v.Type()).Interface())
 }
+
+// 截取字符串
+// haystack -> 源字符串
+// needle -> 截取字符串
+// before_needle -> true返回needle之前,false返回needle之后部分
+func Strstr(haystack string, needle string, before_needle bool) string {
+	idx := strings.Index(haystack, needle)
+	if idx == -1 || needle == "" {
+		return haystack
+	}
+	if before_needle {
+		return haystack[0:idx]
+	} else {
+		return haystack[idx+len([]byte(needle))-1:]
+	}
+}

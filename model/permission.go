@@ -1,6 +1,11 @@
 package model
 
-import "fmt"
+import (
+	"strconv"
+
+	"github.com/tanlinhua/go-web-admin/pkg/trace"
+	"github.com/tanlinhua/go-web-admin/pkg/utils"
+)
 
 // 权限模型
 type Permission struct {
@@ -23,12 +28,26 @@ func PerMenuDataByAdmId(adminId int) {
 
 // 校验权限
 func PerCheck(adminId int, uri string, method string) bool {
-	fmt.Println("adminId =", adminId, ",uri =", uri, ",method =", method)
-	//临时测试
-	if uri == "/admin/console" || uri == "/admin/main" {
+	ids := RoleGetPerIdsByAdminId(adminId) //获取角色ID所拥有的权限ids
+	pid := PerIdByUriMethod(uri, method)   //根据uri及method获取对应权限id
+
+	idsArr := utils.Explode(",", ids)
+	ok := utils.In_array(strconv.Itoa(pid), idsArr) //判断权限id是否存在ids中
+	if ok {
 		return true
+	} else {
+		return false
 	}
-	return false
+}
+
+// 获取权限id
+func PerIdByUriMethod(uri, method string) int {
+	var per Permission
+	err := db.Model(&per).Select("id").Where("uri=?", uri).Where("method=?", method).Find(&per).Error
+	if err != nil {
+		trace.Error("PerIdByUriMethod.Error=" + err.Error())
+	}
+	return per.Id
 }
 
 // 增
