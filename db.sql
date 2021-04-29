@@ -45,7 +45,7 @@ INSERT INTO `go_permission` VALUES ('4', '参数配置', '0', '/admin/params/vie
 INSERT INTO `go_permission` VALUES ('5', '增加参数配置', '4', '/admin/params/add', 'POST', '2');
 INSERT INTO `go_permission` VALUES ('6', '删除参数配置', '4', '/admin/params/del', 'GET', '2');
 INSERT INTO `go_permission` VALUES ('7', '修改参数配置', '4', '/admin/params/update', 'POST', '2');
-INSERT INTO `go_permission` VALUES ('8', '查询参数配置', '4', '/admin/params/list', 'GET', '2');
+INSERT INTO `go_permission` VALUES ('8', '查询参数配置', '4', '/admin/params/get', 'GET', '2');
 
 -- 系统配置表
 DROP TABLE IF EXISTS `go_sys_params`;

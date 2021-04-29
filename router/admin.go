@@ -55,7 +55,9 @@ func initAdmRouter(e *gin.Engine) {
 		auth.POST("params/add", admin.ParamsAdd)       //增
 		auth.GET("params/del", admin.ParamsDelete)     //删
 		auth.POST("params/update", admin.ParamsUpdate) //改
-		auth.GET("params/list", admin.ParamsGet)       //查
+		auth.GET("params/get", admin.ParamsGet)        //查
+
+		// 后台用户管理
 
 		// 角色管理
 
