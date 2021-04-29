@@ -46,7 +46,7 @@ func initAdmRouter(e *gin.Engine) {
 	auth := e.Group("/admin")
 	auth.Use(middleware.CheckSession())
 	{
-		//后台首页
+		// 后台首页
 		auth.GET("main", admin.AdminMain)       //view
 		auth.GET("console", admin.AdminConsole) //控制台
 		auth.POST("cpw", admin.AdminCpw)        //修改密码
