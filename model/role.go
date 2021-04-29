@@ -1,6 +1,6 @@
 package model
 
-import "fmt"
+import "github.com/tanlinhua/go-web-admin/pkg/trace"
 
 // 角色模型
 type Role struct {
@@ -18,7 +18,7 @@ func RoleGetPerIdsByAdminId(admId int) string {
 		Joins("left join go_admin on go_admin.role=go_role.id").
 		Where("go_admin.id=?", admId).Scan(&r).Error
 	if err != nil {
-		fmt.Println(err.Error())
+		trace.Error("RoleGetPerIdsByAdminId.Error=" + err.Error())
 	}
 	return r.PerId
 }
