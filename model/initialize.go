@@ -23,7 +23,6 @@ func InitDB() {
 	if err != nil {
 		log.Panic("连接数据库失败，err：", err)
 	}
-	fmt.Println("数据库连接成功")
 	db.SingularTable(true)                       // 禁用默认表名的复数形式
 	db.DB().SetMaxIdleConns(10)                  // SetMaxIdleCons 设置连接池中的最大闲置连接数。
 	db.DB().SetMaxOpenConns(100)                 // SetMaxOpenCons 设置数据库的最大连接数量。

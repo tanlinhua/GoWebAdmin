@@ -1,7 +1,6 @@
 package admin
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 
@@ -99,7 +98,6 @@ func AdminCpw(c *gin.Context) {
 	pwd1 := c.PostForm("pwd1")
 	pwd2 := c.PostForm("pwd2")
 	pwd3 := c.PostForm("pwd3")
-	fmt.Println(pwd1, pwd2, pwd3)
 
 	adminId := sessions.Default(c).Get("adminId")
 
