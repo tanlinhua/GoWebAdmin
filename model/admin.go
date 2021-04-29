@@ -3,6 +3,7 @@ package model
 import (
 	"time"
 
+	"github.com/tanlinhua/go-web-admin/pkg/trace"
 	"github.com/tanlinhua/go-web-admin/pkg/utils"
 )
 
@@ -12,11 +13,11 @@ type Admin struct {
 	UserName      string    `json:"user_name" validate:"required,min=5,max=32" label:"用户名"`
 	Password      string    `json:"password" validate:"required,min=6,max=64" label:"密码"`
 	Role          int       `json:"role" validate:"omitempty,numeric" label:"角色ID"`
-	Status        string    `json:"status" validate:"omitempty,phone" label:"手机号码"` //可以为空或者必须符合phone要求
+	Status        string    `json:"status" validate:"omitempty,status" label:"状态码"`
 	CreatedAt     time.Time `json:"created_at"`
 	UpdatedAt     time.Time `json:"updated_at"`
 	LastLoginTime time.Time `json:"last_login_time"`
-	LastLoginIp   time.Time `json:"last_login_ip"`
+	LastLoginIp   string    `json:"last_login_ip"`
 }
 
 // 保存前置操作
@@ -45,7 +46,15 @@ func AdminLogin(user_name, password string) (bool, int) {
 }
 
 // 记录最后登录时间及IP
-func AdminLoginTimeAndIp() {
+func AdminLoginTimeAndIp(id int, ip string, loginTime time.Time) {
+	var admin Admin
+	admin.Id = id
+	admin.LastLoginIp = ip
+	admin.LastLoginTime = loginTime
+	err := db.Model(&admin).Updates(admin).Error
+	if err != nil {
+		trace.Error("AdminLoginTimeAndIp.Error=" + err.Error())
+	}
 }
 
 // 修改密码

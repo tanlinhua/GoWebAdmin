@@ -82,6 +82,7 @@ func AdminLoginCheck(c *gin.Context) {
 
 	r, id := model.AdminLogin(user_name, password)
 	if r {
+		model.AdminLoginTimeAndIp(id, c.ClientIP(), time.Now()) //记录最后登录时间及IP
 		session := sessions.Default(c)
 		session.Set("adminLoginTime", time.Now().Unix())
 		session.Set("adminName", user_name)
