@@ -46,9 +46,31 @@ func initAdmRouter(e *gin.Engine) {
 	auth := e.Group("/admin")
 	auth.Use(middleware.CheckSession())
 	{
-		auth.GET("main", admin.AdminMain)       //后台首页
-		auth.GET("console", admin.AdminConsole) //首页控制台
+		//后台首页
+		auth.GET("main", admin.AdminMain)       //view
+		auth.GET("console", admin.AdminConsole) //控制台
 		auth.POST("cpw", admin.AdminCpw)        //修改密码
+
+		// 后台用户管理
+		auth.GET("adm/view", admin.AdmView)      //view
+		auth.POST("adm/add", admin.AdmAdd)       //增
+		auth.GET("adm/del", admin.AdmDel)        //删
+		auth.POST("adm/update", admin.AdmUpdate) //改
+		auth.GET("adm/get", admin.AdmGet)        //查
+
+		// 角色管理
+		auth.GET("role/view", admin.RoleView)      //view
+		auth.POST("role/add", admin.RoleAdd)       //增
+		auth.GET("role/del", admin.RoleDel)        //删
+		auth.POST("role/update", admin.RoleUpdate) //改
+		auth.GET("role/get", admin.RoleGet)        //查
+
+		// 权限管理
+		auth.GET("per/view", admin.PermissionView)      //view
+		auth.POST("per/add", admin.PermissionAdd)       //增
+		auth.GET("per/del", admin.PermissionDel)        //删
+		auth.POST("per/update", admin.PermissionUpdate) //改
+		auth.GET("per/get", admin.PermissionGet)        //查
 
 		// 参数配置
 		auth.GET("params/view", admin.ParamsView)      //view
@@ -56,12 +78,6 @@ func initAdmRouter(e *gin.Engine) {
 		auth.GET("params/del", admin.ParamsDelete)     //删
 		auth.POST("params/update", admin.ParamsUpdate) //改
 		auth.GET("params/get", admin.ParamsGet)        //查
-
-		// 后台用户管理
-
-		// 角色管理
-
-		// 权限管理
 
 		// demo 👇
 		auth.GET("demo1", admin.Form)

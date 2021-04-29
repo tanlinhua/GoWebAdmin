@@ -16,7 +16,8 @@
     + https://github.com/patrickmn/go-cache
 
 ## TODO
-+ rbac + admin/role/per -> crud
++ 1.admin/role/per -> crud
++ 2.admin/main的菜单根据权限列表来展示
 + xss/sql注入/csrf
 + bug -> admin/main 刷新丢失已经打开的tab
 + golang googleauthenticator

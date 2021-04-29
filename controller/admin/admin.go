@@ -109,10 +109,27 @@ func AdminCpw(c *gin.Context) {
 	response.New(c).Error(-1, msg)
 }
 
-// 增
+// 后台用户页面
+func AdmView(c *gin.Context) {
+	c.HTML(http.StatusOK, "adm/index.html", nil)
+}
 
-// 删
+// 增加后台用户
+func AdmAdd(c *gin.Context) {
 
-// 改
+}
 
-// 查
+// 删除后台用户
+func AdmDel(c *gin.Context) {
+
+}
+
+// 修改后台用户
+func AdmUpdate(c *gin.Context) {
+
+}
+
+// 查询后台用户
+func AdmGet(c *gin.Context) {
+
+}
