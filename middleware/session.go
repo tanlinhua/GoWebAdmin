@@ -53,6 +53,7 @@ func CheckSession() gin.HandlerFunc {
 			}
 		}
 		c.Set("admin_id", adminId)
+		c.Set("adminName", session.Get("adminName"))
 		c.Next()
 	}
 }
