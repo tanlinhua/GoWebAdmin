@@ -4,9 +4,9 @@ import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
-	"github.com/tanlinhua/go-web-admin/config"
 	"github.com/tanlinhua/go-web-admin/controller/admin"
 	"github.com/tanlinhua/go-web-admin/middleware"
+	"github.com/tanlinhua/go-web-admin/pkg/config"
 )
 
 // 初始化Admin HTTP服务

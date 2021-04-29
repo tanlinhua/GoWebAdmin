@@ -6,7 +6,7 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
-	"github.com/tanlinhua/go-web-admin/config"
+	"github.com/tanlinhua/go-web-admin/pkg/config"
 	"github.com/tanlinhua/go-web-admin/pkg/response"
 )
 

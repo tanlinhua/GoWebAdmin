@@ -2,9 +2,9 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/tanlinhua/go-web-admin/config"
 	"github.com/tanlinhua/go-web-admin/controller/api"
 	"github.com/tanlinhua/go-web-admin/middleware"
+	"github.com/tanlinhua/go-web-admin/pkg/config"
 	"github.com/tanlinhua/go-web-admin/pkg/response"
 )
 

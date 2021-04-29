@@ -7,8 +7,8 @@ import (
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"github.com/tanlinhua/go-web-admin/config"
 	"github.com/tanlinhua/go-web-admin/model"
+	"github.com/tanlinhua/go-web-admin/pkg/config"
 	"github.com/tanlinhua/go-web-admin/pkg/response"
 	"github.com/tanlinhua/go-web-admin/pkg/utils"
 )
