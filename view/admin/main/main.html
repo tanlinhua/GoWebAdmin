@@ -48,21 +48,23 @@
                             <em>主页</em>
                         </a>
                         <dl class="layui-nav-child">
-                            <dd><a href="console">控制台</a></dd>
+                            <dd><a href="/admin/console">控制台</a></dd>
                         </dl>
                     </li>
 
+                    {{if eq .adminName "admin"}}
                     <li class="layui-nav-item">
                         <a href="javascript:;">
                             <i class="layui-icon">&#xe672;</i>
                             <em>权限配置</em>
                         </a>
                         <dl class="layui-nav-child">
-                            <dd><a href="adm/view">用户管理</a></dd>
-                            <dd><a href="role/view">角色管理</a></dd>
-                            <dd><a href="per/view">权限管理</a></dd>
+                            <dd><a href="/admin/adm/view">用户管理</a></dd>
+                            <dd><a href="/admin/role/view">角色管理</a></dd>
+                            <dd><a href="/admin/per/view">权限管理</a></dd>
                         </dl>
                     </li>
+                    {{end}}
 
                     <li class="layui-nav-item">
                         <a href="javascript:;">
@@ -70,7 +72,7 @@
                             <em>系统配置</em>
                         </a>
                         <dl class="layui-nav-child">
-                            <dd><a href="params/view">系统参数</a></dd>
+                            <dd><a href="/admin/params/view">系统参数</a></dd>
                         </dl>
                     </li>
 
@@ -131,6 +133,7 @@
             title: "修改密码",
             area: ['350px', '280px'],
             shade: 0,
+            anim: 1,
             maxmin: true,
             content: $('#main_cpw_view'),
             btn: ['确定', '取消'],

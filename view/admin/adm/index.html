@@ -1,17 +1,325 @@
 {{define "adm/index.html"}}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../assets/css/layui.css">
+    <link rel="stylesheet" href="../../assets/css/view.css" />
+    <link rel="icon" href="/favicon.ico">
+    <title>用户管理</title>
 </head>
 
-<body>
-    adm/index.html
+<body class="layui-view-body">
+    <div class="layui-content">
+
+        <div class="layui-page-header">
+            <div class="pagewrap">
+                <span class="layui-breadcrumb">
+                    <a href="">首页</a>
+                    <a href="">权限配置</a>
+                    <a><cite>用户管理</cite></a>
+                </span>
+            </div>
+        </div>
+
+        <div class="layui-row">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div class="form-box">
+
+                        <div class="layui-form layui-form-item">
+                            <div class="layui-inline">
+                                <div class="layui-form-mid">键:</div>
+                                <div class="layui-input-inline">
+                                    <input type="text" placeholder="支持模糊查询" autocomplete="off" class="layui-input" id="searchInput" name="searchInput">
+                                </div>
+                                <button class="layui-btn layui-btn-blue" onclick="return false;" data-type="reload" id="searchBtn">查询</button>
+                                <button class="layui-btn layui-btn-green" onclick="addAdmin();return false;" id="addBtn">新增</button>
+                                <button onclick="javascript:location.reload();" class="layui-btn layui-btn-primary">刷新</button>
+                            </div>
+                        </div>
+
+                        <table id="dataDable" lay-filter="dataDable"></table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 行工具栏 -->
+    <script type="text/html" id="barHandle">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
+
+    <!-- 新增视图 -->
+    <div id="add_view" style="margin: 5%;" hidden>
+        <form class="layui-form layui-form-pane" id="add_view_form" method="post" lay-filter="example">
+            <input type="text" id="add_view_id" name="id" hidden>
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-block">
+                    <input type="text" id="user_name" name="user_name" lay-verify="required" placeholder="5~30位字符" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">密码</label>
+                <div class="layui-input-block">
+                    <input type="password" id="password" name="password" lay-verify="required" placeholder="不小于6位数" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">角色</label>
+                <div class="layui-input-block">
+                    <select id="select_role" name="role" lay-verify="required">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">状态</label>
+                <div class="layui-input-block">
+                    <select id="select_status" name="status" lay-verify="required">
+                        <option value="1">启用</option>
+                        <option value="0">禁用</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+
 </body>
+
+<script src="../../assets/layui.all.js"></script>
+<script src="../../assets/js/jquery-3.3.1.min.js"></script>
+<script>
+    var element = layui.element;
+    var table = layui.table;
+    var form = layui.form;
+    var layer = layui.layer;
+
+    //获取角色信息并赋值下拉框
+    $.ajax({
+        url: "/admin/role/get",
+        type: "GET",
+        dataType: "json",
+        success: function (result) {
+            if (result.code == 0) {
+                for (var i = 0; i < result.count; i++) {
+                    $("#select_role").append(new Option(result.data[i].role_name, result.data[i].id));
+                }
+                layui.form.render("select");
+            } else {
+                layer.msg(result.msg);
+            }
+        },
+        error: function () {
+            layer.msg("获取角色数据异常！");
+        }
+    });
+
+    //表格渲染
+    table.render({
+        elem: '#dataDable',
+        url: '/admin/adm/get',
+        cols: [[
+            { field: 'id', title: 'ID', sort: true },
+            { field: 'user_name', title: '用户名' },
+            { field: 'role', title: '角色' },
+            { field: 'created_at', title: '创建时间' },
+            { field: 'updated_at', title: '更新时间' },
+            { field: 'last_login_time', title: '最后登陆时间' },
+            { field: 'last_login_ip', title: '最后登陆IP' },
+            {
+                field: 'status', title: '状态', width: 85, unresize: true, templet: function (data) {
+                    var tpl1 = '<input type="checkbox" name="status" value="' + data.id + '" lay-skin="switch" lay-text="正常|禁用" lay-filter="statusCheckbox">'
+                    var tpl2 = '<input type="checkbox" name="status" value="' + data.id + '" lay-skin="switch" lay-text="正常|禁用" lay-filter="statusCheckbox" checked>';
+                    if (data.status == 1) {
+                        return tpl2;
+                    } else {
+                        return tpl1;
+                    }
+                }
+            },
+            { fixed: 'right', title: '操作', toolbar: '#barHandle' }
+        ]],
+        page: true,
+        limits: [10, 20, 50, 100, 500],
+        limit: 14,
+        id: 'dbTableReload',
+    });
+
+    //监听Checkbox操作
+    form.on('switch(statusCheckbox)', function (obj) {
+        var state = 0;
+        if (obj.elem.checked == true) {
+            state = 1;
+        }
+        $.ajax({
+            url: "/admin/adm/update",
+            type: "POST",
+            dataType: "json",
+            data: { id: this.value, status: state },
+            success: function (result) {
+                if (result.code == 0) {
+                    layer.msg("修改成功");
+                    layer.close(index);
+                } else {
+                    layer.msg(result.msg);
+                }
+            },
+            error: function () {
+                layer.msg("系统异常！");
+            }
+        });
+    });
+
+    //查询并表格重载
+    var $ = layui.$, active = {
+        reload: function () {
+            var searchInput = $('#searchInput');
+            let currpage = $('.layui-laypage-em').next().text(); //当前页
+            //执行重载
+            table.reload('dbTableReload', {
+                page: {
+                    curr: currpage
+                }
+                , where: {
+                    search: searchInput.val() //附加检索条件
+                }
+            });
+        }
+    };
+    $('#searchBtn').on('click', function () {
+        var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+    });
+
+    //新增管理员
+    function addAdmin() {
+        index = layer.open({
+            type: 1,
+            title: "新增管理员",
+            area: ['450px', '440px'],
+            shade: 0,
+            anim: 2,
+            scrollbar: false,
+            maxmin: true,
+            content: $('#add_view'),
+            btn: ['提交', '取消'],
+            yes: function (index, layero) {
+                $.ajax({
+                    url: "/admin/adm/add",
+                    type: "POST",
+                    dataType: "json",
+                    data: $('#add_view_form').serialize(),
+                    success: function (result) {
+                        if (result.code == 0) {
+                            layer.msg("新增成功");
+                            layer.close(index);
+                            reloadTable();
+                            return
+                        }
+                        layer.msg(result.msg);
+                    },
+                    error: function () {
+                        layer.msg("系统异常！");
+                    }
+                });
+            },
+            end: function () {
+                $('#add_view').hide();//隐藏div
+                $('#add_view_form')[0].reset();//重置表单
+            },
+        });
+    };
+
+    //监听行工具事件
+    table.on('tool(dataDable)', function (obj) {
+        var data = obj.data;
+        if (obj.event === 'del') {
+            layer.confirm('真的删除么', function (index) {
+                $.ajax({
+                    url: "/admin/adm/del",
+                    type: "GET",
+                    dataType: "json",
+                    data: { id: data.id },
+                    success: function (result) {
+                        if (result.code == 0) {
+                            layer.msg("成功")
+                            reloadTable();
+                        } else {
+                            layer.msg(result.msg);
+                        }
+                    },
+                    error: function () {
+                        layer.msg("系统异常！");
+                    }
+                });
+            });
+        } else if (obj.event === 'edit') {
+            index = layer.open({
+                type: 1,
+                title: "修改管理员",
+                area: ['450px', '440px'],
+                shade: 0,
+                anim: 2,
+                scrollbar: false,
+                maxmin: true,
+                content: $('#add_view'),
+                btn: ['提交', '取消'],
+                success: function (layero, index) {
+                    $("#add_view_id").val(data.id);
+                    $("#user_name").val(data.user_name);
+                    $('#user_name').prop('disabled', true);
+                    $("#select_role").val(data.role);
+                    $("#select_status").val(data.status);
+                    layui.form.render("select");
+                },
+                yes: function (index, layero) {
+                    $.ajax({
+                        url: "/admin/adm/update",
+                        type: "POST",
+                        dataType: "json",
+                        data: $('#add_view_form').serialize(),
+                        success: function (result) {
+                            if (result.code == 0) {
+                                layer.msg("修改成功");
+                                layer.close(index);
+                                reloadTable();
+                                return
+                            }
+                            layer.msg(result.msg);
+                        },
+                        error: function () {
+                            layer.msg("系统异常！");
+                        }
+                    });
+                },
+                end: function () {
+                    $('#user_name').prop('disabled', false);
+                    $('#add_view').hide();//隐藏div
+                    $('#add_view_form')[0].reset();//重置表单
+                },
+            });
+        }
+    });
+
+    //重载表格
+    function reloadTable() {
+        let currpage = $('.layui-laypage-em').next().text();
+        table.reload('dbTableReload', {
+            page: {
+                curr: currpage
+            }
+        });
+    }
+</script>
 
 </html>
 {{end}}

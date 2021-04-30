@@ -30,3 +30,25 @@ func RoleGetPerIdsByAdminId(admId int) string {
 // 改
 
 // 查
+func RoleGet(page, limit int, search string) (*[]Role, int) {
+	var total int
+	var data []Role
+	Db := db
+
+	Db.Model(&Role{}).Count(&total) //1.查询总数
+
+	if len(search) > 0 {
+		Db = Db.Where("`role_name` LIKE ?", "%"+search+"%")
+	}
+
+	if page > 0 && limit > 0 {
+		Db = Db.Limit(limit).Offset((page - 1) * limit)
+	}
+
+	err := Db.Find(&data).Error //2.查询数据
+	if err != nil {
+		trace.Error("RoleGet.err:" + err.Error())
+	}
+
+	return &data, total
+}

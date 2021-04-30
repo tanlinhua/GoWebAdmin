@@ -2,6 +2,7 @@ package admin
 
 import (
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/gin-contrib/sessions"
@@ -79,8 +80,8 @@ func AdminLoginCheck(c *gin.Context) {
 		return
 	}
 
-	r, id := model.AdminLogin(user_name, password)
-	if r {
+	ok, id, msg := model.AdminLogin(user_name, password)
+	if ok {
 		model.AdminLoginTimeAndIp(id, c.ClientIP(), time.Now()) //记录最后登录时间及IP
 		session := sessions.Default(c)
 		session.Set("adminLoginTime", time.Now().Unix())
@@ -90,7 +91,7 @@ func AdminLoginCheck(c *gin.Context) {
 		resp.Success(nil, 0)
 		return
 	}
-	resp.Error(-1, "用户名或密码错误")
+	resp.Error(-1, msg)
 }
 
 // 修改密码
@@ -116,20 +117,58 @@ func AdmView(c *gin.Context) {
 
 // 增加后台用户
 func AdmAdd(c *gin.Context) {
+	resp := response.New(c)
+	var admin model.Admin
 
+	err := c.Bind(&admin)
+	if err != nil {
+		resp.Error(-1, err.Error())
+		return
+	}
+	ok, msg := model.AdmAdd(&admin)
+	if ok {
+		resp.Success(nil, 0)
+	} else {
+		resp.Error(-1, msg)
+	}
 }
 
 // 删除后台用户
 func AdmDel(c *gin.Context) {
-
+	id, _ := strconv.Atoi(c.Query("id"))
+	ok, msg := model.AdminDel(id)
+	if ok {
+		response.New(c).Success(nil, 0)
+	} else {
+		response.New(c).Error(-1, msg)
+	}
 }
 
 // 修改后台用户
 func AdmUpdate(c *gin.Context) {
+	resp := response.New(c)
+	var admin model.Admin
 
+	err := c.Bind(&admin)
+	if err != nil {
+		resp.Error(-1, err.Error())
+		return
+	}
+	ok, msg := model.AdmUpdate(&admin)
+	if ok {
+		resp.Success(nil, 0)
+	} else {
+		resp.Error(-1, msg)
+	}
 }
 
 // 查询后台用户
 func AdmGet(c *gin.Context) {
+	page, _ := strconv.Atoi(c.Query("page"))
+	limit, _ := strconv.Atoi(c.Query("limit"))
+	search := c.Query("search")
 
+	datas, total := model.AdminGet(page, limit, search)
+
+	response.New(c).Success(datas, total)
 }

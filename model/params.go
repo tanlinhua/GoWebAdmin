@@ -32,7 +32,7 @@ func ParamsGet(page, limit int, search string) (*[]SysParams, int) {
 
 	err := Db.Find(&data).Error //2.查询数据
 	if err != nil {
-		trace.Error("GetParamsList.err:" + err.Error())
+		trace.Error("ParamsGet.err:" + err.Error())
 	}
 
 	return &data, total
@@ -49,6 +49,5 @@ func ParamsUpdate(id int, value string) (bool, string) {
 
 // 增加系统配置
 func ParamsAdd(key, value, remarks string) (bool, string) {
-
 	return false, "fail"
 }
