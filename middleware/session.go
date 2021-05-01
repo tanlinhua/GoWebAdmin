@@ -19,7 +19,7 @@ func CheckSession() gin.HandlerFunc {
 
 		// 1. 校验登录是否超时
 		timeOutCtr := true                         //false：无权限控制，true：启用超时·权限控制
-		timeOut := int64(24 * 3600)                // 无操作超时时间:N*小时
+		timeOut := int64(24 * 3600)                //无操作超时时间:N*小时
 		nowTime := time.Now().Unix()               //当前时间
 		loginTime := session.Get("adminLoginTime") //登录时间
 		if loginTime == nil {
