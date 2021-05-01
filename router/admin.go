@@ -78,10 +78,5 @@ func initAdmRouter(e *gin.Engine) {
 		auth.GET("params/del", admin.ParamsDelete)     //删
 		auth.POST("params/update", admin.ParamsUpdate) //改
 		auth.GET("params/get", admin.ParamsGet)        //查
-
-		// demo 👇
-		auth.GET("demo1", admin.Form)
-		auth.GET("demo2", admin.Users)
-		auth.GET("demo3", admin.Operaterule)
 	}
 }
