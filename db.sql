@@ -14,7 +14,7 @@ CREATE TABLE `go_admin` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='管理员表';
 
 INSERT INTO `go_admin` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '0', '1', '2020-12-12 00:00:00', '2020-12-12 00:00:00', null, null);
-INSERT INTO `go_admin` VALUES ('2', 'yunying01', 'e10adc3949ba59abbe56e057f20f883e', '1', '1', '2020-12-12 00:00:00', '2020-12-12 00:00:00', null, null);
+INSERT INTO `go_admin` VALUES ('2', 'test1', 'e10adc3949ba59abbe56e057f20f883e', '1', '1', '2020-12-12 00:00:00', '2020-12-12 00:00:00', null, null);
 
 -- 角色表
 DROP TABLE IF EXISTS `go_role`;
