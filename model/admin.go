@@ -158,3 +158,16 @@ func AdminCpw(adminId int, pwd1, pwd2, pwd3 string) (result bool, msg string) {
 	}
 	return true, "修改成功"
 }
+
+// 检测用户状态
+func AdminStatusIsNormal(id int) (bool, string) {
+	var admin Admin
+	err := db.Select("status").Where("id=?", id).Find(&admin).Error
+	if err != nil {
+		return false, err.Error()
+	}
+	if admin.Status == 1 {
+		return true, "启用"
+	}
+	return false, "账户已禁用"
+}

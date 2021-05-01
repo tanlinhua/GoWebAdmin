@@ -29,7 +29,6 @@ func CheckSession() gin.HandlerFunc {
 		if calcTime > timeOut && timeOutCtr {
 			c.Redirect(http.StatusFound, "login")
 			c.Abort()
-			return
 		} else {
 			session.Set("adminLoginTime", time.Now().Unix())
 			session.Save()
@@ -40,7 +39,6 @@ func CheckSession() gin.HandlerFunc {
 		if utils.Empty(adminId) {
 			c.Redirect(http.StatusFound, "login")
 			c.Abort()
-			return
 		}
 		if adminId != config.AdminId { //管理员ID不受权限约束
 			ok, msg := checkAdminPermission(adminId.(int), c.Request.RequestURI, c.Request.Method)
@@ -49,6 +47,14 @@ func CheckSession() gin.HandlerFunc {
 				c.Abort()
 			}
 		}
+
+		// 3.校验用户状态
+		normal, cmsg := model.AdminStatusIsNormal(adminId.(int))
+		if !normal {
+			response.New(c).Error(-1, cmsg)
+			c.Abort()
+		}
+
 		c.Set("admin_id", adminId)
 		c.Set("adminName", session.Get("adminName"))
 		c.Next()
