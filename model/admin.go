@@ -82,15 +82,20 @@ func AdmUpdate(data *Admin) (bool, string) {
 	return true, "success"
 }
 
+type AdminGetResult struct {
+	Admin
+	RoleName string `json:"role_name"`
+}
+
 // 查
-func AdminGet(page, limit int, search string) (*[]Admin, int) {
+func AdminGet(page, limit int, search string) (*[]AdminGetResult, int) {
 	var total int
-	var data []Admin
+	var data []AdminGetResult
 	Db := db
 
-	Db = Db.Where("role!=?", 0) //0为内置超级管理员
+	Db = Db.Model(&Admin{}).Where("role!=?", 0) //0为内置超级管理员
 
-	Db.Model(&Admin{}).Count(&total) //1.查询总数
+	Db.Count(&total) //1.查询总数
 
 	if len(search) > 0 {
 		Db = Db.Where("`user_name` LIKE ?", "%"+search+"%")
@@ -100,7 +105,11 @@ func AdminGet(page, limit int, search string) (*[]Admin, int) {
 		Db = Db.Limit(limit).Offset((page - 1) * limit)
 	}
 
-	err := Db.Find(&data).Error //2.查询数据
+	Db = Db.Select("go_admin.id,user_name,role,role_name,created_at,updated_at,last_login_time,last_login_ip,status")
+	Db = Db.Joins("left join go_role on go_admin.role=go_role.id")
+	Db = Db.Order("go_admin.id asc")
+
+	err := Db.Scan(&data).Error //2.查询数据
 	if err != nil {
 		trace.Error("AdminGet.err:" + err.Error())
 	}
