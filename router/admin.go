@@ -66,11 +66,8 @@ func initAdmRouter(e *gin.Engine) {
 		auth.GET("role/get", admin.RoleGet)        //查
 
 		// 权限管理
-		auth.GET("per/view", admin.PermissionView)      //view
-		auth.POST("per/add", admin.PermissionAdd)       //增
-		auth.GET("per/del", admin.PermissionDel)        //删
-		auth.POST("per/update", admin.PermissionUpdate) //改
-		auth.GET("per/get", admin.PermissionGet)        //查
+		auth.GET("per/view", admin.PermissionView) //view
+		auth.GET("per/get", admin.PermissionGet)   //查
 
 		// 参数配置
 		auth.GET("params/view", admin.ParamsView)      //view

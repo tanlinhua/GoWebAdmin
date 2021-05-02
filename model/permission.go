@@ -57,3 +57,25 @@ func PerIdByUriMethod(uri, method string) int {
 // 改
 
 // 查
+func PermissionGet(page, limit int, search string) (*[]Permission, int) {
+	var total int
+	var data []Permission
+	Db := db
+
+	Db.Model(&Permission{}).Count(&total) //1.查询总数
+
+	if len(search) > 0 {
+		Db = Db.Where("`name` LIKE ?", "%"+search+"%")
+	}
+
+	if page > 0 && limit > 0 {
+		Db = Db.Limit(limit).Offset((page - 1) * limit)
+	}
+
+	err := Db.Find(&data).Error //2.查询数据
+	if err != nil {
+		trace.Error("Permission.err:" + err.Error())
+	}
+
+	return &data, total
+}
