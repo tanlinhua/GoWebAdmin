@@ -1,17 +1,193 @@
 {{define "role/index.html"}}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../assets/css/layui.css">
+    <link rel="stylesheet" href="../../assets/css/view.css" />
+    <link rel="icon" href="/favicon.ico">
+    <title>角色管理</title>
 </head>
 
-<body>
-    role/index.html
+<body class="layui-view-body">
+    <div class="layui-content">
+
+        <div class="layui-page-header">
+            <div class="pagewrap">
+                <span class="layui-breadcrumb">
+                    <a href="">首页</a>
+                    <a href="">权限配置</a>
+                    <a><cite>角色管理</cite></a>
+                </span>
+            </div>
+        </div>
+
+        <div class="layui-row">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div class="form-box">
+
+                        <div class="layui-form layui-form-item">
+                            <div class="layui-inline">
+                                <div class="layui-form-mid">名称:</div>
+                                <div class="layui-input-inline">
+                                    <input type="text" placeholder="支持模糊查询" autocomplete="off" class="layui-input" id="searchKey" name="searchKey">
+                                </div>
+                                <button class="layui-btn layui-btn-blue" onclick="return false;" data-type="reload" id="btn_search">查询</button>
+                                <button onclick="javascript:location.reload();" class="layui-btn layui-btn-primary">刷新</button>
+                            </div>
+                        </div>
+
+                        <table id="table_role_id" lay-filter="table_role_id"></table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 行工具栏 -->
+    <script type="text/html" id="barTpl">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
+
 </body>
+
+<script src="../../assets/layui.all.js"></script>
+<script>
+    var element = layui.element;
+    var table = layui.table;
+    var form = layui.form;
+
+    //表格渲染
+    table.render({
+        elem: '#table_role_id',
+        url: '/admin/role/get',
+        cols: [[
+            { field: 'id', title: 'ID', sort: true },
+            { field: 'role_name', title: '角色名称', edit: 'text' },
+            { field: 'role_desc', title: '描述', },
+            { field: 'per_id', title: '所有权限ids' },
+            { fixed: 'right', title: '操作', toolbar: '#barTpl' }
+        ]],
+        page: true,
+        limits: [10, 20, 50, 100, 500],
+        limit: 14,
+        id: 'table_role_r_id',
+    });
+
+    //查询并表格重载
+    var $ = layui.$, active = {
+        reload: function () {
+            var searchKey = $('#searchKey');
+            let currpage = $('.layui-laypage-em').next().text(); //当前页
+            //执行重载
+            table.reload('table_role_r_id', {
+                page: {
+                    curr: currpage
+                }
+                , where: {
+                    search: searchKey.val() //附加检索条件
+                }
+            });
+        }
+    };
+    $('#btn_search').on('click', function () {
+        var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+    });
+
+    //监听单元格编辑
+    table.on('edit(table_role_id)', function (obj) {
+        var val = obj.value       //修改后的值
+            , data = obj.data       //所在行所有键值
+            , field = obj.field;    //字段名
+
+        $.ajax({
+            url: "/admin/role/update",
+            type: "POST",
+            dataType: "json",
+            data: { id: data.id, value: val },
+            success: function (result) {
+                if (result.code == 0) {
+                    layer.msg("成功");
+                    reloadTable();
+                } else {
+                    layer.msg(result.msg);
+                }
+            },
+            error: function () {
+                layer.msg("系统异常！");
+            }
+        });
+    });
+
+    //监听行工具事件
+    table.on('tool(table_role_id)', function (obj) {
+        var data = obj.data;
+        if (obj.event === 'del') {
+            layer.confirm('真的删除么', function (index) {
+                $.ajax({
+                    url: "/admin/role/del",
+                    type: "GET",
+                    dataType: "json",
+                    data: { id: data.id },
+                    success: function (result) {
+                        if (result.code == 0) {
+                            layer.msg("成功")
+                            reloadTable();
+                        } else {
+                            layer.msg(result.msg);
+                        }
+                    },
+                    error: function () {
+                        layer.msg("系统异常！");
+                    }
+                });
+            });
+        } else if (obj.event === 'edit') {
+            layer.prompt({
+                formType: 2,
+                title: '修改值',
+                value: data.value
+            }, function (val, index) {
+                $.ajax({
+                    url: "/admin/role/update",
+                    type: "POST",
+                    dataType: "json",
+                    data: { id: data.id, value: val },
+                    success: function (result) {
+                        if (result.code == 0) {
+                            layer.msg("修改成功");
+                            reloadTable();
+                        } else {
+                            layer.msg(result.msg);
+                        }
+                    },
+                    error: function () {
+                        layer.msg("系统异常！");
+                    }
+                });
+                layer.close(index);
+            });
+        }
+    });
+
+    //重载表格
+    function reloadTable() {
+        let currpage = $('.layui-laypage-em').next().text();
+        table.reload('table_role_r_id', {
+            page: {
+                curr: currpage
+            }
+        });
+    }
+</script>
 
 </html>
 {{end}}
