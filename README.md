@@ -25,6 +25,8 @@
     + ps -ef|grep main
     + ->kill -9 pid
 
++ 如何优雅的更新go gin项目
+
 + 并发相关
     + sync.WaitGroup channel
     + https://blog.csdn.net/m0_37422289/article/details/105328796
