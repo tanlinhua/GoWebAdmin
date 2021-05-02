@@ -10,7 +10,7 @@ type Role struct {
 	PerId    string `json:"per_id"`
 }
 
-// 根据adminId得到PerId
+// 根据adminId获取PerId
 func RoleGetPerIdsByAdminId(admId int) string {
 	type result struct{ PerId string }
 	var r result
@@ -21,6 +21,17 @@ func RoleGetPerIdsByAdminId(admId int) string {
 		trace.Error("RoleGetPerIdsByAdminId.Error=" + err.Error())
 	}
 	return r.PerId
+}
+
+// 根据roleId获取PerId
+func RoleGetPerIdsByRoleId(roleId int) string {
+	var result Role
+	err := db.Where("id=?", roleId).Find(&result).Error
+	if err != nil {
+		trace.Error("RoleGetPerIdsByRoleId.Error=" + err.Error())
+		return "1"
+	}
+	return result.PerId
 }
 
 // 增

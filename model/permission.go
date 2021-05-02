@@ -2,6 +2,7 @@ package model
 
 import (
 	"strconv"
+	"strings"
 
 	"github.com/tanlinhua/go-web-admin/pkg/trace"
 	"github.com/tanlinhua/go-web-admin/pkg/utils"
@@ -18,12 +19,51 @@ type Permission struct {
 }
 
 // 权限菜单
-type PerMenuData struct {
+type PerData struct {
+	Id       int       `json:"id"`
+	Name     string    `json:"title"`
+	Checked  bool      `json:"checked"`
+	Spread   bool      `json:"spread"`
+	Children []PerData `json:"children"`
 }
 
-// 获取权限内的菜单数据
+// 获取后台用户权限内的菜单数据
 func PerMenuDataByAdmId(adminId int) {
-	//获取角色ID,获取该角色拥有的菜单权限,赋值给页面进行{{range $i, $v := .slice}} {{end}}
+	//获取角色ID
+	//获取该角色拥有的菜单权限 PerMenuDataByRoleId ↓
+	//赋值给页面进行{{range $i, $v := .slice}} {{end}}
+}
+
+// 获取指定角色ID的菜单数据
+func PerMenuDataByRoleId(roleId int) (bool, *[]PerData) {
+	var menu []PerData
+
+	// 查询角色ids
+	ids := RoleGetPerIdsByRoleId(roleId)
+
+	err := db.Model(&Permission{}).Select("id,name").Where("pid=?", 0).Scan(&menu).Error
+	if err != nil {
+		return false, nil
+	}
+	for index1, item1 := range menu {
+		if find := strings.Contains(ids, strconv.Itoa(item1.Id)); find {
+			menu[index1].Checked = true
+		}
+	}
+	for index2, item2 := range menu {
+		err := db.Model(&Permission{}).Select("id,name").Where("pid=?", item2.Id).Scan(&menu[index2].Children).Error
+		if err != nil {
+			return false, nil
+		}
+		for index3, item3 := range menu[index2].Children {
+			menu[index2].Checked = false
+			menu[index2].Spread = true
+			if find := strings.Contains(ids, strconv.Itoa(item3.Id)); find {
+				menu[index2].Children[index3].Checked = true
+			}
+		}
+	}
+	return true, &menu
 }
 
 // 校验权限
@@ -51,11 +91,8 @@ func PerIdByUriMethod(uri, method string) int {
 }
 
 // 增
-
 // 删
-
 // 改
-
 // 查
 func PermissionGet(page, limit int, search string) (*[]Permission, int) {
 	var total int

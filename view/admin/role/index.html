@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="../../assets/css/layui.css">
+    <link rel="stylesheet" href="//unpkg.com/layui@2.6.5/dist/css/layui.css">
     <link rel="stylesheet" href="../../assets/css/view.css" />
     <link rel="icon" href="/favicon.ico">
     <title>角色管理</title>
@@ -37,6 +37,7 @@
                                     <input type="text" placeholder="支持模糊查询" autocomplete="off" class="layui-input" id="searchKey" name="searchKey">
                                 </div>
                                 <button class="layui-btn layui-btn-blue" onclick="return false;" data-type="reload" id="btn_search">查询</button>
+                                <button class="layui-btn layui-btn-green" onclick="addRole();return false;" id="addBtn">新增</button>
                                 <button onclick="javascript:location.reload();" class="layui-btn layui-btn-primary">刷新</button>
                             </div>
                         </div>
@@ -52,17 +53,22 @@
 
     <!-- 行工具栏 -->
     <script type="text/html" id="barTpl">
-        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑权限</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     </script>
 
+    <!-- 新增视图 -->
+    <div id="layer_view" style="margin-left: 20%;margin-top: 5%;" hidden>
+        <input type="text" id="layer_view_id" name="id" hidden>
+        <div id="layer_view_tree" class="demo-tree-more"></div>
+    </div>
+
 </body>
 
-<script src="../../assets/layui.all.js"></script>
+<script src="//unpkg.com/layui@2.6.5/dist/layui.js"></script>
 <script>
-    var element = layui.element;
-    var table = layui.table;
-    var form = layui.form;
+    var element = layui.element, table = layui.table, form = layui.form;
+    var tree = layui.tree, util = layui.util
 
     //表格渲染
     table.render({
@@ -70,9 +76,8 @@
         url: '/admin/role/get',
         cols: [[
             { field: 'id', title: 'ID', sort: true },
-            { field: 'role_name', title: '角色名称', edit: 'text' },
+            { field: 'role_name', title: '角色名称' },
             { field: 'role_desc', title: '描述', },
-            { field: 'per_id', title: '所有权限ids' },
             { fixed: 'right', title: '操作', toolbar: '#barTpl' }
         ]],
         page: true,
@@ -102,31 +107,6 @@
         active[type] ? active[type].call(this) : '';
     });
 
-    //监听单元格编辑
-    table.on('edit(table_role_id)', function (obj) {
-        var val = obj.value       //修改后的值
-            , data = obj.data       //所在行所有键值
-            , field = obj.field;    //字段名
-
-        $.ajax({
-            url: "/admin/role/update",
-            type: "POST",
-            dataType: "json",
-            data: { id: data.id, value: val },
-            success: function (result) {
-                if (result.code == 0) {
-                    layer.msg("成功");
-                    reloadTable();
-                } else {
-                    layer.msg(result.msg);
-                }
-            },
-            error: function () {
-                layer.msg("系统异常！");
-            }
-        });
-    });
-
     //监听行工具事件
     table.on('tool(table_role_id)', function (obj) {
         var data = obj.data;
@@ -151,29 +131,68 @@
                 });
             });
         } else if (obj.event === 'edit') {
-            layer.prompt({
-                formType: 2,
-                title: '修改值',
-                value: data.value
-            }, function (val, index) {
-                $.ajax({
-                    url: "/admin/role/update",
-                    type: "POST",
-                    dataType: "json",
-                    data: { id: data.id, value: val },
-                    success: function (result) {
-                        if (result.code == 0) {
-                            layer.msg("修改成功");
-                            reloadTable();
-                        } else {
-                            layer.msg(result.msg);
+            index = layer.open({
+                type: 1,
+                title: "编辑权限",
+                area: ['300px', '600px'],
+                shade: 0,
+                anim: 2,
+                scrollbar: false,
+                maxmin: true,
+                content: $('#layer_view'),
+                btn: ['提交', '取消'],
+                success: function (layero, index) {
+                    $("#layer_view_id").val(data.id);
+                    $.ajax({
+                        url: "/admin/per/get",
+                        type: "GET",
+                        dataType: "json",
+                        data: { roleid: data.id },
+                        success: function (result) {
+                            if (result.code == 0) {
+                                tree.render({
+                                    elem: "#layer_view_tree",
+                                    data: result.data,
+                                    showCheckbox: true,  //是否显示复选框
+                                    id: "tree_id_1"
+                                });
+                            } else {
+                                layer.msg(result.msg);
+                            }
+                        },
+                        error: function () {
+                            layer.msg("系统异常！");
                         }
-                    },
-                    error: function () {
-                        layer.msg("系统异常！");
-                    }
-                });
-                layer.close(index);
+                    });
+                },
+                yes: function (index, layero) {
+                    var roleid = $("#layer_view_id").val()
+                    var checkedData = tree.getChecked("tree_id_1");
+                    console.log("roleID=" + roleid)
+                    console.log("checkedData=" + JSON.stringify(checkedData));
+                    return;
+
+                    $.ajax({
+                        url: "/admin/role/update",
+                        type: "POST",
+                        dataType: "json",
+                        data: $('#layer_view_form').serialize(),
+                        success: function (result) {
+                            if (result.code == 0) {
+                                layer.msg("修改成功");
+                                layer.close(index);
+                                reloadTable();
+                                return
+                            }
+                            layer.msg(result.msg);
+                        },
+                        error: function () {
+                            layer.msg("系统异常！");
+                        }
+                    });
+                },
+                end: function () {
+                },
             });
         }
     });
