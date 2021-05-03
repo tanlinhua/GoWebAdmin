@@ -91,8 +91,14 @@ func PerIdByUriMethod(uri, method string) int {
 }
 
 // 增
+func PermissionAdd() {}
+
 // 删
+func PermissionDel() {}
+
 // 改
+func PermissionUpdate() {}
+
 // 查
 func PermissionGet(page, limit int, search string) (*[]Permission, int) {
 	var total int
