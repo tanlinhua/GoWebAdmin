@@ -43,8 +43,7 @@
 
 
 ## TODO
-+ 1.admin/role/per -> crud(https://www.17sucai.com/preview/1528155/2019-03-31/ladmin/index.html)
-+ 2.admin/main的菜单根据权限列表来展示
++ admin/main的菜单根据权限列表来展示
 + xss/sql注入/csrf (https://github.com/xinliangnote/PHP/blob/master/04-PHP%20WEB%20%E5%AE%89%E5%85%A8%E9%98%B2%E5%BE%A1.md)
 + bug -> admin/main 刷新丢失已经打开的tab
 + golang googleauthenticator
