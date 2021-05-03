@@ -53,7 +53,7 @@
 
     <!-- 行工具栏 -->
     <script type="text/html" id="barTpl">
-        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑权限</a>
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     </script>
 
@@ -150,7 +150,7 @@
             index = layer.open({
                 type: 1,
                 title: "编辑权限",
-                area: ['300px', '600px'],
+                area: ['350px', '600px'],
                 shade: 0,
                 anim: 2,
                 scrollbar: false,
@@ -159,22 +159,23 @@
                 btn: ['提交', '取消'],
                 success: function (layero, index) {
                     $("#layer_view_id").val(data.id);
-                    $("#role_name_div").hide();
-                    $("#role_desc_div").hide();
+                    $("#role_name").val(data.role_name);
+                    $("#role_desc").val(data.role_desc);
                     initTree(data.id);
                 },
                 yes: function (index, layero) {
                     var roleid = $("#layer_view_id").val()
+                    var role_name = $("#role_name").val()
+                    var role_desc = $("#role_desc").val()
                     var checkedData = tree.getChecked("tree_id_1");
-                    console.log("roleID=" + roleid)
-                    console.log("checkedData=" + JSON.stringify(checkedData));
-                    return;
+                    var per_id = getTreeCheckedIds(checkedData);
+                    per_id = per_id.slice(0, per_id.length - 1)
 
                     $.ajax({
                         url: "/admin/role/update",
                         type: "POST",
                         dataType: "json",
-                        data: $('#layer_view_form').serialize(),
+                        data: { id: roleid, role_name: role_name, role_desc: role_desc, per_id: per_id },
                         success: function (result) {
                             if (result.code == 0) {
                                 layer.msg("修改成功");
@@ -235,23 +236,19 @@
             content: $('#layer_view'),
             btn: ['提交', '取消'],
             success: function (layero, index) {
-                $("#role_name_div").show();
-                $("#role_desc_div").show();
                 initTree(0);
             },
             yes: function (index, layero) {
                 var role_name = $("#role_name").val();
                 var role_desc = $("#role_desc").val();
                 var checkedData = tree.getChecked("tree_id_1");
-                console.log(role_name);
-                console.log(role_desc);
-                console.log("checkedData=" + JSON.stringify(checkedData));
-                return;
+                var per_id = getTreeCheckedIds(checkedData);
+                per_id = per_id.slice(0, per_id.length - 1)
                 $.ajax({
                     url: "/admin/role/add",
                     type: "POST",
                     dataType: "json",
-                    data: $('#layer_view_form').serialize(),
+                    data: { role_name: role_name, role_desc: role_desc, per_id: per_id },
                     success: function (result) {
                         if (result.code == 0) {
                             layer.msg("新增成功");
@@ -272,6 +269,21 @@
             },
         });
     };
+
+    function getTreeCheckedIds(json) {
+        var ids = "";
+        for (var index in json) {
+            pid = json[index].id;
+            ids += pid + ",";
+
+            if (json[index].children != undefined && json[index].children.length != 0) {
+                cid = getTreeCheckedIds(json[index].children);
+                ids += cid;
+            }
+
+        }
+        return ids;
+    }
 
     //重载表格
     function reloadTable() {
