@@ -29,7 +29,7 @@ func RoleGetPerIdsByRoleId(roleId int) string {
 	err := db.Where("id=?", roleId).Find(&result).Error
 	if err != nil {
 		trace.Error("RoleGetPerIdsByRoleId.Error=" + err.Error())
-		return "1"
+		return ""
 	}
 	return result.PerId
 }

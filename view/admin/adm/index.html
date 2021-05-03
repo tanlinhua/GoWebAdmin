@@ -243,7 +243,7 @@
     table.on('tool(dataDable)', function (obj) {
         var data = obj.data;
         if (obj.event === 'del') {
-            layer.confirm('真的删除么', function (index) {
+            layer.confirm('真的删除吗?', function (index) {
                 $.ajax({
                     url: "/admin/adm/del",
                     type: "GET",
