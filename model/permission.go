@@ -2,7 +2,6 @@ package model
 
 import (
 	"strconv"
-	"strings"
 
 	"github.com/tanlinhua/go-web-admin/pkg/trace"
 	"github.com/tanlinhua/go-web-admin/pkg/utils"
@@ -40,13 +39,14 @@ func PerMenuDataByRoleId(roleId int) (bool, *[]PerData) {
 
 	// 查询角色ids
 	ids := RoleGetPerIdsByRoleId(roleId)
+	idsArr := utils.Explode(",", ids)
 
 	err := db.Model(&Permission{}).Select("id,name").Where("pid=?", 0).Scan(&menu).Error
 	if err != nil {
 		return false, nil
 	}
 	for index1, item1 := range menu {
-		if find := strings.Contains(ids, strconv.Itoa(item1.Id)); find {
+		if find := utils.In_array(strconv.Itoa(item1.Id), idsArr); find {
 			menu[index1].Checked = true
 		}
 	}
@@ -58,7 +58,7 @@ func PerMenuDataByRoleId(roleId int) (bool, *[]PerData) {
 		for index3, item3 := range menu[index2].Children {
 			menu[index2].Checked = false
 			menu[index2].Spread = true
-			if find := strings.Contains(ids, strconv.Itoa(item3.Id)); find {
+			if find := utils.In_array(strconv.Itoa(item3.Id), idsArr); find {
 				menu[index2].Children[index3].Checked = true
 			}
 		}
