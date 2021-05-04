@@ -21,16 +21,23 @@ type Permission struct {
 type PerData struct {
 	Id       int       `json:"id"`
 	Name     string    `json:"title"`
+	Uri      string    `json:"uri"`
 	Checked  bool      `json:"checked"`
 	Spread   bool      `json:"spread"`
 	Children []PerData `json:"children"`
 }
 
 // 获取后台用户权限内的菜单数据
-func PerMenuDataByAdmId(adminId int) {
-	//获取角色ID
-	//获取该角色拥有的菜单权限 PerMenuDataByRoleId ↓
-	//赋值给页面进行{{range $i, $v := .slice}} {{end}}
+func PerMenuDataByAdmId(adminId int) *[]PerData {
+	roleId := AdminGetRoleIdByAdmId(adminId) //获取角色ID
+	if -1 == roleId {
+		return nil
+	}
+	ok, data := PerMenuDataByRoleId(roleId)
+	if ok {
+		return data
+	}
+	return nil
 }
 
 // 获取指定角色ID的菜单数据
@@ -41,7 +48,7 @@ func PerMenuDataByRoleId(roleId int) (bool, *[]PerData) {
 	ids := RoleGetPerIdsByRoleId(roleId)
 	idsArr := utils.Explode(",", ids)
 
-	err := db.Model(&Permission{}).Select("id,name").Where("pid=?", 0).Scan(&menu).Error
+	err := db.Model(&Permission{}).Select("id,name,uri").Where("pid=?", 0).Scan(&menu).Error
 	if err != nil {
 		return false, nil
 	}
@@ -51,7 +58,7 @@ func PerMenuDataByRoleId(roleId int) (bool, *[]PerData) {
 		}
 	}
 	for index2, item2 := range menu {
-		err := db.Model(&Permission{}).Select("id,name").Where("pid=?", item2.Id).Scan(&menu[index2].Children).Error
+		err := db.Model(&Permission{}).Select("id,name,uri").Where("pid=?", item2.Id).Scan(&menu[index2].Children).Error
 		if err != nil {
 			return false, nil
 		}

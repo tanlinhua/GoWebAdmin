@@ -41,9 +41,10 @@ func Captcha(c *gin.Context) {
 // 后台首页
 func AdminMain(c *gin.Context) {
 	adminName, _ := c.Get("adminName")
-	admin_id, _ := c.Get("admin_id")
-	model.PerMenuDataByAdmId(admin_id.(int))
-	c.HTML(http.StatusOK, "main/main.html", gin.H{"adminName": adminName})
+	adminId, _ := c.Get("admin_id")
+	menuData := model.PerMenuDataByAdmId(adminId.(int))
+
+	c.HTML(http.StatusOK, "main/main.html", gin.H{"adminName": adminName, "menuData": menuData})
 }
 
 // 控制台页面
