@@ -180,3 +180,13 @@ func AdminStatusIsNormal(id int) (bool, string) {
 	}
 	return false, "账户已禁用"
 }
+
+// 根据admId获取roleId
+func AdminGetRoleIdByAdmId(admId int) int {
+	var admin Admin
+	err := db.Select("role").Where("id=?", admId).Find(&admin).Error
+	if err != nil {
+		return -1
+	}
+	return admin.Role
+}
