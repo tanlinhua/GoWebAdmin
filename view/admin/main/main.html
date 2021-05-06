@@ -5,31 +5,33 @@
 {{$perView := false}} {{$perUser := false}} {{$perRole := false}} {{$perPer := false}} {{/*权限配置*/}}
 {{$sysView := false}} {{$params := false}} {{/*系统配置*/}}
 
-{{ range $k, $v := .menuData }}
-	{{ if eq $v.Uri "/admin/cpw" }} {{ if eq $v.Checked true }} {{$cpw = true}} {{ end }} {{ end }}
-	{{ if eq $v.Uri "/admin/console" }} {{ if eq $v.Checked true }} {{$console = true}} {{ end }} {{ end }}
+{{ if ne .adminId .cAdmId}}
+	{{ range $k, $v := .menuData }}
+		{{ if eq $v.Uri "/admin/cpw" }} {{ if eq $v.Checked true }} {{$cpw = true}} {{ end }} {{ end }}
+		{{ if eq $v.Uri "/admin/console" }} {{ if eq $v.Checked true }} {{$console = true}} {{ end }} {{ end }}
 
-	{{/*子菜单*/}}
-	{{ range $v.Children }}
-		{{ if eq .Uri "/admin/adm/add"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perUser = true }} {{ end }} {{ end }}
-		{{ if eq .Uri "/admin/adm/del"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perUser = true }} {{ end }} {{ end }}
-		{{ if eq .Uri "/admin/adm/update"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perUser = true }} {{ end }} {{ end }}
-		{{ if eq .Uri "/admin/adm/get"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perUser = true }} {{ end }} {{ end }}
+		{{/*子菜单*/}}
+		{{ range $v.Children }}
+			{{ if eq .Uri "/admin/adm/add"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perUser = true }} {{ end }} {{ end }}
+			{{ if eq .Uri "/admin/adm/del"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perUser = true }} {{ end }} {{ end }}
+			{{ if eq .Uri "/admin/adm/update"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perUser = true }} {{ end }} {{ end }}
+			{{ if eq .Uri "/admin/adm/get"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perUser = true }} {{ end }} {{ end }}
 
-		{{ if eq .Uri "/admin/role/add"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perRole = true }} {{ end }} {{ end }}
-		{{ if eq .Uri "/admin/role/del"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perRole = true }} {{ end }} {{ end }}
-		{{ if eq .Uri "/admin/role/update"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perRole = true }} {{ end }} {{ end }}
-		{{ if eq .Uri "/admin/role/get"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perRole = true }} {{ end }} {{ end }}
+			{{ if eq .Uri "/admin/role/add"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perRole = true }} {{ end }} {{ end }}
+			{{ if eq .Uri "/admin/role/del"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perRole = true }} {{ end }} {{ end }}
+			{{ if eq .Uri "/admin/role/update"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perRole = true }} {{ end }} {{ end }}
+			{{ if eq .Uri "/admin/role/get"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perRole = true }} {{ end }} {{ end }}
 
-		{{ if eq .Uri "/admin/per/add"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perPer = true }} {{ end }} {{ end }}
-		{{ if eq .Uri "/admin/per/del"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perPer = true }} {{ end }} {{ end }}
-		{{ if eq .Uri "/admin/per/update"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perPer = true }} {{ end }} {{ end }}
-		{{ if eq .Uri "/admin/per/get"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perPer = true }} {{ end }} {{ end }}
+			{{ if eq .Uri "/admin/per/add"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perPer = true }} {{ end }} {{ end }}
+			{{ if eq .Uri "/admin/per/del"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perPer = true }} {{ end }} {{ end }}
+			{{ if eq .Uri "/admin/per/update"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perPer = true }} {{ end }} {{ end }}
+			{{ if eq .Uri "/admin/per/get"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perPer = true }} {{ end }} {{ end }}
 
-		{{ if eq .Uri "/admin/params/add"}} {{ if eq .Checked true}} {{ $sysView = true }} {{$params = true }} {{ end }} {{ end }}
-		{{ if eq .Uri "/admin/params/del"}} {{ if eq .Checked true}} {{ $sysView = true }} {{$params = true }} {{ end }} {{ end }}
-		{{ if eq .Uri "/admin/params/update"}} {{ if eq .Checked true}} {{ $sysView = true }} {{$params = true }} {{ end }} {{ end }}
-		{{ if eq .Uri "/admin/params/get"}} {{ if eq .Checked true}} {{ $sysView = true }} {{$params = true }} {{ end }} {{ end }}
+			{{ if eq .Uri "/admin/params/add"}} {{ if eq .Checked true}} {{ $sysView = true }} {{$params = true }} {{ end }} {{ end }}
+			{{ if eq .Uri "/admin/params/del"}} {{ if eq .Checked true}} {{ $sysView = true }} {{$params = true }} {{ end }} {{ end }}
+			{{ if eq .Uri "/admin/params/update"}} {{ if eq .Checked true}} {{ $sysView = true }} {{$params = true }} {{ end }} {{ end }}
+			{{ if eq .Uri "/admin/params/get"}} {{ if eq .Checked true}} {{ $sysView = true }} {{$params = true }} {{ end }} {{ end }}
+		{{ end }}
 	{{ end }}
 {{ end }}
 
