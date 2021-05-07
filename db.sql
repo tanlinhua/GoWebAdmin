@@ -23,41 +23,45 @@ CREATE TABLE `go_role` (
   `role_name` varchar(40) NOT NULL COMMENT '角色名称',
   `role_desc` varchar(40) DEFAULT NULL COMMENT '角色描述',
   `per_id` varchar(255) DEFAULT NULL COMMENT '权限ids: 1,2,5'
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='角色表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='角色表';
 
-INSERT INTO `go_role` VALUES ('1', '运营', '运营部门', '1,2,3,16,17,18,19,20');
+INSERT INTO `go_role` VALUES ('1', '经理', '经理角色(这是一些描述)', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22');
+INSERT INTO `go_role` VALUES ('2', '运营', '运营角色(这是一些描述)', '1,2,3,17,18,21,22');
 
 -- 角色权限表
 DROP TABLE IF EXISTS `go_permission`;
 CREATE TABLE `go_permission` (
   `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(30) NOT NULL COMMENT '权限名称',
-  `pid` int(11) NOT NULL DEFAULT 0 COMMENT '父id',
+  `pid` int(11) NOT NULL DEFAULT '0' COMMENT '父id',
   `uri` varchar(50) NOT NULL DEFAULT '' COMMENT 'API路由',
   `method` varchar(10) NOT NULL DEFAULT '' COMMENT '路由请求方法(GET/POST)',
-  `level` int NOT NULL DEFAULT '1' COMMENT '权限等级[1,2]'
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='权限表';
+  `icon` varchar(10) DEFAULT NULL COMMENT '主菜单图标',
+  `level` int(11) NOT NULL DEFAULT '1' COMMENT '权限等级[1,2,3]'
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COMMENT='权限表';
 
-INSERT INTO `go_permission` VALUES ('1', '后台首页', '0', '/admin/main', 'GET', '1');
-INSERT INTO `go_permission` VALUES ('2', '首页控制台', '0', '/admin/console', 'GET', '1');
-INSERT INTO `go_permission` VALUES ('3', '修改密码', '0', '/admin/cpw', 'POST', '1');
-INSERT INTO `go_permission` VALUES ('4', '用户管理', '0', '/admin/adm/view', 'GET', '1');
-INSERT INTO `go_permission` VALUES ('5', '增加用户', '4', '/admin/adm/add', 'POST', '2');
-INSERT INTO `go_permission` VALUES ('6', '删除用户', '4', '/admin/adm/del', 'GET', '2');
-INSERT INTO `go_permission` VALUES ('7', '修改用户', '4', '/admin/adm/update', 'POST', '2');
-INSERT INTO `go_permission` VALUES ('8', '查询用户', '4', '/admin/adm/get', 'GET', '2');
-INSERT INTO `go_permission` VALUES ('9', '角色管理', '0', '/admin/role/view', 'GET', '1');
-INSERT INTO `go_permission` VALUES ('10', '增加角色', '9', '/admin/role/add', 'POST', '2');
-INSERT INTO `go_permission` VALUES ('11', '删除角色', '9', '/admin/role/del', 'GET', '2');
-INSERT INTO `go_permission` VALUES ('12', '修改角色', '9', '/admin/role/update', 'POST', '2');
-INSERT INTO `go_permission` VALUES ('13', '查询角色', '9', '/admin/role/get', 'GET', '2');
-INSERT INTO `go_permission` VALUES ('14', '权限管理', '0', '/admin/per/view', 'GET', '1');
-INSERT INTO `go_permission` VALUES ('15', '查询权限', '14', '/admin/per/get', 'GET', '2');
-INSERT INTO `go_permission` VALUES ('16', '系统参数', '0', '/admin/params/view', 'GET', '1');
-INSERT INTO `go_permission` VALUES ('17', '增加参数', '16', '/admin/params/add', 'POST', '2');
-INSERT INTO `go_permission` VALUES ('18', '删除参数', '16', '/admin/params/del', 'GET', '2');
-INSERT INTO `go_permission` VALUES ('19', '修改参数', '16', '/admin/params/update', 'POST', '2');
-INSERT INTO `go_permission` VALUES ('20', '查询参数', '16', '/admin/params/get', 'GET', '1');
+INSERT INTO `go_permission` VALUES ('1', '主页', '0', '/admin/main', 'GET', 'xe68e;', '1');
+INSERT INTO `go_permission` VALUES ('2', '控制台', '1', '/admin/console', 'GET', null, '2');
+INSERT INTO `go_permission` VALUES ('3', '修改密码', '2', '/admin/cpw', 'POST', null, '3');
+INSERT INTO `go_permission` VALUES ('4', '权限配置', '0', '', '', 'xe672;', '1');
+INSERT INTO `go_permission` VALUES ('5', '用户管理', '4', '/admin/adm/view', 'GET', null, '2');
+INSERT INTO `go_permission` VALUES ('6', '增加用户', '5', '/admin/adm/add', 'POST', null, '3');
+INSERT INTO `go_permission` VALUES ('7', '删除用户', '5', '/admin/adm/del', 'GET', null, '3');
+INSERT INTO `go_permission` VALUES ('8', '修改用户', '5', '/admin/adm/update', 'POST', null, '3');
+INSERT INTO `go_permission` VALUES ('9', '查询用户', '5', '/admin/adm/get', 'GET', null, '3');
+INSERT INTO `go_permission` VALUES ('10', '角色管理', '4', '/admin/role/view', 'GET', null, '2');
+INSERT INTO `go_permission` VALUES ('11', '增加角色', '10', '/admin/role/add', 'POST', null, '3');
+INSERT INTO `go_permission` VALUES ('12', '删除角色', '10', '/admin/role/del', 'GET', null, '3');
+INSERT INTO `go_permission` VALUES ('13', '修改角色', '10', '/admin/role/update', 'POST', null, '3');
+INSERT INTO `go_permission` VALUES ('14', '查询角色', '10', '/admin/role/get', 'GET', null, '3');
+INSERT INTO `go_permission` VALUES ('15', '权限管理', '4', '/admin/per/view', 'GET', null, '2');
+INSERT INTO `go_permission` VALUES ('16', '查询权限', '15', '/admin/per/get', 'GET', null, '3');
+INSERT INTO `go_permission` VALUES ('17', '系统配置', '0', '', '', 'xe716;', '1');
+INSERT INTO `go_permission` VALUES ('18', '系统参数', '17', '/admin/params/view', 'GET', null, '2');
+INSERT INTO `go_permission` VALUES ('19', '增加参数', '18', '/admin/params/add', 'POST', null, '3');
+INSERT INTO `go_permission` VALUES ('20', '删除参数', '18', '/admin/params/del', 'GET', null, '3');
+INSERT INTO `go_permission` VALUES ('21', '修改参数', '18', '/admin/params/update', 'POST', null, '3');
+INSERT INTO `go_permission` VALUES ('22', '查询参数', '18', '/admin/params/get', 'GET', null, '3');
 
 -- 系统配置表
 DROP TABLE IF EXISTS `go_sys_params`;

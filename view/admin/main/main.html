@@ -1,47 +1,4 @@
 {{define "main/main.html"}}
-
-{{$cpw := false}} {{/*修改密码*/}}
-{{$console := false}} {{/*控制台*/}}
-{{$perView := false}} {{$perUser := false}} {{$perRole := false}} {{$perPer := false}} {{/*权限配置*/}}
-{{$sysView := false}} {{$params := false}} {{/*系统配置*/}}
-
-{{ if ne .adminId .cAdmId}}
-	{{ range $k, $v := .menuData }}
-		{{ if eq $v.Uri "/admin/cpw" }} {{ if eq $v.Checked true }} {{$cpw = true}} {{ end }} {{ end }}
-		{{ if eq $v.Uri "/admin/console" }} {{ if eq $v.Checked true }} {{$console = true}} {{ end }} {{ end }}
-
-		{{/*子菜单*/}}
-		{{ range $v.Children }}
-			{{ if eq .Uri "/admin/adm/add"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perUser = true }} {{ end }} {{ end }}
-			{{ if eq .Uri "/admin/adm/del"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perUser = true }} {{ end }} {{ end }}
-			{{ if eq .Uri "/admin/adm/update"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perUser = true }} {{ end }} {{ end }}
-			{{ if eq .Uri "/admin/adm/get"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perUser = true }} {{ end }} {{ end }}
-
-			{{ if eq .Uri "/admin/role/add"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perRole = true }} {{ end }} {{ end }}
-			{{ if eq .Uri "/admin/role/del"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perRole = true }} {{ end }} {{ end }}
-			{{ if eq .Uri "/admin/role/update"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perRole = true }} {{ end }} {{ end }}
-			{{ if eq .Uri "/admin/role/get"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perRole = true }} {{ end }} {{ end }}
-
-			{{ if eq .Uri "/admin/per/add"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perPer = true }} {{ end }} {{ end }}
-			{{ if eq .Uri "/admin/per/del"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perPer = true }} {{ end }} {{ end }}
-			{{ if eq .Uri "/admin/per/update"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perPer = true }} {{ end }} {{ end }}
-			{{ if eq .Uri "/admin/per/get"}} {{ if eq .Checked true}} {{ $perView = true }} {{$perPer = true }} {{ end }} {{ end }}
-
-			{{ if eq .Uri "/admin/params/add"}} {{ if eq .Checked true}} {{ $sysView = true }} {{$params = true }} {{ end }} {{ end }}
-			{{ if eq .Uri "/admin/params/del"}} {{ if eq .Checked true}} {{ $sysView = true }} {{$params = true }} {{ end }} {{ end }}
-			{{ if eq .Uri "/admin/params/update"}} {{ if eq .Checked true}} {{ $sysView = true }} {{$params = true }} {{ end }} {{ end }}
-			{{ if eq .Uri "/admin/params/get"}} {{ if eq .Checked true}} {{ $sysView = true }} {{$params = true }} {{ end }} {{ end }}
-		{{ end }}
-	{{ end }}
-{{ end }}
-
-{{/*超级管理员*/}}
-{{ if eq .adminId .cAdmId}}
-	{{$cpw = true}}{{$console = true}}
-	{{$perView = true}}{{$perUser = true}}{{$perRole = true}}{{$perPer = true}}
-	{{$sysView = true}}{{$params = true}}
-{{ end }}
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 
@@ -69,9 +26,7 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">{{.adminName}}</a>
                     <dl class="layui-nav-child">
-                        {{if eq $cpw true}}
                         <dd><a id="main_cpw">修改密码</a></dd>
-                        {{end}}
                         <dd><a href="logout">退出</a></dd>
                     </dl>
                 </li>
@@ -87,54 +42,24 @@
                 </div>
                 <ul id="Nav" class="layui-nav layui-nav-tree">
 
+                    {{ range $k, $item := .menuData }}
+                    {{ if eq $item.Checked true }}
                     <li class="layui-nav-item">
                         <a href="javascript:;">
-                            <i class="layui-icon">&#xe68e;</i>
-                            <em>主页</em>
+                            <i class="layui-icon">&#{{ $item.Icon }}</i>
+                            <em>{{ $item.Name }}</em>
                         </a>
                         <dl class="layui-nav-child">
-                            {{if eq $console true}}
-                            <dd><a href="/admin/console">控制台</a></dd>
+                            {{ range $k, $v := $item.Children }}
+                            {{ if eq $v.Checked true }}
+                            <dd><a href="{{.Uri}}">{{.Name}}</a></dd>
+                            {{end}}
                             {{end}}
                         </dl>
                     </li>
-
-                    {{if eq $perView true}}
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">
-                            <i class="layui-icon">&#xe672;</i>
-                            <em>权限配置</em>
-                        </a>
-                        <dl class="layui-nav-child">
-                            {{if eq $perUser true}}
-                            <dd><a href="/admin/adm/view">用户管理</a></dd>
-                            {{end}}
-                            {{if eq $perRole true}}
-                            <dd><a href="/admin/role/view">角色管理</a></dd>
-                            {{end}}
-                            {{if eq $perPer true}}
-                            <dd><a href="/admin/per/view">权限管理</a></dd>
-                            {{end}}
-                        </dl>
-                    </li>
-                    {{end}}
-
-                    {{if eq $sysView true}}
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">
-                            <i class="layui-icon">&#xe716;</i>
-                            <em>系统配置</em>
-                        </a>
-                        <dl class="layui-nav-child">
-                            {{if eq $params true}}
-                            <dd><a href="/admin/params/view">系统参数</a></dd>
-                            {{end}}
-                        </dl>
-                    </li>
-                    {{end}}
-
+                    {{ end}}
+                    {{ end}}
                 </ul>
-
             </div>
         </div>
 
@@ -158,7 +83,6 @@
 <script src="../assets/js/index.js" data-main="home"></script>
 <script src="../assets/js/jquery-3.3.1.min.js"></script>
 <!-- 修改密码view -->
-{{if eq $cpw true}}
 <div id="main_cpw_view" style="margin: 5%;" hidden>
     <form class="layui-form layui-form-pane" id="main_cpw_form" method="post" lay-filter="example">
         <div class="layui-form-item">
@@ -181,9 +105,7 @@
         </div>
     </form>
 </div>
-{{end}}
 <!-- 修改密码 -->
-{{if eq $cpw true}}
 <script>
     var layer = layui.layer;
     var form = layui.form;
@@ -223,7 +145,6 @@
         });
     });
 </script>
-{{end}}
 
 </html>
 {{end}}

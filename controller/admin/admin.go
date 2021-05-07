@@ -9,7 +9,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/tanlinhua/go-web-admin/model"
 	"github.com/tanlinhua/go-web-admin/pkg/captcha"
-	"github.com/tanlinhua/go-web-admin/pkg/config"
 	"github.com/tanlinhua/go-web-admin/pkg/response"
 	"github.com/tanlinhua/go-web-admin/pkg/utils"
 )
@@ -45,7 +44,7 @@ func AdminMain(c *gin.Context) {
 	adminId, _ := c.Get("admin_id")
 	menuData := model.PerMenuDataByAdmId(adminId.(int)) //优化方向:直接获取对应菜单是否显示的值,放入struct中,再赋值到页面进行判断
 
-	c.HTML(http.StatusOK, "main/main.html", gin.H{"cAdmId": config.AdminId, "adminId": adminId.(int), "adminName": adminName, "menuData": menuData})
+	c.HTML(http.StatusOK, "main/main.html", gin.H{"adminName": adminName, "menuData": menuData})
 }
 
 // 控制台页面
