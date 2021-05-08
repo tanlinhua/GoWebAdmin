@@ -27,7 +27,10 @@ func initAdmMiddleware(e *gin.Engine) {
 	e.Use(middleware.Logger("admin"))          // 自定义日志记录&切割
 	store := cookie.NewStore([]byte("secret")) // sessionStore-cookie存储
 	e.Use(sessions.Sessions("cookie", store))  // session
-	// e.Use(middleware.Safe())                   //安全相关
+
+	// 安全相关
+	var xss middleware.XssMw
+	e.Use(xss.RemoveXss())
 }
 
 // 静态资源
