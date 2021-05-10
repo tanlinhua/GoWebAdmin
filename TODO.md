@@ -9,6 +9,7 @@
     + 参考:composer require "phpgangsta/googleauthenticator:dev-master"
 
 + api模块增加(go gin swagger)
+    + https://blog.csdn.net/u013068184/article/details/106687646/
 
 + go gin 项目 优雅的重启/热更新
     + https://github.com/gravityblast/fresh
