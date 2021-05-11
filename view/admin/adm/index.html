@@ -183,7 +183,7 @@
     var $ = layui.$, active = {
         reload: function () {
             var searchInput = $('#searchInput');
-            let currpage = $('.layui-laypage-em').next().text(); //当前页
+            let currpage = 1;//$('.layui-laypage-em').next().text(); //当前页
             //执行重载
             table.reload('dbTableReload', {
                 page: {
