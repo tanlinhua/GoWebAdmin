@@ -30,7 +30,28 @@
     + * hard nofile 65535
     + soft/hard前面的 * 表示所有用户
 
-> https://cdn.jsdelivr.net/gh/用户名称/仓库名称@版本号/目录  
-> https://github.com/TurboWay/imgstore/blob/master/bigscreen/corp.jpg  
-> 生成链接↓  
-> https://cdn.jsdelivr.net/gh/TurboWay/imgstore@master/bigscreen/corp.jpg  
++ jsdelivr+github cdn
+    + https://cdn.jsdelivr.net/gh/用户名称/仓库名称@版本号/目录  
+    + https://github.com/TurboWay/imgstore/blob/master/bigscreen/corp.jpg  
+    + 生成链接↓  
+    + https://cdn.jsdelivr.net/gh/TurboWay/imgstore@master/bigscreen/corp.jpg 
+
+---
+
+## TODO
++ xss/sql注入/csrf
+    + https://github.com/xinliangnote/PHP/blob/master/04-PHP%20WEB%20%E5%AE%89%E5%85%A8%E9%98%B2%E5%BE%A1.md)
+    + https://www.iquanku.com/read/over-golang/04-Web%E7%BC%96%E7%A8%8B-10-Web%E5%AE%89%E5%85%A8.md
+
++ bug -> admin/main 刷新丢失已经打开的tab
+
++ golang googleauthenticator
+    + https://blog.csdn.net/weixin_33958585/article/details/92494417
+    + 参考:composer require "phpgangsta/googleauthenticator:dev-master"
+
++ api模块增加(go gin swagger)
+    + https://blog.csdn.net/u013068184/article/details/106687646/
+
++ go gin 项目 优雅的重启/热更新
+    + https://github.com/gravityblast/fresh
+    + https://blog.csdn.net/qihoo_tech/article/details/104386331
