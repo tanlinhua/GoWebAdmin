@@ -29,3 +29,8 @@
     + * soft nofile 65535
     + * hard nofile 65535
     + soft/hard前面的 * 表示所有用户
+
+> https://cdn.jsdelivr.net/gh/用户名称/仓库名称@版本号/目录  
+> https://github.com/TurboWay/imgstore/blob/master/bigscreen/corp.jpg  
+> 生成链接↓  
+> https://cdn.jsdelivr.net/gh/TurboWay/imgstore@master/bigscreen/corp.jpg  
