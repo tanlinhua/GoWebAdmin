@@ -2,6 +2,14 @@
 
 ## 一些记录
 
+### VSCode插件安装报错解决方案：
+```
+开启代理设置，Go 1.13 以上默认启用，可跳过此步
+go env -w GO111MODULE=on
+设置代理
+go env -w GOPROXY=https://goproxy.io,direct
+```
+
 ### go交叉编译
 ```
 SET GOOS=linux
@@ -24,6 +32,16 @@ vim /etc/security/limits.conf  
 * soft nofile 65535
 * hard nofile 65535
 soft/hard前面的 * 表示所有用户
+```
+
+### [redis常用命令](https://www.runoob.com/redis/redis-tutorial.html)
+```
+redis-cli 
+auth "pwd"
+ping
+keys Task*
+LLen Task_77
+LRANGE Task_77 0 999
 ```
 
 ### jsdelivr+github cdn
