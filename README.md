@@ -36,15 +36,17 @@ https://cdn.jsdelivr.net/gh/TurboWay/imgstore@master/bigscreen/corp.jpg
 
 ### 一些库👇
 
-> github.com/smartwalle/alipay
+> https://github.com/smartwalle/alipay
 
-> github.com/hashicorp/consul
+> https://github.com/hashicorp/consul
 
-> github.com/Shopify/sarama
+> https://github.com/Shopify/sarama
 
-> github.com/nicksnyder/go-i18n
+> https://github.com/nicksnyder/go-i18n
 
-> github.com/skip2/go-qrcode
+> https://github.com/skip2/go-qrcode
+
+> https://github.com/shirou/gopsutil
 
 ---
 
