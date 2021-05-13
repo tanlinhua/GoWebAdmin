@@ -33,6 +33,19 @@ https://github.com/TurboWay/imgstore/blob/master/bigscreen/corp.jpg
 生成链接↓  
 https://cdn.jsdelivr.net/gh/TurboWay/imgstore@master/bigscreen/corp.jpg 
 ```
+
+### 一些库👇
+
+> github.com/smartwalle/alipay
+
+> github.com/hashicorp/consul
+
+> github.com/Shopify/sarama
+
+> github.com/nicksnyder/go-i18n
+
+> github.com/skip2/go-qrcode
+
 ---
 
 ## TODO
@@ -42,7 +55,6 @@ https://cdn.jsdelivr.net/gh/TurboWay/imgstore@master/bigscreen/corp.jpg
 
 > https://www.iquanku.com/read/over-golang/04-Web%E7%BC%96%E7%A8%8B-10-Web%E5%AE%89%E5%85%A8.md
 
-
 ### golang googleauthenticator
 > https://blog.csdn.net/weixin_33958585/article/details/92494417
 
@@ -51,4 +63,6 @@ https://cdn.jsdelivr.net/gh/TurboWay/imgstore@master/bigscreen/corp.jpg
 
 ### go gin 项目 热更新/优雅的重启
 > https://github.com/gravityblast/fresh
+
 > https://blog.csdn.net/qihoo_tech/article/details/104386331
+

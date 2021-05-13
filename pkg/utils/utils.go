@@ -8,6 +8,7 @@ import (
 	"math/rand"
 	"reflect"
 	"strings"
+	"time"
 )
 
 // md5加密
@@ -38,6 +39,18 @@ func RandString(n int) string {
 		b[i] = letters[rand.Intn(len(letters))]
 	}
 	return string(b)
+}
+
+// 生成随机数验证码
+func GenValidateCode(len int) string {
+	numbers := [10]byte{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+	rand.Seed(time.Now().UnixNano())
+
+	var sb strings.Builder
+	for i := 0; i < len; i++ {
+		fmt.Fprintf(&sb, "%d", numbers[rand.Intn(10)])
+	}
+	return sb.String()
 }
 
 // 判断字符串是否在字符串数组中
