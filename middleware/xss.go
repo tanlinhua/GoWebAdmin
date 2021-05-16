@@ -1,22 +1,19 @@
 package middleware
 
 import (
-	"errors"
-
-	"github.com/gin-gonic/gin"
-
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"mime/multipart"
 	"net/url"
-
-	"github.com/microcosm-cc/bluemonday"
-
 	"strconv"
 	"strings"
+
+	"github.com/gin-gonic/gin"
+	"github.com/microcosm-cc/bluemonday"
 )
 
 type XssMw struct {

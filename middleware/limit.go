@@ -16,7 +16,7 @@ func Limit(max int) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var called, fulled bool
 		defer func() {
-			if called == false && fulled == false {
+			if !called && !fulled {
 				<-sema
 			}
 			if r := recover(); r != nil { // We don't handle panic
