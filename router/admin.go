@@ -18,7 +18,7 @@ func InitAdmServer() {
 	initAdmResources(engine)
 	initAdmRouter(engine)
 
-	engine.Run(config.AdminPort)
+	engine.Run(":" + config.AdminPort)
 }
 
 // 中间件
@@ -42,8 +42,10 @@ func initAdmResources(e *gin.Engine) {
 
 // 路由配置 -> ADMIN
 func initAdmRouter(e *gin.Engine) {
+	e.GET("admin/google/auth", admin.GenGoogleAuth) //生成googleAuth信息
+	e.GET("admin/captcha", admin.Captcha)           //获取图形验证码
+
 	e.GET("admin/login", admin.AdminLogin)       //登录页面
-	e.GET("admin/captcha", admin.Captcha)        //获取图形验证码
 	e.POST("admin/check", admin.AdminLoginCheck) //登录校验
 	e.GET("admin/logout", admin.AdminLogout)     //退出登录
 

@@ -9,11 +9,11 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/tanlinhua/go-web-admin/model"
 	"github.com/tanlinhua/go-web-admin/pkg/captcha"
+	"github.com/tanlinhua/go-web-admin/pkg/config"
 	"github.com/tanlinhua/go-web-admin/pkg/response"
 	"github.com/tanlinhua/go-web-admin/pkg/utils"
+	"github.com/tanlinhua/go-web-admin/server/google"
 )
-
-// Admin模型
 
 // 验证码
 type CaptchaResult struct {
@@ -23,7 +23,40 @@ type CaptchaResult struct {
 
 // 登录页面
 func AdminLogin(c *gin.Context) {
-	c.HTML(http.StatusOK, "main/login.html", nil)
+	c.HTML(http.StatusOK, "main/login.html", gin.H{"LoginAuth": config.LoginAuth})
+}
+
+type googleAuth struct {
+	Secret    string `json:"secret"`
+	QrCodeUrl string `json:"qrCodeUrl"`
+}
+
+// 生成google authenticator信息并存入数据库
+func GenGoogleAuth(c *gin.Context) {
+	var save model.SysParams
+	resp := response.New(c)
+
+	value := model.ParamsGetValueByKey("GoogleAuthenticator")
+	if !utils.Empty(value) {
+		response.New(c).Error(-1, "请勿重复请求")
+		return
+	}
+
+	secret := google.NewGoogleAuth().GetSecret()
+	url := google.NewGoogleAuth().GetQrcodeUrl("Go.Admin.Auth", secret)
+	data := googleAuth{Secret: secret, QrCodeUrl: url}
+	saveValue, _ := utils.Json_encode(data)
+
+	save.Type = 0
+	save.Key = "GoogleAuthenticator"
+	save.Value = saveValue
+	save.Remarks = "Google身份验证器"
+
+	err := save.Add()
+	if err != nil {
+		resp.Error(-1, err.Error())
+	}
+	resp.Success(nil, 0)
 }
 
 // 生成图形验证码
@@ -63,6 +96,7 @@ func AdminLogout(c *gin.Context) {
 
 // 校验管理员用户名密码
 func AdminLoginCheck(c *gin.Context) {
+	capt_ok := false
 	resp := response.New(c)
 
 	user_name := c.PostForm("user_name")
@@ -75,7 +109,19 @@ func AdminLoginCheck(c *gin.Context) {
 		return
 	}
 
-	capt_ok := captcha.CaptchaVerify(cid, code)
+	if config.LoginAuth == 1 {
+		value := model.ParamsGetValueByKey("GoogleAuthenticator")
+		if utils.Empty(value) {
+			resp.Error(-1, "GoogleAuthenticator信息不存在")
+			return
+		}
+		authJson, _ := utils.Json_decode(value)
+		secret := authJson["secret"]
+		capt_ok = google.NewGoogleAuth().VerifyCode(secret.(string), code)
+	} else {
+		capt_ok = captcha.CaptchaVerify(cid, code)
+	}
+
 	if !capt_ok {
 		resp.Error(-1, "验证码错误")
 		return

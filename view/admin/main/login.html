@@ -33,7 +33,11 @@
                 <label for="code" class="input-label">
                     <span class="label-title">验证码</span>
                 </label>
+                {{ if eq .LoginAuth 1 }}
+                <image src="" onclick="getCaptcha();return false;" id="captcha" style="width:145px;z-index:999;display:none;"></image>
+                {{ else }}
                 <image src="" onclick="getCaptcha();return false;" id="captcha" style="width:145px;z-index:999;"></image>
+                {{ end }}
             </div>
             <button type="button" id="btn_submit" onclick="login();return false;" class="login-button">登录<i class="ai ai-enter"></i></button>
         </form>

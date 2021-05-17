@@ -19,7 +19,7 @@ func InitApiServer() {
 	initApiMiddleware(engine)
 	initApiRouter(engine)
 
-	engine.Run(config.APIPort)
+	engine.Run(":" + config.APIPort)
 }
 
 // 404

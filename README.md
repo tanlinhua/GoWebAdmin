@@ -77,9 +77,6 @@ https://cdn.jsdelivr.net/gh/TurboWay/imgstore@master/bigscreen/corp.jpg
 
 > https://www.iquanku.com/read/over-golang/04-Web%E7%BC%96%E7%A8%8B-10-Web%E5%AE%89%E5%85%A8.md
 
-### golang googleauthenticator
-> https://blog.csdn.net/weixin_33958585/article/details/92494417
-
 ### api模块增加(go gin swagger)
 > https://blog.csdn.net/u013068184/article/details/106687646/
 

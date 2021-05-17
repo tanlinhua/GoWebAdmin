@@ -7,22 +7,22 @@ import (
 )
 
 var (
-	AppMode    string
-	APIPort    string
-	AdminPort  string
-	AdminId    int
-	AdminName  string
-	JwtKey     string
+	AppMode   string
+	APIPort   string
+	AdminPort string
+
+	AdminId   int
+	AdminName string
+	LoginAuth int
+
 	Db         string
 	DbHost     string
 	DbPort     string
 	DbUser     string
 	DbPassWord string
 	DbName     string
-	AccessKey  string
-	SecretKey  string
-	Bucket     string
-	QiniuSever string
+
+	JwtKey string
 )
 
 //配置文件
@@ -39,6 +39,7 @@ func init() {
 func loadAdmin(file *ini.File) {
 	AdminId = file.Section("admin").Key("id").MustInt(1)
 	AdminName = file.Section("admin").Key("name").MustString("admin")
+	LoginAuth = file.Section("admin").Key("LoginAuth").MustInt(2)
 }
 
 func loadServer(file *ini.File) {

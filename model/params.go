@@ -48,6 +48,20 @@ func ParamsUpdate(id int, value string) (bool, string) {
 }
 
 // 增加系统配置
-func ParamsAdd(key, value, remarks string) (bool, string) {
-	return false, "fail"
+func (s *SysParams) Add() error {
+	err := db.Create(s).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// 查询指定key的value值
+func ParamsGetValueByKey(key string) string {
+	var row SysParams
+	err := db.Where("`key`=?", key).Select("value").First(&row).Error
+	if err != nil {
+		trace.Error("ParamsGetValueByKey.err=" + err.Error())
+	}
+	return row.Value
 }

@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"bytes"
 	"crypto/md5"
 	"encoding/json"
 	"fmt"
@@ -20,8 +21,15 @@ func Md5(str string) string {
 
 // 转json
 func Json_encode(data interface{}) (string, error) {
-	jsons, err := json.Marshal(data)
-	return string(jsons), err
+	// jsons, err := json.Marshal(data)
+	// return string(jsons), err
+
+	// 转义符 \u0026 , 设置json序列化不转义
+	buffer := &bytes.Buffer{}
+	encoder := json.NewEncoder(buffer)
+	encoder.SetEscapeHTML(false)
+	err := encoder.Encode(data)
+	return buffer.String(), err
 }
 
 // 解json
