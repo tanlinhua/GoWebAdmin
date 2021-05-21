@@ -83,26 +83,26 @@ func (redis *RedisClient) CloseRedis() {
 
 // 设置KEY-VALUE类型缓存
 // expTime为过期时间,单位秒,0为永不过期
-func (redis *RedisClient) SSet(key string, value interface{}, expTime int32) *redis.StatusCmd {
-	return redis.Set(key, value, time.Duration(expTime)*time.Second)
+func (redis *RedisClient) SSet(key string, value interface{}, expTime int32) error {
+	return redis.Set(key, value, time.Duration(expTime)*time.Second).Err()
 }
 
 // 根据KEY获取VALUE值
 func (redis *RedisClient) SGet(key string) string {
-	return redis.Get(key).String()
+	return redis.Get(key).Val()
 }
 
 // 在队列尾部插入一个元素
-func (redis *RedisClient) ListAdd(key, value string) *redis.IntCmd {
-	return redis.RPush(key, value)
+func (redis *RedisClient) ListAdd(key, value string) error {
+	return redis.RPush(key, value).Err()
 }
 
 // 删除并返回队列中的头元素
 func (redis *RedisClient) ListGet(key string) string {
-	return redis.LPop(key).String()
+	return redis.LPop(key).Val()
 }
 
 // 清空队列
-func (redis *RedisClient) ListClear(key string) *redis.StatusCmd {
-	return redis.LTrim(key, 1, 0)
+func (redis *RedisClient) ListClear(key string) error {
+	return redis.LTrim(key, 1, 0).Err()
 }

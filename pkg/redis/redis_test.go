@@ -6,26 +6,20 @@ import (
 	"github.com/go-redis/redis"
 )
 
-func TestRedisKV(t *testing.T) {
-	Redis.SSet("test", "pibigstar", 30)
-	t.Log(Redis.SGet("test"))
-}
-
-func TestRedisListPush(t *testing.T) {
-	Redis.ListAdd("Task", "test1")
-	Redis.ListAdd("Task", "test2")
-	ret := Redis.ListAdd("Task", "test3")
-	t.Log(ret)
-}
-
-func TestRedisListPop(t *testing.T) {
-	ret := Redis.ListGet("Task")
-	t.Log(ret)
-}
-
-func TestReidsListClean(t *testing.T) {
-	ret := Redis.ListClear("Task")
-	t.Log(ret)
+func TestRedis(t *testing.T) {
+	ret0 := Redis.SSet("test", "Testvalue", 30)
+	t.Log(ret0)
+	val1 := Redis.SGet("test")
+	t.Log(val1)
+	t.Log("==============")
+	ret1 := Redis.ListAdd("Task", "test1")
+	t.Log(ret1)
+	ret2 := Redis.ListAdd("Task", "test2")
+	t.Log(ret2)
+	val2 := Redis.ListGet("Task")
+	t.Log(val2)
+	val3 := Redis.ListClear("Task")
+	t.Log(val3)
 }
 
 var lua = `
