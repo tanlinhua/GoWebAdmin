@@ -63,21 +63,6 @@ func init() {
 	}
 }
 
-// set the string to redis，the expire default is seven days
-func (redis *RedisClient) SSet(key string, value interface{}) *redis.StatusCmd {
-	return redis.Set(key, value, 24*time.Hour)
-}
-
-// get the string value by key
-func (redis *RedisClient) SGet(key string) string {
-	return redis.Get(key).String()
-}
-
-// close the redis client
-func (redis *RedisClient) Close() {
-	//redis.Close() // ??
-}
-
 // get the redis client，if client not initialization
 // and create the redis client
 func GetRedisClient() (*RedisClient, error) {
@@ -89,4 +74,35 @@ func GetRedisClient() (*RedisClient, error) {
 		return Redis, nil
 	}
 	return Redis, nil
+}
+
+// close the redis client
+func (redis *RedisClient) CloseRedis() {
+	redis.Close()
+}
+
+// 设置KEY-VALUE类型缓存
+// expTime为过期时间,单位秒,0为永不过期
+func (redis *RedisClient) SSet(key string, value interface{}, expTime int32) *redis.StatusCmd {
+	return redis.Set(key, value, time.Duration(expTime)*time.Second)
+}
+
+// 根据KEY获取VALUE值
+func (redis *RedisClient) SGet(key string) string {
+	return redis.Get(key).String()
+}
+
+// 在队列尾部插入一个元素
+func (redis *RedisClient) ListAdd(key, value string) *redis.IntCmd {
+	return redis.RPush(key, value)
+}
+
+// 删除并返回队列中的头元素
+func (redis *RedisClient) ListGet(key string) string {
+	return redis.LPop(key).String()
+}
+
+// 清空队列
+func (redis *RedisClient) ListClear(key string) *redis.StatusCmd {
+	return redis.LTrim(key, 1, 0)
 }
