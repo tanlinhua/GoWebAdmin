@@ -1,7 +1,9 @@
 package middleware
 
 import (
+	"bytes"
 	"fmt"
+	"io/ioutil"
 	"math"
 	"os"
 	"time"
@@ -39,7 +41,10 @@ func Logger(tag string) gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 		startTime := time.Now()
+		body, _ := c.GetRawData()
+		c.Request.Body = ioutil.NopCloser(bytes.NewBuffer(body)) //读过的字节流重新放到body
 		c.Next()
+
 		stopTime := time.Since(startTime)
 		spendTime := fmt.Sprintf("%d ms", int(math.Ceil(float64(stopTime.Nanoseconds())/1000000.0)))
 		hostName, err := os.Hostname()
@@ -57,15 +62,17 @@ func Logger(tag string) gin.HandlerFunc {
 		path := c.Request.RequestURI
 
 		entry := logger.WithFields(logrus.Fields{
-			"HostName":  hostName,
-			"status":    statusCode,
-			"SpendTime": spendTime,
-			"Ip":        clientIp,
-			"Method":    method,
-			"Path":      path,
-			"DataSize":  dataSize,
-			"Agent":     userAgent,
+			"HostName":    hostName,
+			"RunTime":     spendTime,
+			"IP":          clientIp,
+			"ReqBody":     string(body),
+			"ReqMethod":   method,
+			"ReqURI":      path,
+			"RspDataSize": dataSize,
+			"RspStatus":   statusCode,
+			"UA":          userAgent,
 		})
+
 		if len(c.Errors) > 0 {
 			entry.Error(c.Errors.ByType(gin.ErrorTypePrivate).String())
 		}
