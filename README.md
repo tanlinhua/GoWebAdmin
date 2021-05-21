@@ -33,6 +33,8 @@ vim /etc/security/limits.conf  
 * hard nofile 65535
 soft/hard前面的 * 表示所有用户
 ```
+[或者通过此方案限制并发数](https://github.com/tanlinhua/GoTestDemo/blob/main/semaphore/main.go)
+
 
 ### [redis常用命令](https://www.runoob.com/redis/redis-tutorial.html)
 ```
@@ -66,22 +68,42 @@ https://cdn.jsdelivr.net/gh/TurboWay/imgstore@master/bigscreen/corp.jpg
 
 > https://github.com/shirou/gopsutil
 
+> https://github.com/tidwall/gjson
+
+---
+
+## NOTES
+
+### api模块增加(go gin swagger)
+> https://blog.csdn.net/u013068184/article/details/106687646/
+
+> https://github.com/tanlinhua/GoTestDemo/blob/main/swagger/main.go
+
 ---
 
 ## TODO
 
 ### xss/sql注入/csrf
-> https://github.com/utrack/gin-csrf
 
-> https://github.com/xinliangnote/PHP/blob/master/04-PHP%20WEB%20%E5%AE%89%E5%85%A8%E9%98%B2%E5%BE%A1.md
+- https://github.com/utrack/gin-csrf
 
-> https://www.iquanku.com/read/over-golang/04-Web%E7%BC%96%E7%A8%8B-10-Web%E5%AE%89%E5%85%A8.md
+- https://github.com/xinliangnote/PHP/blob/master/04-PHP%20WEB%20%E5%AE%89%E5%85%A8%E9%98%B2%E5%BE%A1.md
 
-### api模块增加(go gin swagger)
-> https://blog.csdn.net/u013068184/article/details/106687646/
+- https://www.iquanku.com/read/over-golang/04-Web%E7%BC%96%E7%A8%8B-10-Web%E5%AE%89%E5%85%A8.md
 
 ### go gin 项目 热更新/优雅的重启
-> https://github.com/gravityblast/fresh
 
-> https://blog.csdn.net/qihoo_tech/article/details/104386331
+- [Docker](https://blog.csdn.net/u010214802/article/details/90674343)
 
+- https://github.com/gravityblast/fresh
+
+- https://blog.csdn.net/qihoo_tech/article/details/104386331
+
+### golang 消息队列
+
+- [Kafka](kafka)
+- [Nsq](https://blog.csdn.net/luolianxi/article/details/105279432)
+- [Mqtt](mqtt)
+- [RabbitMQ](rabbitmq)
+
+### 浏览器关闭admin账号未退出
