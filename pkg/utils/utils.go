@@ -61,16 +61,6 @@ func GenValidateCode(len int) string {
 	return sb.String()
 }
 
-// 判断字符串是否在字符串数组中
-func String_in_array(items []string, item string) bool {
-	for _, eachItem := range items {
-		if eachItem == item {
-			return true
-		}
-	}
-	return false
-}
-
 // 数组解析成字符串
 func Implode(glue string, pieces []string) string {
 	return strings.Join(pieces, glue)
@@ -85,7 +75,7 @@ func Explode(delimiter, text string) []string {
 	}
 }
 
-// In_array for php2golang.com
+// 检查数组[hystack]中是否存在某个值[needle]
 func In_array(needle interface{}, hystack interface{}) bool {
 	switch key := needle.(type) {
 	case string:
@@ -151,4 +141,60 @@ func Strstr(haystack string, needle string, before_needle bool) string {
 	} else {
 		return haystack[idx+len([]byte(needle))-1:]
 	}
+}
+
+// 比较数组，返回两个数组的差集
+func ArrayDiff(array1 []string, arrayOthers ...[]string) []string {
+	c := make(map[string]bool)
+	for i := 0; i < len(array1); i++ {
+		if _, hasKey := c[array1[i]]; hasKey {
+			c[array1[i]] = true
+		} else {
+			c[array1[i]] = false
+		}
+	}
+	for i := 0; i < len(arrayOthers); i++ {
+		for j := 0; j < len(arrayOthers[i]); j++ {
+			if _, hasKey := c[arrayOthers[i][j]]; hasKey {
+				c[arrayOthers[i][j]] = true
+			} else {
+				c[arrayOthers[i][j]] = false
+			}
+		}
+	}
+	result := make([]string, 0)
+	for k, v := range c {
+		if !v {
+			result = append(result, k)
+		}
+	}
+	return result
+}
+
+// 比较数组，返回两个数组的交集
+func ArrayIntersect(array1 []string, arrayOthers ...[]string) []string {
+	c := make(map[string]bool)
+	for i := 0; i < len(array1); i++ {
+		if _, hasKey := c[array1[i]]; hasKey {
+			c[array1[i]] = true
+		} else {
+			c[array1[i]] = false
+		}
+	}
+	for i := 0; i < len(arrayOthers); i++ {
+		for j := 0; j < len(arrayOthers[i]); j++ {
+			if _, hasKey := c[arrayOthers[i][j]]; hasKey {
+				c[arrayOthers[i][j]] = true
+			} else {
+				c[arrayOthers[i][j]] = false
+			}
+		}
+	}
+	result := make([]string, 0)
+	for k, v := range c {
+		if v {
+			result = append(result, k)
+		}
+	}
+	return result
 }
