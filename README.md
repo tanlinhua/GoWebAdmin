@@ -33,7 +33,7 @@ vim /etc/security/limits.conf  
 * hard nofile 65535
 soft/hard前面的 * 表示所有用户
 ```
-[或者通过此方案限制并发数](https://github.com/tanlinhua/GoTestDemo/blob/main/semaphore/main.go)
+[或者通过此方案限制并发数](https://github.com/tanlinhua/GoTestDemo/blob/main/goroutine/semaphore/main.go)
 
 
 ### [redis常用命令](https://www.runoob.com/redis/redis-tutorial.html)
