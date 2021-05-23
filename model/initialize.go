@@ -15,10 +15,9 @@ var db *gorm.DB
 // 初始化数据库
 func InitDB() {
 	connect := fmt.Sprintf("%s:%s@(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local",
-		config.DbUser, config.DbPassWord, config.DbHost, config.DbPort, config.DbName,
-	)
-	var err error
+		config.DbUser, config.DbPassWord, config.DbHost, config.DbPort, config.DbName)
 
+	var err error
 	db, err = gorm.Open(config.Db, connect)
 	if err != nil {
 		log.Panic("连接数据库失败，err：", err)
