@@ -43,7 +43,7 @@ func NewRedisClient() error {
 
 		//仅当客户端执行命令时需要从连接池获取连接时，如果连接池需要新建连接时则会调用此钩子函数
 		OnConnect: func(conn *redis.Conn) error {
-			fmt.Printf("创建新的连接: %v\n", conn)
+			// fmt.Printf("创建新的连接: %v\n", conn)
 			return nil
 		},
 	})
@@ -60,7 +60,7 @@ func NewRedisClient() error {
 func init() {
 	err := NewRedisClient()
 	if err != nil {
-		fmt.Println("failed to connect redis client")
+		fmt.Println("redis初始化失败", err.Error())
 	}
 }
 
