@@ -22,6 +22,10 @@ var (
 	DbPassWord string
 	DbName     string
 
+	RedisAddr string
+	RedisPWD  string
+	RedisDB   int
+
 	JwtKey string
 )
 
@@ -29,10 +33,12 @@ var (
 func init() {
 	file, err := ini.Load("config/config.ini")
 	if err != nil {
-		fmt.Print("config/config.ini 配置文件读取失败，请检查", err)
+		fmt.Println("配置文件[config/config.ini]读取失败，请检查!", err)
+		return
 	}
 	loadServer(file)
 	loadDatabase(file)
+	loadRedis(file)
 	loadAdmin(file)
 }
 
@@ -56,4 +62,10 @@ func loadDatabase(file *ini.File) {
 	DbUser = file.Section("database").Key("DbUser").MustString("root")
 	DbPassWord = file.Section("database").Key("DbPassWord").MustString("123456")
 	DbName = file.Section("database").Key("DbName").MustString("ginblog")
+}
+
+func loadRedis(file *ini.File) {
+	RedisAddr = file.Section("redis").Key("RedisAddr").MustString("127.0.0.1:6379")
+	RedisPWD = file.Section("redis").Key("RedisPWD").MustString("")
+	RedisDB = file.Section("redis").Key("RedisDB").MustInt(0)
 }

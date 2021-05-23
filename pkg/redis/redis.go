@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/go-redis/redis"
+	"github.com/tanlinhua/go-web-admin/pkg/config"
 )
 
 var Redis *RedisClient
@@ -20,9 +21,9 @@ func NewRedisClient() error {
 		return nil
 	}
 	client := redis.NewClient(&redis.Options{
-		Addr:     "127.0.0.1:6379",
-		Password: "",
-		DB:       0,
+		Addr:     config.RedisAddr,
+		Password: config.RedisPWD,
+		DB:       config.RedisDB,
 		PoolSize: 10, //连接池大小
 		//超时
 		DialTimeout:  5 * time.Second, //连接建立超时时间，默认5秒。
