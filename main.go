@@ -26,8 +26,8 @@ var (
 )
 
 func versionInfo() {
-	fmt.Printf("AppName:\t%s\n", AppName)
-	fmt.Printf("AppVersion:\t%s\n", AppVersion)
-	fmt.Printf("AppMode:\t%s\n", config.AppMode)
-	fmt.Printf("GoVersion:\t%s\n", GoVersion)
+	fmt.Printf("%c[1;40;35mAppName:\t%s %c[0m\n", 0x1B, AppName, 0x1B)
+	fmt.Printf("%c[1;40;35mAppVersion:\t%s %c[0m\n", 0x1B, AppVersion, 0x1B)
+	fmt.Printf("%c[1;40;35mAppMode:\t%s %c[0m\n", 0x1B, config.AppMode, 0x1B)
+	fmt.Printf("%c[1;40;35mGoVersion:\t%s %c[0m\n", 0x1B, GoVersion, 0x1B)
 }
