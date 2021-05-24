@@ -30,13 +30,14 @@ func HandleNotFound(c *gin.Context) {
 // 中间件
 func initApiMiddleware(e *gin.Engine) {
 	e.Use(gin.Recovery())
-	e.Use(middleware.Logger("api"))
+	e.Use(middleware.Logger("api")) // 自定义日志记录&切割
+	e.Use(middleware.IpLimiter())   // IP请求限制器
 }
 
 // 路由配置 -> API
 func initApiRouter(e *gin.Engine) {
-	e.GET("api/user/login", api.UserLogin)
-	e.GET("api/user/reg", api.UserRegister)
+	e.POST("api/user/login", api.UserLogin)
+	e.POST("api/user/reg", api.UserRegister)
 
 	auth := e.Group("/api")
 	auth.Use(middleware.CheckJWT())

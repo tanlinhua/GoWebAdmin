@@ -23,14 +23,14 @@ func InitAdmServer() {
 
 // 中间件
 func initAdmMiddleware(e *gin.Engine) {
-	e.Use(gin.Recovery())                      // 如果存在恐慌(panics)，中间件恢复(recovers)写入500
-	e.Use(middleware.Logger("admin"))          // 自定义日志记录&切割
 	store := cookie.NewStore([]byte("secret")) // sessionStore-cookie存储
-	e.Use(sessions.Sessions("cookie", store))  // session
-
-	// 安全相关
 	var xss middleware.XssMw
-	e.Use(xss.RemoveXss())
+
+	e.Use(gin.Recovery())                     // 如果存在恐慌(panics)，中间件恢复(recovers)写入500
+	e.Use(middleware.Logger("admin"))         // 自定义日志记录&切割
+	e.Use(middleware.IpLimiter())             // IP请求限制器
+	e.Use(sessions.Sessions("cookie", store)) // session
+	e.Use(xss.RemoveXss())                    // xss
 }
 
 // 静态资源
