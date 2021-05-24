@@ -70,6 +70,8 @@ https://cdn.jsdelivr.net/gh/TurboWay/imgstore@master/bigscreen/corp.jpg
 
 > https://github.com/tidwall/gjson
 
+> https://github.com/maddevsio/fcm
+
 ---
 
 ## NOTES
@@ -80,6 +82,25 @@ https://cdn.jsdelivr.net/gh/TurboWay/imgstore@master/bigscreen/corp.jpg
 > https://github.com/tanlinhua/GoTestDemo/blob/main/swagger/main.go
 
 ---
+
+## 初始化Vue管理后台HTTP服务
+```
+func InitVueAdminServer() {
+	e := gin.New()
+	e.Use(gin.Recovery())
+    
+	e.Static("js", "vue/admin/js")
+	e.Static("css", "vue/admin/css")
+	e.Static("fonts", "vue/admin/fonts")
+	e.Static("img", "vue/admin/img")
+	e.StaticFile("admin/favicon.ico", "vue/admin/favicon.ico")
+	e.LoadHTMLGlob("vue/admin/index.html")
+	e.GET("admin", func(c *gin.Context) {
+		c.HTML(200, "index.html", nil)
+	})
+	e.Run(config.AdminPort)
+}
+```
 
 ## TODO
 
