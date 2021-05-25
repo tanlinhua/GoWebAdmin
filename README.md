@@ -86,7 +86,7 @@ https://cdn.jsdelivr.net/gh/TurboWay/imgstore@master/bigscreen/corp.jpg
 ---
 
 ## 初始化Vue管理后台HTTP服务
-```
+```go
 func InitVueAdminServer() {
 	e := gin.New()
 	e.Use(gin.Recovery())
