@@ -29,6 +29,7 @@ func CheckSession() gin.HandlerFunc {
 		if calcTime > timeOut && timeOutCtr {
 			c.Redirect(http.StatusFound, "login")
 			c.Abort()
+			return
 		} else {
 			session.Set("adminLoginTime", time.Now().Unix())
 			session.Save()
@@ -39,12 +40,14 @@ func CheckSession() gin.HandlerFunc {
 		if utils.Empty(adminId) {
 			c.Redirect(http.StatusFound, "login")
 			c.Abort()
+			return
 		}
 		if adminId != config.AdminId { //管理员ID不受权限约束
 			ok, msg := checkAdminPermission(adminId.(int), c.Request.RequestURI, c.Request.Method)
 			if !ok {
 				response.New(c).Error(-1, msg)
 				c.Abort()
+				return
 			}
 		}
 
@@ -53,6 +56,7 @@ func CheckSession() gin.HandlerFunc {
 		if !normal {
 			response.New(c).Error(-1, cmsg)
 			c.Abort()
+			return
 		}
 
 		c.Set("admin_id", adminId)
