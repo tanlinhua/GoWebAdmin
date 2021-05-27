@@ -6,8 +6,8 @@ import (
 
 	"github.com/tanlinhua/go-web-admin/model"
 	"github.com/tanlinhua/go-web-admin/pkg/config"
+	"github.com/tanlinhua/go-web-admin/pkg/cron"
 	"github.com/tanlinhua/go-web-admin/router"
-	"github.com/tanlinhua/go-web-admin/server/cron"
 )
 
 func main() {

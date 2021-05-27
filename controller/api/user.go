@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/tanlinhua/go-web-admin/middleware"
+	"github.com/tanlinhua/go-web-admin/pkg/middleware"
 )
 
 // 用户登录

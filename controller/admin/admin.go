@@ -10,9 +10,9 @@ import (
 	"github.com/tanlinhua/go-web-admin/model"
 	"github.com/tanlinhua/go-web-admin/pkg/captcha"
 	"github.com/tanlinhua/go-web-admin/pkg/config"
+	"github.com/tanlinhua/go-web-admin/pkg/google"
 	"github.com/tanlinhua/go-web-admin/pkg/response"
 	"github.com/tanlinhua/go-web-admin/pkg/utils"
-	"github.com/tanlinhua/go-web-admin/server/google"
 )
 
 // 验证码

@@ -31,9 +31,9 @@ var (
 
 //配置文件
 func init() {
-	file, err := ini.Load("config/config.ini")
+	file, err := ini.Load("config.ini")
 	if err != nil {
-		fmt.Println("配置文件[config/config.ini]读取失败，请检查!", err)
+		fmt.Println("配置文件[config.ini]读取失败，请检查!", err)
 		return
 	}
 	loadServer(file)
