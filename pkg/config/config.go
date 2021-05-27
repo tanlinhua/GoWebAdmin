@@ -1,7 +1,7 @@
 package config
 
 import (
-	"fmt"
+	"log"
 
 	"gopkg.in/ini.v1"
 )
@@ -33,7 +33,7 @@ var (
 func init() {
 	file, err := ini.Load("config.ini")
 	if err != nil {
-		fmt.Println("配置文件[config.ini]读取失败，请检查!", err)
+		log.Panic("配置文件[config.ini]读取失败，请检查!", err)
 		return
 	}
 	loadServer(file)
