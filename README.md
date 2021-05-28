@@ -128,5 +128,3 @@ func InitVueAdminServer() {
 - [Nsq](https://blog.csdn.net/luolianxi/article/details/105279432)
 - [Mqtt](mqtt)
 - [RabbitMQ](rabbitmq)
-
-### 浏览器关闭admin账号未退出
