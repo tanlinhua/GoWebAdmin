@@ -54,37 +54,6 @@ https://github.com/TurboWay/imgstore/blob/master/bigscreen/corp.jpg
 https://cdn.jsdelivr.net/gh/TurboWay/imgstore@master/bigscreen/corp.jpg 
 ```
 
-### 一些库👇
-
-> [Go 开发者路线图](https://github.com/Alikhll/golang-developer-roadmap/blob/master/i18n/zh-CN/ReadMe-zh-CN.md)
-
-> https://github.com/smartwalle/alipay
-
-> https://github.com/hashicorp/consul
-
-> https://github.com/Shopify/sarama
-
-> https://github.com/nicksnyder/go-i18n
-
-> https://github.com/skip2/go-qrcode
-
-> https://github.com/shirou/gopsutil
-
-> https://github.com/tidwall/gjson
-
-> https://github.com/maddevsio/fcm
-
----
-
-## NOTES
-
-### api模块增加(go gin swagger)
-> https://blog.csdn.net/u013068184/article/details/106687646/
-
-> https://github.com/tanlinhua/GoTestDemo/blob/main/swagger/main.go
-
----
-
 ## 初始化Vue管理后台HTTP服务
 ```go
 func InitVueAdminServer() {
@@ -104,23 +73,34 @@ func InitVueAdminServer() {
 }
 ```
 
+## 一些库👇
+
+> [Go 开发者路线图](https://github.com/Alikhll/golang-developer-roadmap/blob/master/i18n/zh-CN/ReadMe-zh-CN.md)
+
+> https://github.com/smartwalle/alipay
+
+> https://github.com/hashicorp/consul
+
+> https://github.com/Shopify/sarama
+
+> https://github.com/nicksnyder/go-i18n
+
+> https://github.com/skip2/go-qrcode
+
+> https://github.com/shirou/gopsutil
+
+> https://github.com/tidwall/gjson
+
+> https://github.com/maddevsio/fcm
+
+
 ## TODO
 
-### xss/sql注入/csrf
-
-- https://github.com/utrack/gin-csrf
-
-- https://github.com/xinliangnote/PHP/blob/master/04-PHP%20WEB%20%E5%AE%89%E5%85%A8%E9%98%B2%E5%BE%A1.md
-
-- https://www.iquanku.com/read/over-golang/04-Web%E7%BC%96%E7%A8%8B-10-Web%E5%AE%89%E5%85%A8.md
-
-### go gin 项目 热更新/优雅的重启
+### go gin 项目 热更新 & 优雅的重启
 
 - [Docker](https://blog.csdn.net/u010214802/article/details/90674343)
 
 - https://github.com/gravityblast/fresh
-
-- https://blog.csdn.net/qihoo_tech/article/details/104386331
 
 ### golang 消息队列
 
@@ -128,3 +108,8 @@ func InitVueAdminServer() {
 - [Nsq](https://blog.csdn.net/luolianxi/article/details/105279432)
 - [Mqtt](mqtt)
 - [RabbitMQ](rabbitmq)
+
+### api模块增加(go gin swagger)
+> https://blog.csdn.net/u013068184/article/details/106687646/
+
+> https://github.com/tanlinhua/GoTestDemo/blob/main/swagger/main.go
