@@ -28,5 +28,6 @@ require (
 	github.com/sirupsen/logrus v1.8.1
 	github.com/smartystreets/goconvey v1.6.4 // indirect
 	github.com/stretchr/testify v1.7.0 // indirect
+	github.com/tidwall/gjson v1.8.0
 	gopkg.in/ini.v1 v1.62.0
 )
