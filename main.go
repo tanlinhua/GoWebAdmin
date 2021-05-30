@@ -29,6 +29,7 @@ var (
 	AppName    = "GoWebAdmin"
 	AppVersion = "1.0"
 	GoVersion  = runtime.Version()
+	ApiDoc     = "http://host:port/api/doc/index.html"
 )
 
 func versionInfo() {
@@ -36,4 +37,5 @@ func versionInfo() {
 	fmt.Printf("%c[1;40;35mAppVersion:\t%s %c[0m\n", 0x1B, AppVersion, 0x1B)
 	fmt.Printf("%c[1;40;35mAppMode:\t%s %c[0m\n", 0x1B, config.AppMode, 0x1B)
 	fmt.Printf("%c[1;40;35mGoVersion:\t%s %c[0m\n", 0x1B, GoVersion, 0x1B)
+	fmt.Printf("%c[1;40;35mApiDocs:\t%s %c[0m\n", 0x1B, ApiDoc, 0x1B)
 }
