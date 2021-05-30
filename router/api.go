@@ -1,7 +1,14 @@
 package router
 
 import (
+	"os"
+
+	ginSwagger "github.com/swaggo/gin-swagger"
+	"github.com/swaggo/gin-swagger/swaggerFiles"
+	_ "github.com/tanlinhua/go-web-admin/docs"
+
 	"github.com/gin-gonic/gin"
+
 	"github.com/tanlinhua/go-web-admin/controller/api"
 	"github.com/tanlinhua/go-web-admin/pkg/config"
 	"github.com/tanlinhua/go-web-admin/pkg/middleware"
@@ -17,6 +24,7 @@ func InitApiServer() {
 	engine.NoMethod(HandleNotFound)
 
 	initApiMiddleware(engine)
+	initSwagger(engine)
 	initApiRouter(engine)
 
 	engine.Run(":" + config.APIPort)
@@ -32,6 +40,15 @@ func initApiMiddleware(e *gin.Engine) {
 	e.Use(gin.Recovery())
 	e.Use(middleware.Logger("api")) // 自定义日志记录&切割
 	e.Use(middleware.IpLimiter())   // IP请求限制器
+}
+
+// 初始化swagger
+func initSwagger(e *gin.Engine) {
+	disablingKey := "GO_API_SWAGGER_DISABLE"
+	if config.AppMode != "debug" {
+		os.Setenv(disablingKey, "true") // 禁用swagger
+	}
+	e.GET("/swagger/*any", ginSwagger.DisablingWrapHandler(swaggerFiles.Handler, disablingKey))
 }
 
 // 路由配置 -> API

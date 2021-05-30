@@ -10,6 +10,12 @@ import (
 	"github.com/tanlinhua/go-web-admin/router"
 )
 
+// @title GoWeb
+// @version 1.0
+// @description golang web template.
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name Authorization
 func main() {
 	versionInfo()
 

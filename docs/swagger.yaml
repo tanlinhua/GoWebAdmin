@@ -1,0 +1,101 @@
+definitions:
+  model.User:
+    properties:
+      password:
+        description: 密码
+        type: string
+      username:
+        description: 用户名
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  response.ResultData:
+    properties:
+      code:
+        type: integer
+      count:
+        type: integer
+      data:
+        type: object
+      msg:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: golang web template.
+  title: GoWeb
+  version: "1.0"
+paths:
+  /api/user/cpw:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 当前密码/新密码/确认密码
+        in: body
+        name: json_data
+        required: true
+        schema:
+          $ref: '#/definitions/model.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code=0成功,否则失败
+          schema:
+            $ref: '#/definitions/response.ResultData'
+      security:
+      - ApiKeyAuth: []
+      summary: 修改用户密码
+      tags:
+      - 用户模块
+  /api/user/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 用户名/密码
+        in: body
+        name: json_data
+        required: true
+        schema:
+          $ref: '#/definitions/model.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code=0成功,否则失败,data.token为jwt
+          schema:
+            $ref: '#/definitions/response.ResultData'
+      summary: 用户登录
+      tags:
+      - 用户模块
+  /api/user/reg:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 用户名/密码/手机号/设备类型/设备型号 ...
+        in: body
+        name: json_data
+        required: true
+        schema:
+          $ref: '#/definitions/model.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code=0成功,否则失败
+          schema:
+            $ref: '#/definitions/response.ResultData'
+      summary: 用户注册
+      tags:
+      - 用户模块
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

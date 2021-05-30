@@ -3,6 +3,7 @@ module github.com/tanlinhua/go-web-admin
 go 1.16
 
 require (
+	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-contrib/cors v1.3.1
 	github.com/gin-contrib/sessions v0.0.3
@@ -18,7 +19,6 @@ require (
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
 	github.com/lestrrat-go/strftime v1.0.4 // indirect
 	github.com/microcosm-cc/bluemonday v1.0.9
-	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/mojocn/base64Captcha v1.3.4
 	github.com/onsi/ginkgo v1.15.0 // indirect
 	github.com/onsi/gomega v1.10.5 // indirect
@@ -28,6 +28,8 @@ require (
 	github.com/sirupsen/logrus v1.8.1
 	github.com/smartystreets/goconvey v1.6.4 // indirect
 	github.com/stretchr/testify v1.7.0 // indirect
+	github.com/swaggo/gin-swagger v1.3.0
+	github.com/swaggo/swag v1.7.0
 	github.com/tidwall/gjson v1.8.0
 	gopkg.in/ini.v1 v1.62.0
 )
