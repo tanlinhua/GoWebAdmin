@@ -34,7 +34,7 @@ func GetJWT(username string, id int) (bool, string) {
 	reqClaim := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	token, err := reqClaim.SignedString(JwtKey)
 	if err != nil {
-		return false, ""
+		return false, err.Error()
 	}
 	return true, token
 }
