@@ -109,7 +109,6 @@ func InitVueAdminServer() {
 - [Mqtt](mqtt)
 - [RabbitMQ](rabbitmq)
 
-### api模块增加(go gin swagger)
-> https://blog.csdn.net/u013068184/article/details/106687646/
-
-> https://github.com/tanlinhua/GoTestDemo/blob/main/swagger/main.go
+### swagger
+- 禁用底部显示Models
+- go build会增加20多M,预编译处理?
