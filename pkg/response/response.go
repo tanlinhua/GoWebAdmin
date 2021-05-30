@@ -12,10 +12,10 @@ type Result struct {
 
 // 返回的结果
 type ResultData struct {
-	Code  int         `json:"code"`  //提示代码
-	Msg   string      `json:"msg"`   //提示信息
-	Total int         `json:"count"` //data total,count for layui
-	Data  interface{} `json:"data"`  //数据
+	Code  int         `json:"code"`
+	Msg   string      `json:"msg"`
+	Total int         `json:"count"`
+	Data  interface{} `json:"data"`
 }
 
 func New(ctx *gin.Context) *Result {
