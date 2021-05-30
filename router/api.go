@@ -48,7 +48,8 @@ func initSwagger(e *gin.Engine) {
 	if config.AppMode != "debug" {
 		os.Setenv(disablingKey, "true") // 禁用swagger
 	}
-	e.GET("/swagger/*any", ginSwagger.DisablingWrapHandler(swaggerFiles.Handler, disablingKey))
+	// http://host:port/api/doc/index.html
+	e.GET("/api/doc/*any", ginSwagger.DisablingWrapHandler(swaggerFiles.Handler, disablingKey))
 }
 
 // 路由配置 -> API
