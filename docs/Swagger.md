@@ -4,15 +4,26 @@
 
 ### 安装swag cli tool:
     go get -u github.com/swaggo/swag/cmd/swag
+    
 ### 测试是否安装成功
     swag -version
-### 导入
+
+### 使用
 ```
 import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 	_ "swagger.demo/docs" // 执行docs.go的init函数
 )
+
+// 初始化swagger
+func initSwagger(e *gin.Engine) {
+	disablingKey := "GO_API_SWAGGER_DISABLE"
+	if config.AppMode != "debug" {
+		os.Setenv(disablingKey, "true") // 禁用swagger
+	}
+	e.GET("/swagger/*any", ginSwagger.DisablingWrapHandler(swaggerFiles.Handler, disablingKey))
+}
 ```
 ### 初始化
 ```
@@ -26,18 +37,16 @@ swag init (注解有做修改就需要执行一次)
 └── swagger.yaml
 ```
 
-### Swagger的注解:
+### [注解](https://github.com/swaggo/swag/blob/master/README_zh-CN.md)
 ```
-// @Summary 接口概要说明
-// @Description 接口详细描述信息
-// @Tags 用户信息   //swagger API分类标签, 同一个tag为一组
-// @accept json  //浏览器可处理数据类型，浏览器默认发 Accept: */*
-// @Produce  json  //设置返回数据的类型和编码
-// @Param id path int true "ID"    //url参数：（name；参数类型[query(?id=),path(/123)]；数据类型；required；参数描述）
-// @Param name query string false "name"
-// @Success 200 {object} Res {"code":200,"data":null,"msg":""}  //成功返回的数据结构， 最后是示例
-// @Failure 400 {object} Res {"code":200,"data":null,"msg":""}
-// @Router /test/{id} [get]    //路由信息，一定要写上
+// @Tags 标签列表
+// @Summary 简短摘要
+// @Description 描述信息
+// @accept API可以使用的MIME类型的列表 #mime类型
+// @Param 参数名 #参数类型 #数据类型(struct忽略关键字swaggerignore:"true") 是否必填 "描述"
+// @Produce API可以生成的MIME类型的列表 #mime类型
+// @Response 以空格分隔的成功响应。return code,{param type},data type,comment
+// @Router /api/user/login [post]
 ```
 
 ### 注意事项:
