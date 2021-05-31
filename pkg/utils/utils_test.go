@@ -27,3 +27,11 @@ func TestHttpGet(t *testing.T) {
 	ok, resp := HttpGet("http://api.ipify.org", nil)
 	t.Log(ok, resp)
 }
+
+//测试正则表达式
+func TestRegxp(t *testing.T) {
+	isMail := Is_Email("test@test.com")
+	t.Log(isMail)
+	isPhone := Is_Phone_China("13800138000")
+	t.Log(isPhone)
+}
