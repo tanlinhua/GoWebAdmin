@@ -1,6 +1,8 @@
 package utils
 
-import "testing"
+import (
+	"testing"
+)
 
 //测试数组差集
 func TestArrayDiff(t *testing.T) {
@@ -16,4 +18,12 @@ func TestArrayIntersect(t *testing.T) {
 	a2 := []string{"test3", "test4"}
 	r := ArrayIntersect(a1, a2)
 	t.Log(r)
+}
+
+//测试http get
+func TestHttpGet(t *testing.T) {
+	var params = make(map[string]string)
+	params["a"] = "b"
+	ok, resp := HttpGet("http://api.ipify.org", nil)
+	t.Log(ok, resp)
 }
