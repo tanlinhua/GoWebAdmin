@@ -24,10 +24,10 @@ func CaptchaMake() (id, b64s string, err error) {
 		// Length:          4,
 		// Source:          "1234567890qwertyuioplkjhgfdsazxcvbnm",
 		BgColor: &color.RGBA{
-			R: 3,
-			G: 102,
-			B: 214,
-			A: 125,
+			R: 71,
+			G: 64,
+			B: 64,
+			A: 1,
 		},
 		Fonts: []string{"wqy-microhei.ttc"},
 	}
