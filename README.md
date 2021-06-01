@@ -114,3 +114,4 @@ func InitVueAdminServer() {
 - go build会增加20多M,预编译处理?
 
 ### i18n
+- https://xuanwo.io/2019/12/11/golang-i18n/
