@@ -112,3 +112,5 @@ func InitVueAdminServer() {
 ### swagger
 - 禁用底部显示Models
 - go build会增加20多M,预编译处理?
+
+### i18n
