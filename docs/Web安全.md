@@ -1,5 +1,7 @@
 ## Web安全
 
+### [Go安全指南](https://github.com/Tencent/secguide/blob/main/Go安全指南.md)
+
 ### SQL注入攻击
 
 ### XSS攻击
