@@ -45,7 +45,7 @@ func initApiMiddleware(e *gin.Engine) {
 // 初始化swagger
 func initSwagger(e *gin.Engine) {
 	disablingKey := "GO_API_SWAGGER_DISABLE"
-	if config.AppMode != "debug" {
+	if config.SwaggerIsOpen != 1 {
 		os.Setenv(disablingKey, "true") // 禁用swagger
 	}
 	// http://host:port/api/doc/index.html

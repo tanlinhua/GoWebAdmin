@@ -27,6 +27,8 @@ var (
 	RedisDB   int
 
 	JwtKey string
+
+	SwaggerIsOpen int
 )
 
 //配置文件
@@ -37,22 +39,22 @@ func init() {
 		return
 	}
 	loadServer(file)
+	loadAdmin(file)
 	loadDatabase(file)
 	loadRedis(file)
-	loadAdmin(file)
-}
-
-func loadAdmin(file *ini.File) {
-	AdminId = file.Section("admin").Key("id").MustInt(1)
-	AdminName = file.Section("admin").Key("name").MustString("admin")
-	LoginAuth = file.Section("admin").Key("LoginAuth").MustInt(2)
+	loadOther(file)
 }
 
 func loadServer(file *ini.File) {
 	AppMode = file.Section("server").Key("AppMode").MustString("debug")
 	APIPort = file.Section("server").Key("APIPort").MustString("3030")
 	AdminPort = file.Section("server").Key("AdminPort").MustString("3031")
-	JwtKey = file.Section("jwt").Key("JwtKey").MustString("89js82js72")
+}
+
+func loadAdmin(file *ini.File) {
+	AdminId = file.Section("admin").Key("id").MustInt(1)
+	AdminName = file.Section("admin").Key("name").MustString("admin")
+	LoginAuth = file.Section("admin").Key("LoginAuth").MustInt(2)
 }
 
 func loadDatabase(file *ini.File) {
@@ -68,4 +70,9 @@ func loadRedis(file *ini.File) {
 	RedisAddr = file.Section("redis").Key("RedisAddr").MustString("127.0.0.1:6379")
 	RedisPWD = file.Section("redis").Key("RedisPWD").MustString("")
 	RedisDB = file.Section("redis").Key("RedisDB").MustInt(0)
+}
+
+func loadOther(file *ini.File) {
+	JwtKey = file.Section("jwt").Key("JwtKey").MustString("89js82js72")
+	SwaggerIsOpen = file.Section("swagger").Key("IsOpen").MustInt(0)
 }
