@@ -25,3 +25,9 @@
 - https://github.com/iGoogle-ink/gopay
 
 - https://github.com/iGoogle-ink/gopay
+
+## 钉钉
+
+[开放平台](https://developers.dingtalk.com/)
+
+[开发文档](https://developers.dingtalk.com/document/app)
