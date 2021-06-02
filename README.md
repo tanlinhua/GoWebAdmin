@@ -102,13 +102,6 @@ func InitVueAdminServer() {
 
 - https://github.com/gravityblast/fresh
 
-### golang 消息队列
-
-- [Kafka](kafka)
-- [Nsq](https://blog.csdn.net/luolianxi/article/details/105279432)
-- [Mqtt](mqtt)
-- [RabbitMQ](rabbitmq)
-
 ### swagger
 - 禁用底部显示Models
 - go build会增加20多M,预编译处理?
