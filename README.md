@@ -77,34 +77,26 @@ func InitVueAdminServer() {
 
 > [Go 开发者路线图](https://github.com/Alikhll/golang-developer-roadmap/blob/master/i18n/zh-CN/ReadMe-zh-CN.md)
 
-> https://github.com/smartwalle/alipay
+> [alipay](https://github.com/smartwalle/alipay)
 
-> https://github.com/hashicorp/consul
+> [QrCode](https://github.com/skip2/go-qrcode)
 
-> https://github.com/Shopify/sarama
+> [psutil for golang](https://github.com/shirou/gopsutil)
 
-> https://github.com/nicksnyder/go-i18n
+> [Json解析.gjson](https://github.com/tidwall/gjson)
 
-> https://github.com/skip2/go-qrcode
+> [Json解析.fastjson](https://github.com/valyala/fastjson)
 
-> https://github.com/shirou/gopsutil
-
-> https://github.com/tidwall/gjson
-
-> https://github.com/maddevsio/fcm
-
+> [FCM](https://github.com/maddevsio/fcm)
 
 ## TODO
 
 ### go gin 项目 热更新 & 优雅的重启
 
+- https://www.liwenzhou.com/posts/Go/deploy_go_app/
 - [Docker](https://blog.csdn.net/u010214802/article/details/90674343)
-
 - https://github.com/gravityblast/fresh
-
-### swagger
-- 禁用底部显示Models
-- go build会增加20多M,预编译处理?
 
 ### i18n
 - https://xuanwo.io/2019/12/11/golang-i18n/
+- https://github.com/nicksnyder/go-i18n
