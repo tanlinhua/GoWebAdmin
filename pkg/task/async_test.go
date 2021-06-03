@@ -5,8 +5,6 @@ import (
 	"os"
 	"testing"
 	"time"
-
-	"github.com/tidwall/gjson"
 )
 
 func TestRunner_Start(t *testing.T) {
@@ -45,19 +43,11 @@ func TestRunner_Start(t *testing.T) {
 func createTask(jsonData string) func(id int) error {
 
 	test := `:{"k1":1,"k2":"` + jsonData + `"}`
-	const json = `{"name":{"first":"Janet","last":"Prichard"},"age":47}`
 
 	return func(id int) error {
 		fmt.Println("")
 		fmt.Printf("正在执行%v个任务\n", id)
 		fmt.Println(test)
-		fmt.Println(json)
-
-		value1 := gjson.Get(test, "k2")
-		fmt.Println(value1)
-
-		value2 := gjson.Get(json, "name.last")
-		println(value2.String())
 
 		fmt.Println("")
 		time.Sleep(1 * time.Second) //模拟任务执行,sleep
