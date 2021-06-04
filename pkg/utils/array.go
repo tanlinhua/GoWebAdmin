@@ -98,3 +98,33 @@ func ArrayIntersect(array1 []string, arrayOthers ...[]string) []string {
 	}
 	return result
 }
+
+// array_push — 将一个或多个单元压入数组的末尾（入栈）
+func ArrayPush(s *[]interface{}, elements ...interface{}) int {
+	*s = append(*s, elements...)
+	return len(*s)
+}
+
+// array_pop — 弹出数组最后一个单元（出栈）
+func ArrayPop(s *[]interface{}) interface{} {
+	if len(*s) == 0 {
+		return nil
+	}
+	ep := len(*s) - 1
+	e := (*s)[ep]
+	*s = (*s)[:ep]
+	return e
+}
+
+// array_merge — 合并一个或多个数组
+func ArrayMerge(ss ...[]interface{}) []interface{} {
+	n := 0
+	for _, v := range ss {
+		n += len(v)
+	}
+	s := make([]interface{}, 0, n)
+	for _, v := range ss {
+		s = append(s, v...)
+	}
+	return s
+}
