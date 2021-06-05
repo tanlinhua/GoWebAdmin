@@ -89,6 +89,24 @@ func InitVueAdminServer() {
 
 > [FCM](https://github.com/maddevsio/fcm)
 
+> [命令行.cobra](https://github.com/spf13/cobra)
+
+> [命令行.urfave/cli](https://github.com/urfave/cli)
+
+> [任务调度.Gron](https://github.com/roylee0704/gron)
+
+> [任务调度.JobRunner](https://github.com/bamzi/jobrunner)
+
+> [github.com/spf13/hugo](https://www.cnblogs.com/landv/p/11959097.html)
+
+> [日志.zap](https://github.com/uber-go/zap)
+
+> [微服务.go-zero](https://github.com/tal-tech/go-zero)
+
+> [微服务.rpcx](https://github.com/smallnest/rpcx)
+
+> [设计模式](https://github.com/tanlinhua/golang-design-pattern)
+
 ## TODO
 
 ### go gin 项目 热更新 & 优雅的重启
