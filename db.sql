@@ -38,7 +38,7 @@ CREATE TABLE `go_permission` (
   `method` varchar(10) NOT NULL DEFAULT '' COMMENT '路由请求方法(GET/POST)',
   `icon` varchar(10) DEFAULT NULL COMMENT '主菜单图标',
   `level` int(11) NOT NULL DEFAULT '1' COMMENT '权限等级[1,2,3]'
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COMMENT='权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COMMENT='权限表';
 
 INSERT INTO `go_permission` VALUES ('1', '主页', '0', '/admin/main', 'GET', 'xe68e;', '1');
 INSERT INTO `go_permission` VALUES ('2', '控制台', '1', '/admin/console', 'GET', null, '2');
