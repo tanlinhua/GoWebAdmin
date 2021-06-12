@@ -17,13 +17,13 @@ import (
 // 自定义日志中间件
 func Logger(tag string) gin.HandlerFunc {
 	filePath := "runtime/log/" + tag + "/"
-	linkName := "latest_log_" + tag + ".log" // 最新日志的软链接
+	// linkName := "latest_log_" + tag + ".log" // 最新日志的软链接
 
 	logWriter, _ := retalog.New(
 		filePath+"%Y%m%d.log",
 		retalog.WithMaxAge(7*24*time.Hour),
 		retalog.WithRotationTime(24*time.Hour),
-		retalog.WithLinkName(linkName),
+		// retalog.WithLinkName(linkName),
 	)
 	writeMap := lfshook.WriterMap{
 		logrus.InfoLevel:  logWriter,

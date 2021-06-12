@@ -33,6 +33,7 @@ func AdmAdd(data *Admin) (bool, string) {
 		return false, "用户名已存在"
 	}
 	data.Password = utils.Md5(data.Password)
+	data.LastLoginTime = time.Now()
 	err := db.Create(data).Error
 	if err != nil {
 		return false, err.Error()
@@ -95,11 +96,11 @@ func AdminGet(page, limit int, search string) (*[]AdminGetResult, int) {
 
 	Db = Db.Model(&Admin{}).Where("role!=?", 0) //0为内置超级管理员
 
-	Db.Count(&total) //1.查询总数
-
 	if len(search) > 0 {
 		Db = Db.Where("`user_name` LIKE ?", "%"+search+"%")
 	}
+
+	Db.Count(&total) //1.查询总数
 
 	if page > 0 && limit > 0 {
 		Db = Db.Limit(limit).Offset((page - 1) * limit)

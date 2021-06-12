@@ -150,11 +150,11 @@ func PermissionGet(page, limit int, search string) (*[]Permission, int) {
 	var data []Permission
 	Db := db
 
-	Db.Model(&Permission{}).Count(&total) //1.查询总数
-
 	if len(search) > 0 {
 		Db = Db.Where("`name` LIKE ?", "%"+search+"%")
 	}
+
+	Db.Model(&Permission{}).Count(&total) //1.查询总数
 
 	if page > 0 && limit > 0 {
 		Db = Db.Limit(limit).Offset((page - 1) * limit)

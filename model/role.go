@@ -79,11 +79,11 @@ func RoleGet(page, limit int, search string) (*[]Role, int) {
 	var data []Role
 	Db := db
 
-	Db.Model(&Role{}).Count(&total) //1.查询总数
-
 	if len(search) > 0 {
 		Db = Db.Where("`role_name` LIKE ?", "%"+search+"%")
 	}
+
+	Db.Model(&Role{}).Count(&total) //1.查询总数
 
 	if page > 0 && limit > 0 {
 		Db = Db.Limit(limit).Offset((page - 1) * limit)
