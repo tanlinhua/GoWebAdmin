@@ -105,6 +105,8 @@ func InitVueAdminServer() {
 
 > [微服务.rpcx](https://github.com/smallnest/rpcx)
 
+> [gnet网络框架](https://github.com/panjf2000/gnet)
+
 > [设计模式](https://github.com/tanlinhua/golang-design-pattern)
 
 ## TODO
