@@ -178,7 +178,8 @@ func (mw *XssMw) HandleMultiPartFormData(c *gin.Context, ctHdr string) error {
 			return err
 		}
 		if n <= 0 {
-			return errors.New("error recreating Multipart form Request")
+			fmt.Println("xss.go.HandleMultiPartFormData -> error recreating Multipart form Request", n)
+			// return errors.New("error recreating Multipart form Request")
 		}
 		multiPrtFrm.WriteString(`--` + boundary + "\r\n")
 		if part.FileName() != "" {
