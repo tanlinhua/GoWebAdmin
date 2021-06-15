@@ -37,9 +37,12 @@ func HandleNotFound(c *gin.Context) {
 
 // 中间件
 func initApiMiddleware(e *gin.Engine) {
+	var xss middleware.XssMw
+
 	e.Use(gin.Recovery())
 	e.Use(middleware.Logger("api")) // 自定义日志记录&切割
 	e.Use(middleware.IpLimiter())   // IP请求限制器
+	e.Use(xss.RemoveXss())          // xss
 }
 
 // 初始化swagger
