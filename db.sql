@@ -5,16 +5,16 @@ CREATE TABLE `go_admin` (
   `user_name` varchar(32) NOT NULL COMMENT '登录名',
   `password` varchar(32) NOT NULL COMMENT '密码',
   `role` int(11) DEFAULT 0 COMMENT '角色ID',
+  `pid` int(11) DEFAULT 0 COMMENT '上级ID',
   `status` int(4) NOT NULL DEFAULT 0 COMMENT '状态:0禁用/1启用',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `last_login_time` datetime DEFAULT NULL COMMENT '最后登陆时间',
   `last_login_ip` varchar(20) DEFAULT NULL COMMENT '最后登录IP',
   UNIQUE KEY `user_name` (`user_name`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='管理员表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='管理员表';
 
-INSERT INTO `go_admin` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '0', '1', '2020-12-12 00:00:00', '2020-12-12 00:00:00', null, null);
-INSERT INTO `go_admin` VALUES ('2', 'test1', 'e10adc3949ba59abbe56e057f20f883e', '1', '1', '2020-12-12 00:00:00', '2020-12-12 00:00:00', null, null);
+INSERT INTO `go_admin` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1', '2020-12-12 00:00:00', '2020-12-12 00:00:00', null, null);
 
 -- 角色表
 DROP TABLE IF EXISTS `go_role`;
@@ -23,10 +23,7 @@ CREATE TABLE `go_role` (
   `role_name` varchar(40) NOT NULL COMMENT '角色名称',
   `role_desc` varchar(40) DEFAULT NULL COMMENT '角色描述',
   `per_id` varchar(255) DEFAULT NULL COMMENT '权限ids: 1,2,5'
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='角色表';
-
-INSERT INTO `go_role` VALUES ('1', '经理', '经理角色(这是一些描述)', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22');
-INSERT INTO `go_role` VALUES ('2', '运营', '运营角色(这是一些描述)', '1,2,3,17,18,21,22');
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='角色表';
 
 -- 角色权限表
 DROP TABLE IF EXISTS `go_permission`;

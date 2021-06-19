@@ -82,6 +82,14 @@
                 </div>
             </div>
             <div class="layui-form-item">
+                <label class="layui-form-label">上级ID</label>
+                <div class="layui-input-block">
+                    <select id="select_pid" name="pid" lay-verify="required">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
                 <label class="layui-form-label">状态</label>
                 <div class="layui-input-block">
                     <select id="select_status" name="status" lay-verify="required">
@@ -123,6 +131,26 @@
         }
     });
 
+    //获取用户信息并赋值下拉框
+    $.ajax({
+        url: "/admin/adm/get",
+        type: "GET",
+        dataType: "json",
+        success: function (result) {
+            if (result.code == 0) {
+                for (var i = 0; i < result.count; i++) {
+                    $("#select_pid").append(new Option(result.data[i].user_name, result.data[i].id));
+                }
+                layui.form.render("select");
+            } else {
+                layer.msg(result.msg);
+            }
+        },
+        error: function () {
+            layer.msg("获取用户数据异常！");
+        }
+    });
+
     //表格渲染
     table.render({
         elem: '#dataDable',
@@ -130,7 +158,8 @@
         cols: [[
             { field: 'id', title: 'ID', sort: true },
             { field: 'user_name', title: '用户名' },
-            { field: 'role_name', title: '角色', sort: true },
+            { field: 'role_name', title: '角色' },
+            { field: 'pid', title: '上级ID' },
             { field: 'created_at', title: '创建时间' },
             { field: 'updated_at', title: '更新时间' },
             { field: 'last_login_time', title: '最后登陆时间' },
@@ -204,7 +233,7 @@
         index = layer.open({
             type: 1,
             title: "新增管理员",
-            area: ['450px', '440px'],
+            area: ['550px', '550px'],
             shade: 0,
             anim: 2,
             scrollbar: false,
@@ -265,7 +294,7 @@
             index = layer.open({
                 type: 1,
                 title: "修改管理员",
-                area: ['450px', '440px'],
+                area: ['550px', '550px'],
                 shade: 0,
                 anim: 2,
                 scrollbar: false,
@@ -277,6 +306,7 @@
                     $("#user_name").val(data.user_name);
                     $('#user_name').prop('disabled', true);
                     $("#select_role").val(data.role);
+                    $("#select_pid").val(data.pid);
                     $("#select_status").val(data.status);
                     layui.form.render("select");
                 },

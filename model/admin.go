@@ -15,6 +15,7 @@ type Admin struct {
 	UserName      string    `json:"user_name" form:"user_name" validate:"required,min=5,max=32" label:"用户名"`
 	Password      string    `json:"password" form:"password" validate:"required,min=6,max=64" label:"密码"`
 	Role          int       `json:"role" form:"role" validate:"required,numeric" label:"角色"`
+	Pid           int       `json:"pid" form:"pid" validate:"numeric" label:"上级ID"`
 	Status        int       `json:"status" form:"status" validate:"required,status" label:"状态"`
 	CreatedAt     time.Time `json:"created_at" form:"created_at"`
 	UpdatedAt     time.Time `json:"updated_at" form:"updated_at"`
@@ -73,6 +74,9 @@ func AdmUpdate(data *Admin) (bool, string) {
 	if !utils.Empty(data.Role) {
 		update["role"] = data.Role
 	}
+	if !utils.Empty(data.Pid) {
+		update["pid"] = data.Pid
+	}
 	if data.Status == 0 || data.Status == 1 {
 		update["status"] = data.Status //fuck,存在0值必须用map替代
 	}
@@ -89,12 +93,24 @@ type AdminGetResult struct {
 }
 
 // 查
-func AdminGet(page, limit int, search string) (*[]AdminGetResult, int) {
+func AdminGet(adminId, page, limit int, search string) (*[]AdminGetResult, int) {
 	var total int
 	var data []AdminGetResult
 	Db := db
 
 	Db = Db.Model(&Admin{}).Where("role!=?", 0) //0为内置超级管理员
+
+	if adminId != config.AdminId {
+		var find []Admin
+		if err := Db.Where("pid=?", adminId).Select("id").Scan(&find).Error; err != nil {
+			trace.Error("model.AdminGet.FindChilErr=" + err.Error())
+		}
+		if len(find) > 0 {
+			Db = Db.Where("pid=? or go_admin.id=?", adminId, adminId) // 存在下级用户
+		} else {
+			Db = Db.Where("go_admin.id=?", adminId) // 不存在下级用户,查出自己
+		}
+	}
 
 	if len(search) > 0 {
 		Db = Db.Where("`user_name` LIKE ?", "%"+search+"%")
@@ -106,7 +122,7 @@ func AdminGet(page, limit int, search string) (*[]AdminGetResult, int) {
 		Db = Db.Limit(limit).Offset((page - 1) * limit)
 	}
 
-	Db = Db.Select("go_admin.id,user_name,role,role_name,created_at,updated_at,last_login_time,last_login_ip,status")
+	Db = Db.Select("go_admin.id,user_name,role,pid,role_name,created_at,updated_at,last_login_time,last_login_ip,status")
 	Db = Db.Joins("left join go_role on go_admin.role=go_role.id")
 	Db = Db.Order("go_admin.id asc")
 
