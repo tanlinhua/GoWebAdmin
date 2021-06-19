@@ -60,6 +60,26 @@
 
 <script src="../../assets/layui.all.js"></script>
 <script>
+    var HtmlUtil = {
+        /*1.用浏览器内部转换器实现html转码*/
+        htmlEncode: function (html) {
+            var temp = document.createElement("div");
+            (temp.textContent != undefined) ? (temp.textContent = html) : (temp.innerText = html);
+            var output = temp.innerHTML;
+            temp = null;
+            return output;
+        },
+        /*2.用浏览器内部转换器实现html解码*/
+        htmlDecode: function (text) {
+            var temp = document.createElement("div");
+            temp.innerHTML = text;
+            var output = temp.innerText || temp.textContent;
+            temp = null;
+            return output;
+        }
+    };
+</script>
+<script>
     var element = layui.element;
     var table = layui.table;
     var form = layui.form;
@@ -155,7 +175,7 @@
                 formType: 2,
                 shade: 0,
                 title: '修改值',
-                value: data.value
+                value: HtmlUtil.htmlDecode(data.value)
             }, function (val, index) {
                 $.ajax({
                     url: "/admin/params/update",
