@@ -33,7 +33,7 @@ vim /etc/security/limits.conf  
 * hard nofile 65535
 soft/hard前面的 * 表示所有用户
 ```
-[或者通过此方案限制并发数](https://github.com/tanlinhua/GoTestDemo/blob/main/goroutine/semaphore/main.go)
+[或者通过此方案限制并发数](pkg/gpool/docs/demo.md)
 
 
 ### [redis常用命令](https://www.runoob.com/redis/redis-tutorial.html)
@@ -106,6 +106,8 @@ func InitVueAdminServer() {
 > [微服务.rpcx](https://github.com/smallnest/rpcx)
 
 > [gnet网络框架](https://github.com/panjf2000/gnet)
+
+> [协程池](https://github.com/panjf2000/ants)
 
 > [设计模式](https://github.com/tanlinhua/golang-design-pattern)
 
