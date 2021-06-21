@@ -172,7 +172,9 @@ func AdmAdd(c *gin.Context) {
 		resp.Error(-1, err.Error())
 		return
 	}
-	ok, msg := model.AdmAdd(&admin)
+	adminId, _ := c.Get("admin_id")
+
+	ok, msg := model.AdmAdd(adminId.(int), &admin)
 	if ok {
 		resp.Success(nil, 0)
 	} else {
@@ -214,9 +216,10 @@ func AdmGet(c *gin.Context) {
 	page, _ := strconv.Atoi(c.Query("page"))
 	limit, _ := strconv.Atoi(c.Query("limit"))
 	search := c.Query("search")
+	role := c.Query("role")
 
 	adminId, _ := c.Get("admin_id")
-	datas, total := model.AdminGet(adminId.(int), page, limit, search)
+	datas, total := model.AdminGet(adminId.(int), page, limit, search, role)
 
 	response.New(c).Success(datas, total)
 }

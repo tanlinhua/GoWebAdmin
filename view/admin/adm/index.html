@@ -36,6 +36,16 @@
                                 <div class="layui-input-inline">
                                     <input type="text" placeholder="支持模糊查询" autocomplete="off" class="layui-input" id="searchInput" name="searchInput">
                                 </div>
+                                <div class="layui-inline">
+                                    <div class="layui-input-inline">
+                                        <div class="layui-form-mid">角色:</div>
+                                        <div class="layui-input-inline" style="width: 120px;">
+                                            <select id="select_role_id" name="select_role_id" lay-verify="required">
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                                 <button class="layui-btn layui-btn-blue" onclick="return false;" data-type="reload" id="searchBtn">查询</button>
                                 <button class="layui-btn layui-btn-green" onclick="addAdmin();return false;" id="addBtn">新增</button>
                                 <button onclick="javascript:location.reload();" class="layui-btn layui-btn-primary">刷新</button>
@@ -120,6 +130,7 @@
             if (result.code == 0) {
                 for (var i = 0; i < result.count; i++) {
                     $("#select_role").append(new Option(result.data[i].role_name, result.data[i].id));
+                    $("#select_role_id").append(new Option(result.data[i].role_name, result.data[i].id));
                 }
                 layui.form.render("select");
             } else {
@@ -210,6 +221,7 @@
     //查询并表格重载
     var $ = layui.$, active = {
         reload: function () {
+            var role_id = $('#select_role_id').val();
             var searchInput = $('#searchInput');
             let currpage = 1;//$('.layui-laypage-em').next().text(); //当前页
             //执行重载
@@ -218,7 +230,8 @@
                     curr: currpage
                 }
                 , where: {
-                    search: searchInput.val() //附加检索条件
+                    search: searchInput.val(),
+                    role: role_id
                 }
             });
         }

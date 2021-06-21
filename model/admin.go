@@ -24,7 +24,7 @@ type Admin struct {
 }
 
 // 增
-func AdmAdd(data *Admin) (bool, string) {
+func AdmAdd(adminId int, data *Admin) (bool, string) {
 	ok, msg := validator.Validate(data)
 	if !ok {
 		return ok, msg
@@ -35,6 +35,10 @@ func AdmAdd(data *Admin) (bool, string) {
 	}
 	data.Password = utils.Md5(data.Password)
 	data.LastLoginTime = time.Now()
+	// 如果不是超级管理员新建用户,上级ID只允许是他自己
+	if adminId != config.AdminId {
+		data.Pid = adminId
+	}
 	err := db.Create(data).Error
 	if err != nil {
 		return false, err.Error()
@@ -93,7 +97,7 @@ type AdminGetResult struct {
 }
 
 // 查
-func AdminGet(adminId, page, limit int, search string) (*[]AdminGetResult, int) {
+func AdminGet(adminId, page, limit int, search, role string) (*[]AdminGetResult, int) {
 	var total int
 	var data []AdminGetResult
 	Db := db
@@ -114,6 +118,9 @@ func AdminGet(adminId, page, limit int, search string) (*[]AdminGetResult, int) 
 
 	if len(search) > 0 {
 		Db = Db.Where("`user_name` LIKE ?", "%"+search+"%")
+	}
+	if len(role) > 0 {
+		Db = Db.Where("role=?", role)
 	}
 
 	Db.Count(&total) //1.查询总数
