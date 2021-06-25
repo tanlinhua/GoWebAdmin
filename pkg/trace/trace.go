@@ -17,7 +17,7 @@ func Error(msg string) {
 }
 
 func writer(msg string, level string) {
-	filePath := "runtime/trace/"
+	filePath := "runtime/" + level + "/"
 
 	logWriter, _ := retalog.New(
 		filePath+"%Y%m%d.log",
