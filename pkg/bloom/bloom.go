@@ -17,8 +17,16 @@ func (f *BloomFilter) Add(key string) {
 	f.AddString(key)
 }
 
-func (f *BloomFilter) Exist(key string) bool {
+func (f *BloomFilter) Test(key string) bool {
 	return f.TestString(key)
+}
+
+func (f *BloomFilter) TestAndAdd(key string) bool {
+	return f.TestAndAddString(key)
+}
+
+func (f *BloomFilter) Clear() {
+	f.ClearAll()
 }
 
 /*
