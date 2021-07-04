@@ -111,6 +111,10 @@ func InitVueAdminServer() {
 
 > [设计模式](https://github.com/tanlinhua/golang-design-pattern)
 
+> [pprof](https://github.com/gin-contrib/pprof)
+
+> [websocket](github.com/gorilla/websocket)
+
 ## TODO
 
 ### go gin 项目 热更新 & 优雅的重启
