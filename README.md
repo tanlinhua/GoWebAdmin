@@ -128,3 +128,5 @@ func InitVueAdminServer() {
 - https://github.com/nicksnyder/go-i18n
 
 ### 升级Grom到2.0
+
+### [go gin zap](https://www.liwenzhou.com/posts/Go/use_zap_in_gin/)
