@@ -24,14 +24,20 @@ ps -ef|grep main
 ->kill -9 pid
 ```
 
-### centos 1W并发http.Get报错(socket: too many open files)
+### socket: too many open files
 ```
-永久修改open files 方法
-vim /etc/security/limits.conf  
-在最后加入  
+vim /etc/security/limits.conf
+在最后加入
 * soft nofile 65535
 * hard nofile 65535
-soft/hard前面的 * 表示所有用户
+
+* soft nproc 65535
+* hard nproc 65535
+
+tips↓
+* 表示所有用户
+soft/hard 软硬限制
+nproc 最大线程数 / nofile 最大文件数
 ```
 [或者通过此方案限制并发数](pkg/gpool/docs/demo.md)
 
