@@ -123,6 +123,18 @@ func InitVueAdminServer() {
 
 > [telegram api](https://github.com/go-telegram-bot-api/telegram-bot-api)
 
+## 一些值得学习的项目
+
+> [设计模式 Golang实现](https://github.com/senghoo/golang-design-pattern)
+
+> [Go 语言实现的快速、稳定、内嵌的 k-v 数据库。](https://github.com/roseduan/rosedb)
+
+> [NSQ](https://github.com/nsqio/nsq)
+
+> [go-shadowsocks2](https://github.com/shadowsocks/go-shadowsocks2)
+
+> [Gin-vue-admin](https://github.com/flipped-aurora/gin-vue-admin)
+
 ## TODO
 
 ### i18n
