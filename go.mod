@@ -33,5 +33,6 @@ require (
 	github.com/stretchr/testify v1.7.0 // indirect
 	github.com/swaggo/gin-swagger v1.3.0
 	github.com/swaggo/swag v1.7.0
+	github.com/tidwall/gjson v1.8.1
 	gopkg.in/ini.v1 v1.62.0
 )

@@ -29,6 +29,10 @@ var (
 	JwtKey string
 
 	SwaggerIsOpen int
+
+	TgHost   string
+	TgToken  string
+	TgChatId string
 )
 
 //配置文件
@@ -43,6 +47,7 @@ func init() {
 	loadDatabase(file)
 	loadRedis(file)
 	loadOther(file)
+	loadNotify(file)
 }
 
 func loadServer(file *ini.File) {
@@ -75,4 +80,10 @@ func loadRedis(file *ini.File) {
 func loadOther(file *ini.File) {
 	JwtKey = file.Section("jwt").Key("JwtKey").MustString("89js82js72")
 	SwaggerIsOpen = file.Section("swagger").Key("IsOpen").MustInt(0)
+}
+
+func loadNotify(file *ini.File) {
+	TgHost = file.Section("notify").Key("TgHost").MustString("https://api.telegram.org/")
+	TgToken = file.Section("notify").Key("TgToken").MustString("")
+	TgChatId = file.Section("notify").Key("TgChatId").MustString("")
 }
