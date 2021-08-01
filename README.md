@@ -121,13 +121,9 @@ func InitVueAdminServer() {
 
 > [websocket](github.com/gorilla/websocket)
 
+> [telegram api](https://github.com/go-telegram-bot-api/telegram-bot-api)
+
 ## TODO
-
-### go gin 项目 热更新 & 优雅的重启
-
-- https://www.liwenzhou.com/posts/Go/deploy_go_app/
-- [Docker](https://blog.csdn.net/u010214802/article/details/90674343)
-- https://github.com/gravityblast/fresh
 
 ### i18n
 - https://xuanwo.io/2019/12/11/golang-i18n/
