@@ -11,8 +11,8 @@ import (
 
 	"github.com/tanlinhua/go-web-admin/controller/api"
 	"github.com/tanlinhua/go-web-admin/pkg/config"
-	"github.com/tanlinhua/go-web-admin/pkg/middleware"
 	"github.com/tanlinhua/go-web-admin/pkg/response"
+	"github.com/tanlinhua/go-web-admin/service/middleware"
 )
 
 // 初始化API HTTP服务

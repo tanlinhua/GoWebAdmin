@@ -6,8 +6,8 @@ import (
 
 	"github.com/tanlinhua/go-web-admin/model"
 	"github.com/tanlinhua/go-web-admin/pkg/config"
-	"github.com/tanlinhua/go-web-admin/pkg/cron"
 	"github.com/tanlinhua/go-web-admin/router"
+	"github.com/tanlinhua/go-web-admin/service/cron"
 )
 
 // @title GoWeb
@@ -20,7 +20,7 @@ func main() {
 	versionInfo()
 
 	model.InitDB()
-	go cron.Work()
+	go cron.Run()
 	go router.InitAdmServer()
 	router.InitApiServer()
 }

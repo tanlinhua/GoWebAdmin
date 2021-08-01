@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/tanlinhua/go-web-admin/controller/admin"
 	"github.com/tanlinhua/go-web-admin/pkg/config"
-	"github.com/tanlinhua/go-web-admin/pkg/middleware"
+	"github.com/tanlinhua/go-web-admin/service/middleware"
 )
 
 // 初始化Admin HTTP服务

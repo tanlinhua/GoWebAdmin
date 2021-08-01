@@ -4,7 +4,7 @@ import (
 	"github.com/robfig/cron"
 )
 
-func Work() {
+func Run() {
 	c := cron.New()
 
 	c.AddFunc(specTest1, test1)
