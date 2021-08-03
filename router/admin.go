@@ -5,7 +5,7 @@ import (
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 	"github.com/tanlinhua/go-web-admin/controller/admin"
-	"github.com/tanlinhua/go-web-admin/pkg/config"
+	"github.com/tanlinhua/go-web-admin/service/config"
 	"github.com/tanlinhua/go-web-admin/service/middleware"
 )
 
