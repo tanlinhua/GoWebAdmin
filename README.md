@@ -46,6 +46,18 @@ tips↓
 soft/hard 软硬限制
 nproc 最大线程数 / nofile 最大文件数
 ```
+```
+临时修改
+cat /proc/39977/limits
+prlimit --nofile=65536:65536 --pid 39977
+
+查看当前系统打开的文件数量,代码如下:
+lsof | wc -l
+watch "lsof | wc -l"
+
+查看某一进程的打开文件数量,代码如下:
+lsof -p 3490 | wc -l
+```
 [或者通过此方案限制并发数](pkg/gpool/docs/demo.md)
 
 
