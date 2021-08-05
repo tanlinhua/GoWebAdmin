@@ -88,6 +88,9 @@ func InitVueAdminServer() {
 
 ## 一些库👇
 
+> [合集1](https://learnku.com/articles/56078)
+> [合集2](https://learnku.com/articles/41230)
+
 > [Go 开发者路线图](https://github.com/Alikhll/golang-developer-roadmap/blob/master/i18n/zh-CN/ReadMe-zh-CN.md)
 
 > [alipay](https://github.com/smartwalle/alipay)
@@ -129,6 +132,11 @@ func InitVueAdminServer() {
 > [websocket](github.com/gorilla/websocket)
 
 > [telegram api](https://github.com/go-telegram-bot-api/telegram-bot-api)
+
+> [key/value database](https://github.com/etcd-io/bbolt)
+
+> [csrf](https://github.com/gorilla/csrf)
+
 
 ## 一些值得学习的项目
 
