@@ -43,6 +43,16 @@ sudo yum -y install golang
 ```
 ```
 
+## Composer
+```
+wget -O composer-setup.php https://getcomposer.org/installer
+sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+composer -v
+composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
+更新
+sudo composer self-update
+```
+
 ## 一些配置
 ```
 桌面配置工具
