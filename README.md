@@ -26,9 +26,9 @@ go build main.go
 
 ### 程序目录执行后台运行命令
 ```
-nohup ./main >> /www/wwwroot/main.go.nohup.output.`date +%Y-%m-%d`.log 2>&1 &
+nohup ./main >> /www/wwwroot/nohup.output.log 2>&1 &
 ps -ef|grep main
-->kill -9 pid
+kill -9 pid
 ```
 
 ### socket: too many open files
