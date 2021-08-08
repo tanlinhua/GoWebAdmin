@@ -59,3 +59,7 @@ sudo composer self-update
 sudo apt  install gnome-tweaks
 终端输入 gnome-tweaks 命令打开
 ```
+```
+点击任务栏最小化
+gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize'
+```
