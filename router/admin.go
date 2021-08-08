@@ -1,12 +1,16 @@
 package router
 
 import (
+	"html/template"
+	"net/http"
+
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 	"github.com/tanlinhua/go-web-admin/controller/admin"
 	"github.com/tanlinhua/go-web-admin/service/config"
 	"github.com/tanlinhua/go-web-admin/service/middleware"
+	"github.com/tanlinhua/go-web-admin/view"
 )
 
 // 初始化Admin HTTP服务
@@ -37,9 +41,19 @@ func initAdmMiddleware(e *gin.Engine) {
 
 // 静态资源
 func initAdmResources(e *gin.Engine) {
-	e.Static("assets", "view/static/assets")
-	e.StaticFile("favicon.ico", "view/static/favicon.ico")
-	e.LoadHTMLGlob("view/admin/**/*")
+	// e.Static("assets", "view/static/assets")
+	// e.StaticFile("favicon.ico", "view/static/favicon.ico")
+	// e.LoadHTMLGlob("view/admin/**/*")
+
+	templ := template.Must(template.New("").ParseFS(view.Admin, "admin/**/*"))
+	e.SetHTMLTemplate(templ)
+
+	e.StaticFS("view", http.FS(view.Static))
+
+	e.GET("favicon.ico", func(c *gin.Context) {
+		file, _ := view.Static.ReadFile("favicon.ico")
+		c.Data(http.StatusOK, "image/x-icon", file)
+	})
 }
 
 // 路由配置 -> ADMIN
