@@ -12,6 +12,8 @@ yum install -y supervisor
 yum install -y python-setuptools
 easy_install supervisor
 echo_supervisord_conf >/etc/supervisord.conf
+
+# 宝塔安装
 ```
 查看是否安装成功
 
@@ -155,3 +157,53 @@ command中指定的进程已经起来，但supervisor还不断重启
 问题描述：在运行supervisord -c /etc/supervisord.conf之前，直接运行过supervisord -c /etc/supervisord.d/xx.conf导致有些进程被多个superviord管理，无法正常关闭进程。
 解决办法：使用ps -fe | grep supervisord查看所有启动过的supervisord服务，kill相关的进程。
 ```
+
+## 遇到的坑
+
+### socket: too many open files
+
+```
+vim /etc/security/limits.conf
+在最后加入
+* soft nofile 65535
+* hard nofile 65535
+
+* soft nproc 65535
+* hard nproc 65535
+
+tips↓
+* 表示所有用户
+soft/hard 软硬限制
+nproc 最大线程数 / nofile 最大文件数
+```
+
+```
+supervisor 控制的程序
+CentOS 上使用系统自带的 supervisor，使用 systemd 启动 supervisord 的服务。被 supervisor 管理的程序，
+继承的是 systemd 对应的限制，如果需要修改的话，就需要在启动.service 文件里面修改对应的限制
+
+方法1:
+vi /usr/lib/systemd/system/supervisord.service
+
+[Service]
+Type=forking
+LimitNOFILE=102400
+LimitNPROC=102400
+
+方法2:
+vi /etc/supervisord.conf
+minfds=102400
+```
+
+```
+一些命令
+查看当前程序nofile限制: cat /proc/39977/limits
+临时修改: prlimit --nofile=65536:65536 --pid 39977
+查看当前系统打开的文件数量,代码如下:
+lsof | wc -l
+watch "lsof | wc -l"
+
+查看某一进程的打开文件数量,代码如下:
+lsof -p 3490 | wc -l
+```
+[或者通过此方案限制并发数](../../pkg/gpool/docs/demo.md)

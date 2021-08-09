@@ -17,65 +17,21 @@ go env -w GO111MODULE=on
 go env -w GOPROXY=https://goproxy.io,direct
 ```
 
-### go交叉编译
+### 交叉编译
 ```
 SET GOOS=linux
 SET GOARCH=amd64
 go build main.go
 ```
 
-### 程序目录执行后台运行命令
+### 部署
+1. nohup
 ```
 nohup ./main >> /www/wwwroot/nohup.output.log 2>&1 &
 ps -ef|grep main
 kill -9 pid
 ```
-
-### socket: too many open files
-```
-vim /etc/security/limits.conf
-在最后加入
-* soft nofile 65535
-* hard nofile 65535
-
-* soft nproc 65535
-* hard nproc 65535
-
-tips↓
-* 表示所有用户
-soft/hard 软硬限制
-nproc 最大线程数 / nofile 最大文件数
-```
-```
-临时修改
-cat /proc/39977/limits
-prlimit --nofile=65536:65536 --pid 39977
-
-查看当前系统打开的文件数量,代码如下:
-lsof | wc -l
-watch "lsof | wc -l"
-
-查看某一进程的打开文件数量,代码如下:
-lsof -p 3490 | wc -l
-```
-```
-supervisor 控制的程序
-CentOS 上使用系统自带的 supervisor，使用 systemd 启动 supervisord 的服务。被 supervisor 管理的程序，
-继承的是 systemd 对应的限制，如果需要修改的话，就需要在启动.service 文件里面修改对应的限制
-
-方法1:
-vi /usr/lib/systemd/system/supervisord.service
-
-[Service]
-Type=forking
-LimitNOFILE=102400
-LimitNPROC=102400
-方法2:
-vi /etc/supervisord.conf
-minfds=102400
-```
-[或者通过此方案限制并发数](pkg/gpool/docs/demo.md)
-
+2. [Supervisor](docs/一些笔记/Supervisor.md)
 
 ### [redis常用命令](https://www.runoob.com/redis/redis-tutorial.html)
 ```
