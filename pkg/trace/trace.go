@@ -16,6 +16,10 @@ func Error(msg string) {
 	writer(msg, "error")
 }
 
+func Info(msg string) {
+	writer(msg, "info")
+}
+
 func writer(msg string, level string) {
 	filePath := "runtime/" + level + "/"
 
@@ -47,7 +51,9 @@ func writer(msg string, level string) {
 		entry.Debug()
 	case "error":
 		entry.Error()
-	default:
+	case "info":
 		entry.Info()
+	default:
+		entry.Warn()
 	}
 }
