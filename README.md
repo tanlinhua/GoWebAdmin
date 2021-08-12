@@ -121,6 +121,8 @@ func InitVueAdminServer() {
 
 > [csrf](https://github.com/gorilla/csrf)
 
+> [异步任务框架](https://github.com/RichardKnop/machinery)
+
 
 ## 一些值得学习的项目
 
