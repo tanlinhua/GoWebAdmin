@@ -32,7 +32,7 @@ func InitApiServer() {
 
 // 404
 func HandleNotFound(c *gin.Context) {
-	response.New(c).Error(404, "资源未找到")
+	response.New(c).Error(404, "not found")
 }
 
 // 中间件
