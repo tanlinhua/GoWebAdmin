@@ -27,6 +27,9 @@ vi /etc/docker/daemon.json
 "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]
 }
 
+为了避免每次命令都输入sudo，可以设置用户权限，注意执行后须注销重新登录
+sudo usermod -a -G docker $USER
+
 查看镜像
 docker images
 删除镜像
