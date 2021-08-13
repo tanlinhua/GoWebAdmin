@@ -20,9 +20,11 @@ func main() {
 	versionInfo()
 
 	model.InitDB()
-	go cron.Run()
+
 	go router.InitAdmServer()
-	router.InitApiServer()
+	go router.InitApiServer()
+
+	cron.Run()
 }
 
 var (
