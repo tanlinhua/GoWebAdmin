@@ -11,16 +11,16 @@ import (
 
 // 管理者模型
 type Admin struct {
-	Id            int       `json:"id" form:"id" validate:"numeric"`
-	UserName      string    `json:"user_name" form:"user_name" validate:"required,min=5,max=32" label:"用户名"`
-	Password      string    `json:"password" form:"password" validate:"required,min=6,max=64" label:"密码"`
-	Role          int       `json:"role" form:"role" validate:"required,numeric" label:"角色"`
-	Pid           int       `json:"pid" form:"pid" validate:"numeric" label:"上级ID"`
-	Status        int       `json:"status" form:"status" validate:"required,status" label:"状态"`
-	CreatedAt     time.Time `json:"created_at" form:"created_at"`
-	UpdatedAt     time.Time `json:"updated_at" form:"updated_at"`
-	LastLoginTime time.Time `json:"last_login_time" form:"last_login_time"`
-	LastLoginIp   string    `json:"last_login_ip" form:"last_login_ip"`
+	Id            int        `json:"id" form:"id" validate:"numeric"`
+	UserName      string     `json:"user_name" form:"user_name" validate:"required,min=5,max=32" label:"用户名"`
+	Password      string     `json:"password" form:"password" validate:"required,min=6,max=64" label:"密码"`
+	Role          int        `json:"role" form:"role" validate:"required,numeric" label:"角色"`
+	Pid           int        `json:"pid" form:"pid" validate:"numeric" label:"上级ID"`
+	Status        int        `json:"status" form:"status" validate:"required,status" label:"状态"`
+	CreatedAt     TimeNormal `json:"created_at" form:"created_at"`
+	UpdatedAt     TimeNormal `json:"updated_at" form:"updated_at"`
+	LastLoginTime TimeNormal `json:"last_login_time" form:"last_login_time"`
+	LastLoginIp   string     `json:"last_login_ip" form:"last_login_ip"`
 }
 
 // 增
@@ -34,7 +34,7 @@ func AdmAdd(adminId int, data *Admin) (bool, string) {
 		return false, "用户名已存在"
 	}
 	data.Password = utils.Md5(data.Password)
-	data.LastLoginTime = time.Now()
+	data.LastLoginTime = TimeNormal{time.Now()}
 	// 如果不是超级管理员新建用户,上级ID只允许是他自己
 	if adminId != config.AdminId {
 		data.Pid = adminId
@@ -164,7 +164,7 @@ func AdminLoginTimeAndIp(id int, ip string, loginTime time.Time) {
 	var admin Admin
 	admin.Id = id
 	admin.LastLoginIp = ip
-	admin.LastLoginTime = loginTime
+	admin.LastLoginTime = TimeNormal{loginTime}
 	err := db.Model(&admin).Updates(admin).Error
 	if err != nil {
 		trace.Error("AdminLoginTimeAndIp.Error=" + err.Error())
