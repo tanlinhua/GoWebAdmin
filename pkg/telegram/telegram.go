@@ -1,4 +1,4 @@
-package notify
+package telegram
 
 import (
 	"github.com/tanlinhua/go-web-admin/app/config"
@@ -8,7 +8,7 @@ import (
 )
 
 // 发送telegram消息
-func SendTelegarmMessage(msg string) {
+func SendMessage(msg string) {
 	url := config.TgHost + "bot" + config.TgToken + "/sendMessage"
 
 	var params = make(map[string]string)
