@@ -60,6 +60,8 @@ func initApiRouter(e *gin.Engine) {
 	e.POST("api/user/login", api.UserLogin)
 	e.POST("api/user/reg", api.UserRegister)
 
+	e.POST("api/test/upload", api.TestUpload)
+
 	auth := e.Group("/api")
 	auth.Use(middleware.CheckJWT())
 	{
