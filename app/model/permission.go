@@ -3,9 +3,9 @@ package model
 import (
 	"strconv"
 
+	"github.com/tanlinhua/go-web-admin/app/config"
 	"github.com/tanlinhua/go-web-admin/pkg/trace"
 	"github.com/tanlinhua/go-web-admin/pkg/utils"
-	"github.com/tanlinhua/go-web-admin/service/config"
 )
 
 // 权限模型

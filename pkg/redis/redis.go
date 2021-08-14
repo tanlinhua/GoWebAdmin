@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/go-redis/redis"
-	"github.com/tanlinhua/go-web-admin/service/config"
+	"github.com/tanlinhua/go-web-admin/app/config"
 )
 
 var Redis *RedisClient

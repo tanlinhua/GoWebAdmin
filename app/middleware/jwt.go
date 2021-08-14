@@ -6,8 +6,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"
+	"github.com/tanlinhua/go-web-admin/app/config"
 	"github.com/tanlinhua/go-web-admin/pkg/response"
-	"github.com/tanlinhua/go-web-admin/service/config"
 )
 
 var JwtKey = []byte(config.JwtKey)

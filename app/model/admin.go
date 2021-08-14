@@ -3,10 +3,10 @@ package model
 import (
 	"time"
 
+	"github.com/tanlinhua/go-web-admin/app/config"
 	"github.com/tanlinhua/go-web-admin/pkg/trace"
 	"github.com/tanlinhua/go-web-admin/pkg/utils"
 	"github.com/tanlinhua/go-web-admin/pkg/validator"
-	"github.com/tanlinhua/go-web-admin/service/config"
 )
 
 // 管理者模型

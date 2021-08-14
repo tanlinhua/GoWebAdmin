@@ -1,12 +1,12 @@
-package view
+package public
 
 import "embed"
-
-//go:embed admin/*
-var Admin embed.FS
 
 //go:embed static/*
 var Static embed.FS
 
-// Tips
+// //go:embed app/*
+// var AppView embed.FS
+
+// Tips👇
 // https://www.cnblogs.com/apocelipes/p/13907858.html

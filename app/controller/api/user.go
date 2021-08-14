@@ -4,9 +4,9 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/tanlinhua/go-web-admin/model"
+	"github.com/tanlinhua/go-web-admin/app/middleware"
+	"github.com/tanlinhua/go-web-admin/app/model"
 	"github.com/tanlinhua/go-web-admin/pkg/response"
-	"github.com/tanlinhua/go-web-admin/service/middleware"
 )
 
 // @Tags 用户模块

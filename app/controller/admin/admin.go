@@ -7,12 +7,12 @@ import (
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"github.com/tanlinhua/go-web-admin/model"
+	"github.com/tanlinhua/go-web-admin/app/config"
+	"github.com/tanlinhua/go-web-admin/app/model"
 	"github.com/tanlinhua/go-web-admin/pkg/captcha"
 	"github.com/tanlinhua/go-web-admin/pkg/google"
 	"github.com/tanlinhua/go-web-admin/pkg/response"
 	"github.com/tanlinhua/go-web-admin/pkg/utils"
-	"github.com/tanlinhua/go-web-admin/service/config"
 )
 
 // 验证码

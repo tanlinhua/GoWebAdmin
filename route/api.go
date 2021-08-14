@@ -1,4 +1,4 @@
-package router
+package route
 
 import (
 	"os"
@@ -9,10 +9,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/tanlinhua/go-web-admin/controller/api"
+	"github.com/tanlinhua/go-web-admin/app/config"
+	"github.com/tanlinhua/go-web-admin/app/controller/api"
+	"github.com/tanlinhua/go-web-admin/app/middleware"
 	"github.com/tanlinhua/go-web-admin/pkg/response"
-	"github.com/tanlinhua/go-web-admin/service/config"
-	"github.com/tanlinhua/go-web-admin/service/middleware"
 )
 
 // 初始化API HTTP服务

@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"runtime"
 
-	"github.com/tanlinhua/go-web-admin/model"
-	"github.com/tanlinhua/go-web-admin/router"
-	"github.com/tanlinhua/go-web-admin/service/config"
-	"github.com/tanlinhua/go-web-admin/service/cron"
+	"github.com/tanlinhua/go-web-admin/app/config"
+	"github.com/tanlinhua/go-web-admin/app/model"
+	"github.com/tanlinhua/go-web-admin/app/service/cron"
+	"github.com/tanlinhua/go-web-admin/route"
 )
 
 // @title GoWeb
@@ -21,8 +21,8 @@ func main() {
 
 	model.InitDB()
 
-	go router.InitAdmServer()
-	go router.InitApiServer()
+	go route.InitAdmServer()
+	go route.InitApiServer()
 
 	cron.Run()
 }
@@ -31,7 +31,7 @@ var (
 	AppName    = "GoWebAdmin"
 	AppVersion = "1.0"
 	GoVersion  = runtime.Version()
-	ApiDoc     = "http://host:port/api/doc/index.html"
+	ApiDoc     = "http://" + config.ExtIP + ":" + config.APIPort + "/api/doc/index.html"
 )
 
 func versionInfo() {

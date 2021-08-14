@@ -10,6 +10,7 @@ var (
 	AppMode   string
 	APIPort   string
 	AdminPort string
+	ExtIP     string
 
 	AdminId   int
 	AdminName string
@@ -54,6 +55,7 @@ func loadServer(file *ini.File) {
 	AppMode = file.Section("server").Key("AppMode").MustString("debug")
 	APIPort = file.Section("server").Key("APIPort").MustString("3030")
 	AdminPort = file.Section("server").Key("AdminPort").MustString("3031")
+	ExtIP = file.Section("server").Key("ExtIP").MustString("")
 }
 
 func loadAdmin(file *ini.File) {

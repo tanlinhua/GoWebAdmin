@@ -1,4 +1,4 @@
-package router
+package route
 
 import (
 	"html/template"
@@ -7,10 +7,11 @@ import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
-	"github.com/tanlinhua/go-web-admin/controller/admin"
-	"github.com/tanlinhua/go-web-admin/service/config"
-	"github.com/tanlinhua/go-web-admin/service/middleware"
-	"github.com/tanlinhua/go-web-admin/view"
+	"github.com/tanlinhua/go-web-admin/app/config"
+	"github.com/tanlinhua/go-web-admin/app/controller/admin"
+	"github.com/tanlinhua/go-web-admin/app/middleware"
+	"github.com/tanlinhua/go-web-admin/app/view"
+	"github.com/tanlinhua/go-web-admin/public"
 )
 
 // 初始化Admin HTTP服务
@@ -48,10 +49,10 @@ func initAdmResources(e *gin.Engine) {
 	templ := template.Must(template.New("").ParseFS(view.Admin, "admin/**/*"))
 	e.SetHTMLTemplate(templ)
 
-	e.StaticFS("view", http.FS(view.Static))
+	e.StaticFS("view", http.FS(public.Static))
 
 	e.GET("favicon.ico", func(c *gin.Context) {
-		file, _ := view.Static.ReadFile("favicon.ico")
+		file, _ := public.Static.ReadFile("favicon.ico")
 		c.Data(http.StatusOK, "image/x-icon", file)
 	})
 }
