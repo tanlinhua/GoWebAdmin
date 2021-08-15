@@ -135,6 +135,7 @@ func InitVueAdminServer() {
 - https://xuanwo.io/2019/12/11/golang-i18n/
 - https://github.com/nicksnyder/go-i18n
 - https://goframe.org/pages/viewpage.action?pageId=7301652
+- https://github.com/suisrc/gin-i18n
 
 ### 升级Grom到2.0
 
