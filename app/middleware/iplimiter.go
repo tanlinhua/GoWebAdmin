@@ -7,7 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis"
-	my "github.com/tanlinhua/go-web-admin/pkg/redis"
+	rdb "github.com/tanlinhua/go-web-admin/pkg/redis"
 	"github.com/tanlinhua/go-web-admin/pkg/response"
 )
 
@@ -19,7 +19,7 @@ func IpLimiter() gin.HandlerFunc {
 
 	key := "ipLimiter"
 
-	if my.Redis == nil {
+	if rdb.Handler == nil {
 		fmt.Println("IpLimiter: redis未就绪")
 		return func(c *gin.Context) {}
 	}
@@ -29,9 +29,9 @@ func IpLimiter() gin.HandlerFunc {
 		now := time.Now().UnixNano()
 		max := fmt.Sprint(now - (slidingWindow.Nanoseconds()))
 
-		my.Redis.ZRemRangeByScore(userCntKey, "0", max).Result()
+		rdb.Handler.ZRemRangeByScore(userCntKey, "0", max).Result()
 
-		reqs, _ := my.Redis.ZRange(userCntKey, 0, -1).Result()
+		reqs, _ := rdb.Handler.ZRange(userCntKey, 0, -1).Result()
 
 		if len(reqs) >= limit {
 			// c.AbortWithStatusJSON(http.StatusTooManyRequests, gin.H{"status": http.StatusTooManyRequests, "message": "too many request"})
@@ -41,10 +41,9 @@ func IpLimiter() gin.HandlerFunc {
 		}
 
 		c.Next()
-		my.Redis.ZAddNX(userCntKey, redis.Z{Score: float64(now), Member: float64(now)})
-		my.Redis.Expire(userCntKey, slidingWindow)
+		rdb.Handler.ZAddNX(userCntKey, redis.Z{Score: float64(now), Member: float64(now)})
+		rdb.Handler.Expire(userCntKey, slidingWindow)
 	}
-
 }
 
 // https://github.com/imtoori/gin-redis-ip-limiter

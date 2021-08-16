@@ -8,23 +8,29 @@ import (
 	"github.com/tanlinhua/go-web-admin/app/config"
 )
 
-var Redis *RedisClient
+var Handler *RedisClient
 
-// RedisClient extend client and have itself func
 type RedisClient struct {
 	*redis.Client
 }
 
-// Init the redis client
-func NewRedisClient() error {
-	if Redis != nil {
+func init() {
+	err := new()
+	if err != nil {
+		fmt.Println("redis初始化失败", err.Error())
+	}
+}
+
+func new() error {
+	if Handler != nil {
 		return nil
 	}
 	client := redis.NewClient(&redis.Options{
-		Addr:     config.RedisAddr,
-		Password: config.RedisPWD,
-		DB:       config.RedisDB,
-		PoolSize: 10, //连接池大小
+		Addr:     config.RedisAddr, //HOST
+		Password: config.RedisPWD,  //密码
+		DB:       config.RedisDB,   //DB
+		PoolSize: 10,               //连接池大小
+
 		//超时
 		DialTimeout:  5 * time.Second, //连接建立超时时间，默认5秒。
 		ReadTimeout:  3 * time.Second, //读超时，默认3秒， -1表示取消读超时
@@ -52,58 +58,64 @@ func NewRedisClient() error {
 	if err != nil {
 		return err
 	}
-	Redis = &RedisClient{client}
+	Handler = &RedisClient{client}
 	return nil
 }
 
-// init the redis  client
-func init() {
-	err := NewRedisClient()
-	if err != nil {
-		fmt.Println("redis初始化失败", err.Error())
-	}
-}
-
-// get the redis client，if client not initialization
-// and create the redis client
-func GetRedisClient() (*RedisClient, error) {
-	if Redis == nil {
-		err := NewRedisClient()
+// 获取redis操作对象
+func GetClient() (*RedisClient, error) {
+	if Handler == nil {
+		err := new()
 		if err != nil {
 			return nil, err
 		}
-		return Redis, nil
+		return Handler, nil
 	}
-	return Redis, nil
+	return Handler, nil
 }
 
-// close the redis client
-func (redis *RedisClient) CloseRedis() {
-	redis.Close()
+func (rdb *RedisClient) CloseRedis() {
+	rdb.Close()
 }
 
-// 设置KEY-VALUE类型缓存
-// expTime为过期时间,单位秒,0为永不过期
-func (redis *RedisClient) SSet(key string, value interface{}, expTime int32) error {
-	return redis.Set(key, value, time.Duration(expTime)*time.Second).Err()
+//---------------------------------------------------------
+// 常用功能封装
+// 未封装的使用示例:
+// import rdb "github.com/tanlinhua/go-web-admin/pkg/redis"
+// rdb.Handler.ZRange
+//---------------------------------------------------------
+
+// 设置KEY-VALUE类型缓存,expTime为过期时间,单位秒,0为永不过期
+func (rdb *RedisClient) SSet(key string, value interface{}, expTime int32) error {
+	return rdb.Set(key, value, time.Duration(expTime)*time.Second).Err()
 }
 
 // 根据KEY获取VALUE值
-func (redis *RedisClient) SGet(key string) string {
-	return redis.Get(key).Val()
+func (rdb *RedisClient) SGet(key string) string {
+	return rdb.Get(key).Val()
+}
+
+// 自增,返回当前的值
+func (rdb *RedisClient) Inc(key string) (int64, error) {
+	return rdb.Incr(key).Result()
+}
+
+// 自减,返回当前的值
+func (rdb *RedisClient) Dec(key string) (int64, error) {
+	return rdb.Decr(key).Result()
 }
 
 // 在队列尾部插入一个元素
-func (redis *RedisClient) ListAdd(key, value string) error {
-	return redis.RPush(key, value).Err()
+func (rdb *RedisClient) ListAdd(key, value string) error {
+	return rdb.RPush(key, value).Err()
 }
 
 // 删除并返回队列中的头元素
-func (redis *RedisClient) ListGet(key string) string {
-	return redis.LPop(key).Val()
+func (rdb *RedisClient) ListGet(key string) string {
+	return rdb.LPop(key).Val()
 }
 
 // 清空队列
-func (redis *RedisClient) ListClear(key string) error {
-	return redis.LTrim(key, 1, 0).Err()
+func (rdb *RedisClient) ListClear(key string) error {
+	return rdb.LTrim(key, 1, 0).Err()
 }
