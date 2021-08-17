@@ -8,6 +8,8 @@ import (
 	"github.com/tanlinhua/go-web-admin/app/config"
 )
 
+// http://doc.redisfans.com
+
 var Handler *RedisClient
 
 type RedisClient struct {
@@ -78,12 +80,16 @@ func (rdb *RedisClient) CloseRedis() {
 	rdb.Close()
 }
 
-//---------------------------------------------------------
+//----------------------------------------------------------------------
 // 常用功能封装
 // 未封装的使用示例:
 // import rdb "github.com/tanlinhua/go-web-admin/pkg/redis"
 // rdb.Handler.ZRange
-//---------------------------------------------------------
+//----------------------------------------------------------------------
+
+//----------------------------------------------------------------------
+// Tag.字符串 (string)
+//----------------------------------------------------------------------
 
 // 设置KEY-VALUE类型缓存,expTime为过期时间,单位秒,0为永不过期
 func (rdb *RedisClient) SSet(key string, value interface{}, expTime int32) error {
@@ -105,6 +111,10 @@ func (rdb *RedisClient) Dec(key string) (int64, error) {
 	return rdb.Decr(key).Result()
 }
 
+//----------------------------------------------------------------------
+// Tag.列表 (list)
+//----------------------------------------------------------------------
+
 // 在队列尾部插入一个元素
 func (rdb *RedisClient) ListAdd(key, value string) error {
 	return rdb.RPush(key, value).Err()
@@ -119,3 +129,52 @@ func (rdb *RedisClient) ListGet(key string) string {
 func (rdb *RedisClient) ListClear(key string) error {
 	return rdb.LTrim(key, 1, 0).Err()
 }
+
+//----------------------------------------------------------------------
+// Tag.哈希 (hash)
+//----------------------------------------------------------------------
+
+//----------------------------------------------------------------------
+// Tag.集合 (set)
+//----------------------------------------------------------------------
+
+//----------------------------------------------------------------------
+// Tag.有序集合 (sorted set)
+//----------------------------------------------------------------------
+
+//----------------------------------------------------------------------
+// Tag.事务操作 [保证单个客户端的多个操作是原子的]
+//----------------------------------------------------------------------
+
+//----------------------------------------------------------------------
+// Tag.脚本
+//----------------------------------------------------------------------
+
+// 脚本
+func (rdb *RedisClient) Script(script string, keys []string, args ...interface{}) (interface{}, error) {
+	scripter := redis.NewScript(script)
+	cmd := scripter.Run(Handler, keys, args)
+	return cmd.Result()
+}
+
+/*
+var lua = `
+local key1 = tostring(KEYS[1])
+local key2 = tostring(KEYS[2])
+local args1 = tonumber(ARGV[1])
+local args2 = tonumber(ARGV[2])
+
+if key1 == "user"
+then
+	redis.call('SET',key1,args1)
+	return 1
+else
+	redis.call('SET',key2,args2)
+	return 2
+end
+return 0
+`
+
+Script(lua, []string{"user", "test"}, 1, 2)
+}
+*/
