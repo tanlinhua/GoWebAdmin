@@ -88,12 +88,16 @@ func (rdb *RedisClient) CloseRedis() {
 //----------------------------------------------------------------------
 
 //----------------------------------------------------------------------
-// Tag.字符串 (string)
 // KEY命名规则:简洁,高效,可维护; 单词与单词之间以 : 隔开
-// user:token:id => set user:token:1 tokenValue
+// user:token:id => set user:token:id:1 tokenValue
 //----------------------------------------------------------------------
 
-// 设置KEY-VALUE类型缓存,expTime为过期时间,单位秒,0为永不过期
+//----------------------------------------------------------------------
+// Tag.字符串 (string)
+//----------------------------------------------------------------------
+
+// 设置KEY-VALUE类型缓存
+// expTime为过期时间,单位秒,0为永不过期
 func (rdb *RedisClient) SSet(key string, value interface{}, expTime int32) error {
 	return rdb.Set(key, value, time.Duration(expTime)*time.Second).Err()
 }
@@ -111,6 +115,22 @@ func (rdb *RedisClient) Inc(key string) (int64, error) {
 // 自减,返回当前的值
 func (rdb *RedisClient) Dec(key string) (int64, error) {
 	return rdb.Decr(key).Result()
+}
+
+//----------------------------------------------------------------------
+// Tag.哈希 (hash)
+//----------------------------------------------------------------------
+
+// 添加hash key&value值
+func (rdb *RedisClient) HashSet(key string, fields map[string]interface{}) (string, error) {
+	return rdb.HMSet(key, fields).Result()
+}
+
+// 获取hash表中所有的key&value
+// HGET -> 获取hash表中单个key的值
+// HMGET -> 获取hash表中多个key的值
+func (rdb *RedisClient) HashGet(key string) map[string]string {
+	return rdb.HGetAll(key).Val()
 }
 
 //----------------------------------------------------------------------
@@ -133,10 +153,6 @@ func (rdb *RedisClient) ListClear(key string) error {
 }
 
 //----------------------------------------------------------------------
-// Tag.哈希 (hash)
-//----------------------------------------------------------------------
-
-//----------------------------------------------------------------------
 // Tag.集合 (set)
 //----------------------------------------------------------------------
 
@@ -149,6 +165,20 @@ func (rdb *RedisClient) ListClear(key string) error {
 //----------------------------------------------------------------------
 
 //----------------------------------------------------------------------
+// Tag.redis.opt
+//----------------------------------------------------------------------
+
+// 保存缓存数据到文件
+func (rdb *RedisClient) Save() (string, error) {
+	return rdb.BgSave().Result()
+}
+
+// 设置key的过期时间,秒
+func (rdb *RedisClient) SetKeyExpire(key string, second int) {
+	rdb.Expire(key, time.Duration(second)*time.Second)
+}
+
+//----------------------------------------------------------------------
 // Tag.脚本
 //----------------------------------------------------------------------
 
@@ -158,25 +188,3 @@ func (rdb *RedisClient) Script(script string, keys []string, args ...interface{}
 	cmd := scripter.Run(Handler, keys, args)
 	return cmd.Result()
 }
-
-/*
-var lua = `
-local key1 = tostring(KEYS[1])
-local key2 = tostring(KEYS[2])
-local args1 = tonumber(ARGV[1])
-local args2 = tonumber(ARGV[2])
-
-if key1 == "user"
-then
-	redis.call('SET',key1,args1)
-	return 1
-else
-	redis.call('SET',key2,args2)
-	return 2
-end
-return 0
-`
-
-Script(lua, []string{"user", "test"}, 1, 2)
-}
-*/
