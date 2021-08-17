@@ -26,16 +26,6 @@ kill -9 pid
 ```
 2. [Supervisor](docs/一些笔记/Supervisor.md)
 
-### [redis常用命令](https://www.runoob.com/redis/redis-tutorial.html)
-```
-redis-cli 
-auth "pwd"
-ping
-keys Task*
-LLen Task_77
-LRANGE Task_77 0 999
-```
-
 ### jsdelivr+github cdn
 ```
 https://cdn.jsdelivr.net/gh/用户名称/仓库名称@版本号/目录  
