@@ -11,10 +11,11 @@ import (
 	"github.com/tanlinhua/go-web-admin/pkg/response"
 )
 
-// IP指定时间内请求次数限制器,依赖redis存储
+// 单个IP指定时间内请求次数限制
+// 依赖redis存储
 func IpLimiter() gin.HandlerFunc {
-
-	slidingWindow := 5 * time.Second // var slidingWindow time.Duration
+	// slidingWindow时间内不能超过limit次访问
+	slidingWindow := 5 * time.Second
 	limit := 100
 
 	key := "ipLimiter"
@@ -45,9 +46,6 @@ func IpLimiter() gin.HandlerFunc {
 		rdb.Handler.Expire(userCntKey, slidingWindow)
 	}
 }
-
-// https://github.com/imtoori/gin-redis-ip-limiter
-// https://www.runoob.com/redis/redis-sorted-sets.html
 
 /*
 func TestIpLimiter() {
