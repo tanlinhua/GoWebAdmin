@@ -94,8 +94,6 @@ func InitVueAdminServer() {
 
 > [设计模式](https://github.com/tanlinhua/golang-design-pattern)
 
-> [pprof](https://github.com/gin-contrib/pprof)
-
 > [websocket](github.com/gorilla/websocket)
 
 > [telegram api](https://github.com/go-telegram-bot-api/telegram-bot-api)
