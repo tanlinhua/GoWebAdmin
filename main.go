@@ -32,6 +32,7 @@ var (
 	AppVersion = "1.0"
 	GoVersion  = runtime.Version()
 	ApiDoc     = "http://" + config.ExtIP + ":" + config.APIPort + "/api/doc/index.html"
+	Pprof      = "http://" + config.ExtIP + ":" + config.AdminPort + "/jason/pprof"
 )
 
 func versionInfo() {
@@ -40,5 +41,6 @@ func versionInfo() {
 	fmt.Printf("AppMode:\t%s\n", config.AppMode)
 	fmt.Printf("GoVersion:\t%s\n", GoVersion)
 	fmt.Printf("ApiDoc:\t\t%s\n", ApiDoc)
+	fmt.Printf("pprof:\t\t%s\n", Pprof)
 	fmt.Printf("\n\n")
 }
