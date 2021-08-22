@@ -62,6 +62,8 @@ func InitVueAdminServer() {
 
 > [alipay](https://github.com/smartwalle/alipay)
 
+> [wxpay](https://github.com/smartwalle/wxpay)
+
 > [QrCode](https://github.com/skip2/go-qrcode)
 
 > [psutil for golang](https://github.com/shirou/gopsutil)
@@ -91,8 +93,6 @@ func InitVueAdminServer() {
 > [gnet网络框架](https://github.com/panjf2000/gnet)
 
 > [协程池](https://github.com/panjf2000/ants)
-
-> [设计模式](https://github.com/tanlinhua/golang-design-pattern)
 
 > [websocket](github.com/gorilla/websocket)
 
