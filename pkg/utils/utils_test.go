@@ -4,6 +4,12 @@ import (
 	"testing"
 )
 
+func TestShortUUID(t *testing.T) {
+	for i := 0; i < 10; i++ {
+		t.Log(ShortUUID())
+	}
+}
+
 //测试数组差集
 func TestArrayDiff(t *testing.T) {
 	a1 := []string{"test1", "test2", "test3"}
