@@ -104,6 +104,9 @@ func InitVueAdminServer() {
 
 > [异步任务框架](https://github.com/RichardKnop/machinery)
 
+> [(APNs)Apple Push Notification Service |](https://github.com/sideshow/apns2)
+> [| APNs Demo](https://github.com/Finb/bark-server/tree/master/apns)
+
 > [简单易用的各种数据结构](https://github.com/emirpasic/gods)
 
 ## 一些值得学习的项目
