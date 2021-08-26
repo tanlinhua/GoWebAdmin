@@ -123,6 +123,14 @@ func InitVueAdminServer() {
 
 ## TODO
 
+### casbin
+- 百度&b站: golang casbin
+- 参考gin-vue-admin
+- https://www.bilibili.com/video/BV1qz4y167XP
+- https://www.bilibili.com/video/BV13r4y1M7AC
+- go get github.com/casbin/casbin/v2
+- go get github.com/casbin/gorm-adapter/v3
+
 ### i18n
 - https://xuanwo.io/2019/12/11/golang-i18n/
 - https://github.com/nicksnyder/go-i18n
