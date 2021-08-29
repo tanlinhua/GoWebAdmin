@@ -11,10 +11,11 @@ go env -w GOPROXY=https://goproxy.io,direct
 ```
 
 ### 交叉编译
-```
-SET GOOS=linux
-SET GOARCH=amd64
-go build main.go
+```shell
+SET CGO_ENABLED=0		#交叉编译不支持 CGO 所以要禁用它
+SET GOOS=linux			#目标平台的操作系统 (darwin freebsd linux windows)
+SET GOARCH=amd64		#目标平台的体系架构 (386 amd64 arm)
+go build -o main main.go
 ```
 
 ### 部署
@@ -25,6 +26,11 @@ ps -ef|grep main
 kill -9 pid
 ```
 2. [Supervisor](docs/一些笔记/Supervisor.md)
+
+### [WEB安全](docs/一些笔记/Web安全.md)
+
+- [Web安全学习笔记](https://github.com/LyleMi/Learn-Web-Hacking)
+- [在线阅读](https://websec.readthedocs.io/zh/latest/)
 
 ### jsdelivr+github cdn
 ```
