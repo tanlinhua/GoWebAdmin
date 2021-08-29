@@ -18,6 +18,14 @@ SET GOARCH=amd64		#目标平台的体系架构 (386 amd64 arm)
 go build -o main main.go
 ```
 
+### go mod
+```
+go get -u								工程目录下执行,更新所有依赖包,
+go get -u github.com/gin-gonic/gin		只更新这一个依赖包
+go mod why -m all						分析所有依赖的依赖链
+go mod tidy								整理依赖
+```
+
 ### 部署
 1. nohup
 ```
