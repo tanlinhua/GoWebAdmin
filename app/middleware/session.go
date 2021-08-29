@@ -19,7 +19,7 @@ func CheckSession() gin.HandlerFunc {
 
 		// 1. 校验登录是否超时
 		timeOutCtr := true                         //false：无权限控制，true：启用超时·权限控制
-		timeOut := int64(24 * 3600)                //无操作超时时间:N*小时
+		timeOut := int64(2 * 3600)                 //无操作超时时间:N*小时
 		nowTime := time.Now().Unix()               //当前时间
 		loginTime := session.Get("adminLoginTime") //登录时间
 		if loginTime == nil {
@@ -27,8 +27,7 @@ func CheckSession() gin.HandlerFunc {
 		}
 		calcTime := nowTime - loginTime.(int64) //登录时间差
 		if calcTime > timeOut && timeOutCtr {
-			c.Redirect(http.StatusFound, "login")
-			c.Abort()
+			timeOutHandler(c)
 			return
 		} else {
 			session.Set("adminLoginTime", time.Now().Unix())
@@ -38,8 +37,7 @@ func CheckSession() gin.HandlerFunc {
 		// 2.校验后台操作权限
 		adminId := session.Get("adminId")
 		if utils.Empty(adminId) {
-			c.Redirect(http.StatusFound, "login")
-			c.Abort()
+			timeOutHandler(c)
 			return
 		}
 		if adminId != config.AdminId { //管理员ID不受权限约束
@@ -73,4 +71,13 @@ func checkAdminPermission(adminId int, uri string, method string) (bool, string)
 		return true, "SUCCESS"
 	}
 	return false, "权限不足"
+}
+
+func timeOutHandler(c *gin.Context) {
+	if c.Request.RequestURI == "/admin/main" {
+		c.Redirect(http.StatusFound, "/admin/login")
+	} else {
+		c.String(http.StatusBadRequest, "登录超时,请重新登录! 😎")
+	}
+	c.Abort()
 }
