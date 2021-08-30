@@ -75,7 +75,7 @@ func Captcha(c *gin.Context) {
 func AdminMain(c *gin.Context) {
 	adminName, _ := c.Get("adminName")
 	adminId, _ := c.Get("admin_id")
-	menuData := model.PerMenuDataByAdmId(adminId.(int)) //优化方向:直接获取对应菜单是否显示的值,放入struct中,再赋值到页面进行判断
+	menuData := model.PerMenuDataByAdmId(adminId.(int))
 
 	c.HTML(http.StatusOK, "main/main.html", gin.H{"adminName": adminName, "menuData": menuData})
 }

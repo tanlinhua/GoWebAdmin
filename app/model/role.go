@@ -74,8 +74,8 @@ func RoleUpdate(data *Role) (bool, string) {
 }
 
 // 查
-func RoleGet(page, limit int, search string) (*[]Role, int) {
-	var total int
+func RoleGet(page, limit int, search string) (*[]Role, int64) {
+	var total int64
 	var data []Role
 	Db := db
 

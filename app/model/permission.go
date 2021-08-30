@@ -10,38 +10,20 @@ import (
 
 // 权限模型
 type Permission struct {
-	Id     int    `json:"id"`
-	Name   string `json:"name"`
-	Pid    int    `json:"pid"`
-	Uri    string `json:"uri"`
-	Method string `json:"method"`
-	Level  int    `json:"level"`
+	Id       int          `json:"id"`
+	Name     string       `json:"title"` // title for layui
+	Pid      int          `json:"pid"`
+	Uri      string       `json:"uri"`
+	Method   string       `json:"method"`
+	Icon     string       `json:"icon"`
+	Level    int          `json:"level"`
+	Checked  bool         `json:"checked"`           // tree是否选中,也意味着是否有权限
+	Spread   bool         `json:"spread"`            // tree是否展开
+	Children []Permission `json:"children" gorm:"-"` // 子菜单
 }
 
-// 权限菜单
-type PerData struct {
-	Id       int       `json:"id"`
-	Name     string    `json:"title"`
-	Uri      string    `json:"uri"`
-	Icon     string    `json:"icon"`
-	Checked  bool      `json:"checked"`  //tree是否选中(也意味着是否有权限)
-	Spread   bool      `json:"spread"`   //tree是否展开
-	Children []PerData `json:"children"` //子菜单
-}
-
-// 权限tree
-type TreeList struct {
-	Id       int       `json:"id"`
-	Name     string    `json:"title"`
-	Uri      string    `json:"uri"`
-	Icon     string    `json:"icon"`
-	Checked  bool      `json:"checked"`
-	Spread   bool      `json:"spread"`
-	Children []PerData `json:"children"`
-}
-
-// 获取后台用户权限内的菜单数据
-func PerMenuDataByAdmId(adminId int) []TreeList {
+// 后台首页,获取后台用户权限内的菜单数据
+func PerMenuDataByAdmId(adminId int) []Permission {
 	roleId := AdminGetRoleIdByAdmId(adminId) //获取角色ID
 	if -1 == roleId {
 		return nil
@@ -50,6 +32,8 @@ func PerMenuDataByAdmId(adminId int) []TreeList {
 	if !ok {
 		return nil
 	}
+
+	// 处理后台菜单显示
 	for index1, item1 := range data {
 		for index2, item2 := range item1.Children {
 			for _, item3 := range item2.Children {
@@ -66,49 +50,45 @@ func PerMenuDataByAdmId(adminId int) []TreeList {
 	return data
 }
 
-// 获取指定角色ID的菜单数据
-func PerMenuDataByRoleId(roleId int) (bool, []TreeList) {
-	var tree []TreeList
+// 获取指定角色ID的菜单TREE数据
+func PerMenuDataByRoleId(roleId int) (bool, []Permission) {
+	var root []Permission
+	var lowLevel int = 3
 
-	// 查询角色ids
-	ids := RoleGetPerIdsByRoleId(roleId)
-	idsArr := utils.Explode(",", ids)
+	ids := utils.Explode(",", RoleGetPerIdsByRoleId(roleId)) // 查询角色ids
+	db.Find(&root)
+	db.Model(&Permission{}).Select(`max(level)`).Scan(&lowLevel)
+	tree := getTreeMenu(root, 0, ids, lowLevel)
+	return true, tree
+}
 
-	err := db.Model(&Permission{}).Select("id,name,uri,icon").Where("pid=?", 0).Scan(&tree).Error // 一级
-	if err != nil {
-		return false, nil
-	}
-	for index1, item1 := range tree {
-		if find := utils.In_array(strconv.Itoa(item1.Id), idsArr); find {
-			tree[index1].Checked = true
-		}
-	}
-	for idx1, itm1 := range tree {
-		err := db.Model(&Permission{}).Select("id,name,uri,icon").Where("pid=?", itm1.Id).Scan(&tree[idx1].Children).Error // 二级
-		if err != nil {
-			return false, nil
-		}
-		for idx2, itm2 := range tree[idx1].Children {
-			tree[idx1].Checked = false
-			tree[idx1].Spread = true
-			if find := utils.In_array(strconv.Itoa(itm2.Id), idsArr); find {
-				tree[idx1].Children[idx2].Checked = true
-			}
-
-			err := db.Model(&Permission{}).Select("id,name,uri,icon").Where("pid=?", itm2.Id).Scan(&tree[idx1].Children[idx2].Children).Error // 三级
-			if err != nil {
-				return false, nil
-			}
-			for idx3, itm3 := range tree[idx1].Children[idx2].Children {
-				tree[idx1].Children[idx2].Checked = false
-				tree[idx1].Children[idx2].Spread = true
-				if find := utils.In_array(strconv.Itoa(itm3.Id), idsArr); find {
-					tree[idx1].Children[idx2].Children[idx3].Checked = true
+// GET TREE DATA
+func getTreeMenu(menuList []Permission, pid int, ids []string, lowLevel int) []Permission {
+	tree := []Permission{}
+	for _, v := range menuList {
+		if v.Pid == pid {
+			checked := false
+			if v.Level == lowLevel {
+				if utils.In_array(strconv.Itoa(v.Id), ids) {
+					checked = true
 				}
 			}
+			node := Permission{
+				Id:      v.Id,
+				Name:    v.Name,
+				Pid:     v.Pid,
+				Uri:     v.Uri,
+				Method:  v.Method,
+				Icon:    v.Icon,
+				Level:   v.Level,
+				Checked: checked,
+				Spread:  true,
+			}
+			node.Children = getTreeMenu(menuList, v.Id, ids, lowLevel)
+			tree = append(tree, node)
 		}
 	}
-	return true, tree
+	return tree
 }
 
 // 校验权限
@@ -145,8 +125,8 @@ func PermissionDel() {}
 func PermissionUpdate() {}
 
 // 查
-func PermissionGet(page, limit int, search string) (*[]Permission, int) {
-	var total int
+func PermissionGet(page, limit int, search string) (*[]Permission, int64) {
+	var total int64
 	var data []Permission
 	Db := db
 

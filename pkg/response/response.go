@@ -14,7 +14,7 @@ type Result struct {
 type ResultData struct {
 	Code  int         `json:"code"`
 	Msg   string      `json:"msg"`
-	Total int         `json:"count"`
+	Total int64       `json:"count"`
 	Data  interface{} `json:"data"`
 }
 
@@ -23,7 +23,7 @@ func New(ctx *gin.Context) *Result {
 }
 
 // 成功
-func (r *Result) Success(data interface{}, total int) {
+func (r *Result) Success(data interface{}, total int64) {
 	if data == nil {
 		data = gin.H{}
 	}

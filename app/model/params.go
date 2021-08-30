@@ -14,8 +14,8 @@ type SysParams struct {
 }
 
 // 获取系统配置数据
-func ParamsGet(page, limit int, search string) (*[]SysParams, int) {
-	var total int
+func ParamsGet(page, limit int, search string) (*[]SysParams, int64) {
+	var total int64
 	var data []SysParams
 	Db := db
 

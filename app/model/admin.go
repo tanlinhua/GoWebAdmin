@@ -97,8 +97,8 @@ type AdminGetResult struct {
 }
 
 // 查
-func AdminGet(adminId, page, limit int, search, role string) (*[]AdminGetResult, int) {
-	var total int
+func AdminGet(adminId, page, limit int, search, role string) (*[]AdminGetResult, int64) {
+	var total int64
 	var data []AdminGetResult
 	Db := db
 
