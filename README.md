@@ -151,6 +151,4 @@ func InitVueAdminServer() {
 - https://goframe.org/pages/viewpage.action?pageId=7301652
 - https://github.com/suisrc/gin-i18n
 
-### 升级Grom到2.0
-
 ### [go gin zap](https://www.liwenzhou.com/posts/Go/use_zap_in_gin/)
