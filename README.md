@@ -96,7 +96,7 @@ func InitVueAdminServer() {
 
 > [任务调度.JobRunner](https://github.com/bamzi/jobrunner)
 
-> [github.com/spf13/hugo](https://www.cnblogs.com/landv/p/11959097.html)
+> [spf13/hugo](https://www.cnblogs.com/landv/p/11959097.html)
 
 > [日志.zap](https://github.com/uber-go/zap)
 
@@ -113,8 +113,6 @@ func InitVueAdminServer() {
 > [telegram api](https://github.com/go-telegram-bot-api/telegram-bot-api)
 
 > [key/value database](https://github.com/etcd-io/bbolt)
-
-> [csrf](https://github.com/gorilla/csrf)
 
 > [异步任务框架](https://github.com/RichardKnop/machinery)
 
