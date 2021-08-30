@@ -5,18 +5,18 @@ import (
 	"time"
 )
 
-var specClean = "0 0 1 * * ?"    // 每天凌晨1点执行一次
-var specTest1 = "*/20 * * * * ?" // 每N秒执行一次
-var specTest2 = "0 */2 * * * ?"  // 每N分钟执行一次
-
-func cleanLog() {
-	fmt.Println("每天凌晨1点执行一次", specClean, time.Now())
-}
+var specSecond = "*/30 * * * * ?" // 每N秒执行一次
+var specMinute = "0 */5 * * * ?"  // 每N分钟执行一次
+var specHour = "0 0 1 * * ?"      // 每天凌晨1点执行一次	[ "0 0 */2 * * ?" -> 每2个小时执行一次 ]
 
 func test1() {
-	fmt.Println("每N秒执行一次!", specTest1, time.Now())
+	fmt.Println("CRON.每N秒执行一次!", specSecond, time.Now())
 }
 
 func test2() {
-	fmt.Println("每N分钟执行一次!", specTest2, time.Now())
+	fmt.Println("CRON.每N分钟执行一次!", specMinute, time.Now())
+}
+
+func cleanLog() {
+	fmt.Println("CRON.每天凌晨1点执行一次!", specHour, time.Now())
 }
