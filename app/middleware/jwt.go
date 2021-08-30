@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -13,17 +12,17 @@ import (
 var JwtKey = []byte(config.JwtKey)
 
 type Claims struct {
-	UserName string
-	Id       int
+	// UserName string
+	Id int64
 	jwt.StandardClaims
 }
 
 // 生成token
-func GetJWT(username string, id int) (bool, string) {
+func GetJWT(uid int64) (bool, string) {
 	expireTime := time.Now().Add(1 * time.Hour).Unix() // expireTime = 3600
 	claims := &Claims{
-		UserName: username,
-		Id:       id,
+		// UserName: username,
+		Id: uid, // 用户ID
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expireTime,        //过期时间
 			IssuedAt:  time.Now().Unix(), //生成时间
@@ -42,56 +41,37 @@ func GetJWT(username string, id int) (bool, string) {
 // jwt中间件
 func CheckJWT() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		tokenString := c.Request.Header.Get("Authorization")
-		if len(tokenString) == 0 {
-			response.New(c).Error(-1, "TOKEN不存在")
+		jwt := c.Request.Header.Get("Authorization")
+		if len(jwt) == 0 {
+			response.New(c).Error(-1, "token does not exist")
 			c.Abort()
 			return
 		}
 
-		token, claims, err := parseToken(tokenString)
-
+		token, claims, err := parseJWT(jwt)
 		if err != nil {
 			response.New(c).Error(-2, err.Error())
 			c.Abort()
 			return
 		}
 		if !token.Valid {
-			response.New(c).Error(-2, "TOKEN ERROR")
+			response.New(c).Error(-2, "token error")
 			c.Abort()
 			return
 		}
 
-		fmt.Println(config.AdminName, claims.UserName, claims.Id)
-
-		if config.AdminName != claims.UserName {
-			ok, msg := CheckPermission(claims.UserName, c.Request.RequestURI, c.Request.Method)
-
-			fmt.Println(ok, msg)
-
-			if !ok {
-				response.New(c).Error(-3, msg)
-				c.Abort()
-			}
-		}
-		c.Set("id", claims.Id)
+		c.Set("id", claims.Id) // 暂存用户ID
 		c.Next()
 	}
 }
 
 // 解析token
-func parseToken(tokenString string) (*jwt.Token, *Claims, error) {
+func parseJWT(tokenString string) (*jwt.Token, *Claims, error) {
 	Claims := &Claims{}
 	token, err := jwt.ParseWithClaims(tokenString, Claims, func(token *jwt.Token) (i interface{}, err error) {
 		return JwtKey, nil
 	})
 	return token, Claims, err
-}
-
-// 验证用户是否有该uri操作权限
-func CheckPermission(username, uri, method string) (bool, string) {
-	// return model.CheckPermission(username, uri, method)
-	return false, "权限不足"
 }
 
 /*

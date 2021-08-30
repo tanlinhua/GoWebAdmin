@@ -32,7 +32,7 @@ func UserLogin(c *gin.Context) {
 		return
 	}
 
-	ok, content := middleware.GetJWT(user.UserName, uId)
+	ok, content := middleware.GetJWT(uId)
 	if ok {
 		rsp.Success(gin.H{"token": content}, 0)
 	} else {
