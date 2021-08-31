@@ -84,6 +84,8 @@
     var table = layui.table;
     var form = layui.form;
 
+    var index = layer.load();
+
     //表格渲染
     table.render({
         elem: '#sys_params',
@@ -99,6 +101,7 @@
         limits: [10, 20, 50, 100, 500],
         limit: 10,
         id: 'paramsReload',
+        done: function (res) { layer.close(index); },
     });
 
     //查询并表格重载
@@ -110,10 +113,11 @@
             table.reload('paramsReload', {
                 page: {
                     curr: currpage
-                }
-                , where: {
+                },
+                where: {
                     search: paramsKey.val() //附加检索条件
-                }
+                },
+                done: function (res) { layer.close(index); },
             });
         }
     };
