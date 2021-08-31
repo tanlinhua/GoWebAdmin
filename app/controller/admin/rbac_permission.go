@@ -11,7 +11,7 @@ import (
 
 // 权限页面
 func PermissionView(c *gin.Context) {
-	c.HTML(http.StatusOK, "permission/index.html", nil)
+	c.HTML(http.StatusOK, "rbac/permission.html", nil)
 }
 
 // 查询权限

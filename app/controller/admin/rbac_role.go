@@ -11,7 +11,7 @@ import (
 
 // 角色页面
 func RoleView(c *gin.Context) {
-	c.HTML(http.StatusOK, "role/index.html", nil)
+	c.HTML(http.StatusOK, "rbac/role.html", nil)
 }
 
 // 增加角色

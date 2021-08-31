@@ -2,7 +2,6 @@ package admin
 
 import (
 	"net/http"
-	"strconv"
 	"time"
 
 	"github.com/gin-contrib/sessions"
@@ -15,15 +14,30 @@ import (
 	"github.com/tanlinhua/go-web-admin/pkg/utils"
 )
 
+// 登录页面
+func AdminLogin(c *gin.Context) {
+	c.HTML(http.StatusOK, "main/login.html", gin.H{"LoginAuth": config.LoginAuth})
+}
+
+// 后台首页
+func AdminMain(c *gin.Context) {
+	adminName, _ := c.Get("adminName")
+	adminId, _ := c.Get("admin_id")
+	menuData := model.PerMenuDataByAdmId(adminId.(int))
+
+	c.HTML(http.StatusOK, "main/main.html", gin.H{"adminName": adminName, "menuData": menuData})
+}
+
+// 控制台页面
+func AdminConsole(c *gin.Context) {
+	//根据角色ID,查询所属预览数据展示到页面
+	c.HTML(http.StatusOK, "main/console.html", nil)
+}
+
 // 验证码
 type CaptchaResult struct {
 	Id     string `json:"id"`
 	Base64 string `json:"base64"`
-}
-
-// 登录页面
-func AdminLogin(c *gin.Context) {
-	c.HTML(http.StatusOK, "main/login.html", gin.H{"LoginAuth": config.LoginAuth})
 }
 
 type googleAuth struct {
@@ -69,21 +83,6 @@ func Captcha(c *gin.Context) {
 	}
 	capt := CaptchaResult{Id: id, Base64: b64}
 	resp.Success(capt, 0)
-}
-
-// 后台首页
-func AdminMain(c *gin.Context) {
-	adminName, _ := c.Get("adminName")
-	adminId, _ := c.Get("admin_id")
-	menuData := model.PerMenuDataByAdmId(adminId.(int))
-
-	c.HTML(http.StatusOK, "main/main.html", gin.H{"adminName": adminName, "menuData": menuData})
-}
-
-// 控制台页面
-func AdminConsole(c *gin.Context) {
-	//根据角色ID,查询所属预览数据展示到页面
-	c.HTML(http.StatusOK, "main/console.html", nil)
 }
 
 // 退出登录
@@ -155,71 +154,4 @@ func AdminCpw(c *gin.Context) {
 		return
 	}
 	response.New(c).Error(-1, msg)
-}
-
-// 后台用户页面
-func AdmView(c *gin.Context) {
-	c.HTML(http.StatusOK, "adm/index.html", nil)
-}
-
-// 增加后台用户
-func AdmAdd(c *gin.Context) {
-	resp := response.New(c)
-	var admin model.Admin
-
-	err := c.Bind(&admin)
-	if err != nil {
-		resp.Error(-1, err.Error())
-		return
-	}
-	adminId, _ := c.Get("admin_id")
-
-	ok, msg := model.AdmAdd(adminId.(int), &admin)
-	if ok {
-		resp.Success(nil, 0)
-	} else {
-		resp.Error(-1, msg)
-	}
-}
-
-// 删除后台用户
-func AdmDel(c *gin.Context) {
-	id, _ := strconv.Atoi(c.Query("id"))
-	ok, msg := model.AdminDel(id)
-	if ok {
-		response.New(c).Success(nil, 0)
-	} else {
-		response.New(c).Error(-1, msg)
-	}
-}
-
-// 修改后台用户
-func AdmUpdate(c *gin.Context) {
-	resp := response.New(c)
-	var admin model.Admin
-
-	err := c.Bind(&admin)
-	if err != nil {
-		resp.Error(-1, err.Error())
-		return
-	}
-	ok, msg := model.AdmUpdate(&admin)
-	if ok {
-		resp.Success(nil, 0)
-	} else {
-		resp.Error(-1, msg)
-	}
-}
-
-// 查询后台用户
-func AdmGet(c *gin.Context) {
-	page, _ := strconv.Atoi(c.Query("page"))
-	limit, _ := strconv.Atoi(c.Query("limit"))
-	search := c.Query("search")
-	role := c.Query("role")
-
-	adminId, _ := c.Get("admin_id")
-	datas, total := model.AdminGet(adminId.(int), page, limit, search, role)
-
-	response.New(c).Success(datas, total)
 }

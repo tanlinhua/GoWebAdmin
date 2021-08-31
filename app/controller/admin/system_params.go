@@ -11,7 +11,7 @@ import (
 
 // 参数配置-view
 func ParamsView(c *gin.Context) {
-	c.HTML(http.StatusOK, "params/index.html", nil)
+	c.HTML(http.StatusOK, "system/params.html", nil)
 }
 
 // 查询配置数据
