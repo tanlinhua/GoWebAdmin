@@ -4,6 +4,17 @@ import (
 	"testing"
 )
 
+func TestPassWord(t *testing.T) {
+	password := "123456"
+	hash, _ := PasswordHash(password)
+
+	t.Log("密码:", password)
+	t.Log("密码hash:", hash)
+
+	match := PasswordVerify(password, hash)
+	t.Log("校验结果:", match)
+}
+
 func TestShortUUID(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		t.Log(ShortUUID())

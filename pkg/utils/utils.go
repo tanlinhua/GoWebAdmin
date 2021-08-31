@@ -7,6 +7,8 @@ import (
 	"fmt"
 	"io"
 	"reflect"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 // md5加密
@@ -14,6 +16,18 @@ func Md5(str string) string {
 	h := md5.New()
 	io.WriteString(h, str)
 	return fmt.Sprintf("%x", h.Sum(nil))
+}
+
+// password_hash
+func PasswordHash(password string) (string, error) {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	return string(bytes), err
+}
+
+// password_verify
+func PasswordVerify(password, hash string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+	return err == nil
 }
 
 // 转json
