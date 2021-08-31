@@ -69,9 +69,11 @@ func AdmGet(c *gin.Context) {
 	limit, _ := strconv.Atoi(c.Query("limit"))
 	search := c.Query("search")
 	role := c.Query("role")
+	startTime := c.Query("t1")
+	endTime := c.Query("t2")
 
 	adminId, _ := c.Get("admin_id")
-	datas, total := model.AdminGet(adminId.(int), page, limit, search, role)
+	datas, total := model.AdminGet(adminId.(int), page, limit, search, role, startTime, endTime)
 
 	response.New(c).Success(datas, total)
 }

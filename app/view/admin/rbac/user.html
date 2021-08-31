@@ -31,33 +31,46 @@
                     <div class="form-box">
 
                         <div class="layui-form layui-form-item">
+
                             <div class="layui-inline">
                                 <div class="layui-form-mid">用户名:</div>
                                 <div class="layui-input-inline">
                                     <input type="text" placeholder="支持模糊查询" autocomplete="off" class="layui-input" id="searchInput" name="searchInput">
                                 </div>
-                                <div class="layui-inline">
-                                    <div class="layui-input-inline">
-                                        <div class="layui-form-mid">角色:</div>
-                                        <div class="layui-input-inline" style="width: 120px;">
-                                            <select id="select_role_id" name="select_role_id" lay-verify="required">
-                                                <option value=""></option>
-                                            </select>
-                                        </div>
+                            </div>
+
+                            <div class="layui-inline">
+                                <div class="layui-input-inline">
+                                    <div class="layui-form-mid">角色:</div>
+                                    <div class="layui-input-inline" style="width: 120px;">
+                                        <select id="select_role_id" name="select_role_id" lay-verify="required">
+                                            <option value=""></option>
+                                        </select>
                                     </div>
                                 </div>
-                                <button class="layui-btn layui-btn-blue" onclick="return false;" data-type="reload" id="searchBtn">查询</button>
-                                <button class="layui-btn layui-btn-green" onclick="addAdmin();return false;" id="addBtn">新增</button>
-                                <button onclick="javascript:location.reload();" class="layui-btn layui-btn-primary">刷新</button>
                             </div>
+
+                            <div class="layui-inline">
+                                <div class="layui-form-mid">最后登录时间:</div>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" id="select_datetime" name="select_datetime" placeholder=" - " autocomplete="off">
+                                </div>
+                            </div>
+
+                            <button class="layui-btn layui-btn-blue" onclick="return false;" data-type="reload" id="searchBtn">查询</button>
+                            <button class="layui-btn layui-btn-green" onclick="addAdmin();return false;" id="addBtn">新增</button>
+                            <button onclick="javascript:location.reload();" class="layui-btn layui-btn-primary">刷新</button>
+
                         </div>
 
-                        <table id="dataDable" lay-filter="dataDable"></table>
-
                     </div>
+
+                    <table id="dataDable" lay-filter="dataDable"></table>
+
                 </div>
             </div>
         </div>
+    </div>
 
     </div>
 
@@ -120,6 +133,12 @@
     var table = layui.table;
     var form = layui.form;
     var layer = layui.layer;
+
+    layui.laydate.render({
+        elem: '#select_datetime',
+        type: 'datetime',
+        range: true
+    });
 
     //获取角色信息并赋值下拉框
     $.ajax({
@@ -224,6 +243,10 @@
             var role_id = $('#select_role_id').val();
             var searchInput = $('#searchInput');
             let currpage = 1;//$('.layui-laypage-em').next().text(); //当前页
+
+            var datetime_val = $('#select_datetime').val();
+            var dt_arr = datetime_val.split(" - ");
+
             //执行重载
             table.reload('dbTableReload', {
                 page: {
@@ -231,7 +254,9 @@
                 }
                 , where: {
                     search: searchInput.val(),
-                    role: role_id
+                    role: role_id,
+                    t1: dt_arr[0],
+                    t2: dt_arr[1],
                 }
             });
         }

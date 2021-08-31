@@ -97,7 +97,7 @@ type AdminGetResult struct {
 }
 
 // 查
-func AdminGet(adminId, page, limit int, search, role string) (*[]AdminGetResult, int64) {
+func AdminGet(adminId, page, limit int, search, role string, startTime, endTime string) (*[]AdminGetResult, int64) {
 	var total int64
 	var data []AdminGetResult
 	Db := db
@@ -121,6 +121,9 @@ func AdminGet(adminId, page, limit int, search, role string) (*[]AdminGetResult,
 	}
 	if len(role) > 0 {
 		Db = Db.Where("role=?", role)
+	}
+	if len(startTime) > 0 && len(endTime) > 0 {
+		Db = Db.Where("last_login_time BETWEEN ? AND ?", startTime, endTime)
 	}
 
 	Db.Count(&total) //1.查询总数
