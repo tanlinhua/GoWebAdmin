@@ -64,7 +64,7 @@ func PerMenuDataByRoleId(roleId int) (bool, []Permission) {
 
 // GET TREE DATA
 func getTreeMenu(menuList []Permission, pid int, ids []string, lowLevel int) []Permission {
-	tree := []Permission{}
+	var tree []Permission
 	for _, v := range menuList {
 		if v.Pid == pid {
 			checked := false
@@ -93,11 +93,11 @@ func getTreeMenu(menuList []Permission, pid int, ids []string, lowLevel int) []P
 
 // 校验权限
 func PerCheck(adminId int, uri string, method string) bool {
-	ids := RoleGetPerIdsByAdminId(adminId) //获取角色ID所拥有的权限ids
-	pid := PerIdByUriMethod(uri, method)   //根据uri及method获取对应权限id
+	ids := RoleGetPerIdsByAdminId(adminId) // 获取角色ID所拥有的权限ids
+	pid := PerIdByUriMethod(uri, method)   // 根据uri及method获取对应权限id
 
 	idsArr := utils.Explode(",", ids)
-	ok := utils.In_array(strconv.Itoa(pid), idsArr) //判断权限id是否存在ids中
+	ok := utils.In_array(strconv.Itoa(pid), idsArr) // 判断权限id是否存在ids中
 	if ok {
 		return true
 	} else {
@@ -134,13 +134,13 @@ func PermissionGet(page, limit int, search string) (*[]Permission, int64) {
 		Db = Db.Where("`name` LIKE ?", "%"+search+"%")
 	}
 
-	Db.Model(&Permission{}).Count(&total) //1.查询总数
+	Db.Model(&Permission{}).Count(&total) // 1.查询总数
 
 	if page > 0 && limit > 0 {
 		Db = Db.Limit(limit).Offset((page - 1) * limit)
 	}
 
-	err := Db.Find(&data).Error //2.查询数据
+	err := Db.Find(&data).Error // 2.查询数据
 	if err != nil {
 		trace.Error("Permission.err:" + err.Error())
 	}
