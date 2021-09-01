@@ -121,6 +121,8 @@ func InitVueAdminServer() {
 
 > [简单易用的各种数据结构](https://github.com/emirpasic/gods)
 
+> [爬虫框架](https://github.com/gocolly/colly)
+
 ## 一些值得学习的项目
 
 > 阅读Gin,Gorm,ants的源码
