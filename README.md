@@ -123,6 +123,8 @@ func InitVueAdminServer() {
 
 ## 一些值得学习的项目
 
+> 阅读Gin,Gorm,ants的源码
+
 > [设计模式 Golang实现](https://github.com/senghoo/golang-design-pattern)
 
 > [Go 语言实现的快速、稳定、内嵌的 k-v 数据库。](https://github.com/roseduan/rosedb)
