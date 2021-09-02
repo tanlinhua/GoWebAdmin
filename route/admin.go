@@ -50,7 +50,7 @@ func initAdmResources(e *gin.Engine) {
 	templ := template.Must(template.New("").ParseFS(view.Admin, "admin/**/*"))
 	e.SetHTMLTemplate(templ)
 
-	e.StaticFS("view", http.FS(public.Static))
+	e.StaticFS("public", http.FS(public.Static))
 
 	e.GET("favicon.ico", func(c *gin.Context) {
 		file, _ := public.Static.ReadFile("favicon.ico")
