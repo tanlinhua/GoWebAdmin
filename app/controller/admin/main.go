@@ -30,7 +30,8 @@ func AdminMain(c *gin.Context) {
 
 // 控制台页面
 func AdminConsole(c *gin.Context) {
-	//根据角色ID,查询所属预览数据展示到页面
+	// 根据角色ID,查询所属预览数据展示到页面
+	// 推荐先渲染页面异步请求数据
 	c.HTML(http.StatusOK, "main/console.html", nil)
 }
 
