@@ -23,10 +23,30 @@
             </ul>
 
             <ul class="layui-nav layui-layout-right">
+                <li class="no-line layui-nav-item main_tips">
+                    <a class="refresh" href="javascript:" tips="刷新">
+                        <i class="layui-icon layui-icon-refresh-3"></i>
+                    </a>
+                </li>
+                <li class="no-line layui-nav-item main_tips">
+                    <a id="notice" href="javascript:" tips="系统公告">
+                        <i class="layui-icon layui-icon-release"></i>
+                    </a>
+                </li>
+                <li class="no-line layui-nav-item main_tips">
+                    <a id="lock" href="javascript:" tips="锁屏">
+                        <i class="layui-icon layui-icon-password"></i>
+                    </a>
+                </li>
+                <li class="no-line layui-nav-item main_tips">
+                    <a id="fullScreen" href="javascript:;" tips="全屏">
+                        <i class="layui-icon layui-icon-screen-full"></i>
+                    </a>
+                </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;">{{.adminName}}</a>
+                    <a href="javascript:;">{{.adminName}} 😎</a>
                     <dl class="layui-nav-child">
-                        <dd><a id="main_cpw">修改密码</a></dd>
+                        <dd><a href="#" id="main_cpw">修改密码</a></dd>
                         <dd><a href="logout">退出</a></dd>
                     </dl>
                 </li>
@@ -40,8 +60,8 @@
                     <img src="../view/static/layui/images/logo.png" alt="" />
                     <h1>Admin Pro</h1>
                 </div>
-                <ul id="Nav" class="layui-nav layui-nav-tree">
 
+                <ul id="Nav" class="layui-nav layui-nav-tree">
                     {{ range $k, $item := .menuData }}
                     {{ if eq $item.Checked true }}
                     <li class="layui-nav-item">
@@ -60,6 +80,7 @@
                     {{ end}}
                     {{ end}}
                 </ul>
+
             </div>
         </div>
 
@@ -77,11 +98,61 @@
         <div class="mobile-mask"></div>
     </div>
 
+    <!-- 锁屏 -->
+    <div class="lock-screen">
+        <div class="lock-bg">
+            <img class="active lock-gradual" src="../view/static/layui/images/wallpaper/1.jpg" alt="" />
+            <img class="lock-gradual" src="../view/static/layui/images/wallpaper/2.jpg" alt="" />
+            <img class="lock-gradual" src="../view/static/layui/images/wallpaper/3.jpg" alt="" />
+            <img class="lock-gradual" src="../view/static/layui/images/wallpaper/4.jpg" alt="" />
+            <img class="lock-gradual" src="../view/static/layui/images/wallpaper/5.jpg" alt="" />
+        </div>
+        <div class="lock-content">
+            <!--雪花-->
+            <div class="snowflake">
+                <canvas id="snowflake"></canvas>
+            </div>
+            <!--雪花 END-->
+            <div class="time">
+                <div>
+                    <div class="hhmmss"></div>
+                    <div class="yyyymmdd"></div>
+                </div>
+            </div>
+            <div class="quit" id="lockQuit">
+                <i class="layui-icon layui-icon-logout" title="退出登录"></i>
+            </div>
+            <table class="unlock">
+                <tr>
+                    <td>
+                        <div class="layui-form lock-form">
+                            <div class="lock-head">
+                                <img src="../view/static/layui/images/logo.png" alt="avatar.png" />
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-col-xs8 layui-col-sm8 layui-col-md8">
+                                    <input type="password" required lay-verify="required" id="lockPassword" name="lock_password" style="border-radius: 0;border:0;height: 44px" placeholder="请输入解锁密码" autocomplete="off" class="layui-input" />
+                                </div>
+                                <div class="layui-col-xs4 layui-col-sm4 layui-col-md4">
+                                    <button style="width: 100%;box-sizing:border-box;border-radius: 0;" type="button" lay-submit lay-filter="lockSubmit" class="layui-btn lock-btn layui-btn-lg layui-btn-normal">确定
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
 </body>
 
-<script src="../view/static/layui/layui.all.js"></script>
+<script src="../view/static/layui/layui.js"></script>
 <script src="../view/static/layui/js/index.js" data-main="home"></script>
 <script src="../view/static/layui/js/jquery-3.3.1.min.js"></script>
+<script src="../view/static/layui/js/snowflake.js?snowflake=雪花"></script>
+<script src="../view/static/layui/js/main.js"></script>
+
 <!-- 修改密码view -->
 <div id="main_cpw_view" style="margin: 5%;" hidden>
     <form class="layui-form layui-form-pane" id="main_cpw_form" method="post" lay-filter="example">
@@ -109,6 +180,7 @@
 <script>
     var layer = layui.layer;
     var form = layui.form;
+
     $("#main_cpw").click(function () {
         index = layer.open({
             type: 1,
