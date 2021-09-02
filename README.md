@@ -139,7 +139,15 @@ func InitVueAdminServer() {
 
 ## TODO
 
-### 增加系统操作日志
+### 1.layui form验证
+
+### 2. 首次进入后台[控制台]子菜单未选中状态
+
+### 3. 增加系统操作日志
+```
+记录: 修改/新增/删除
+id,admin_id,msg,craete_time
+```
 
 ### casbin
 - 百度&b站: golang casbin
@@ -150,6 +158,7 @@ func InitVueAdminServer() {
 - go get github.com/casbin/gorm-adapter/v3
 
 ### i18n
+- https://blog.csdn.net/qq_42041981/article/details/105233384 (layui国际化)
 - https://www.cnblogs.com/smallbo/p/15042203.html
 - https://xuanwo.io/2019/12/11/golang-i18n/
 - https://github.com/nicksnyder/go-i18n
