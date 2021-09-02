@@ -28,41 +28,33 @@
         <div class="layui-row">
             <div class="layui-card">
                 <div class="layui-card-body">
-                    <div class="form-box">
 
-                        <div class="layui-form layui-form-item">
-
-                            <div class="layui-inline">
-                                <div class="layui-form-mid">用户名:</div>
-                                <div class="layui-input-inline">
-                                    <input type="text" placeholder="支持模糊查询" autocomplete="off" class="layui-input" id="searchInput" name="searchInput">
-                                </div>
+                    <div class="layui-form layui-form-item layui-form-pane">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">用户名</label>
+                            <div class="layui-input-inline">
+                                <input type="text" placeholder="支持模糊查询" autocomplete="off" class="layui-input" id="searchInput" name="searchInput">
                             </div>
-
-                            <div class="layui-inline">
-                                <div class="layui-input-inline">
-                                    <div class="layui-form-mid">角色:</div>
-                                    <div class="layui-input-inline" style="width: 120px;">
-                                        <select id="select_role_id" name="select_role_id" lay-verify="required">
-                                            <option value=""></option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="layui-inline">
-                                <div class="layui-form-mid">最后登录时间:</div>
-                                <div class="layui-input-inline">
-                                    <input type="text" class="layui-input" id="select_datetime" name="select_datetime" placeholder=" - " autocomplete="off">
-                                </div>
-                            </div>
-
-                            <button class="layui-btn layui-btn-blue" onclick="return false;" data-type="reload" id="searchBtn">查询</button>
-                            <button class="layui-btn layui-btn-green" onclick="addAdmin();return false;" id="addBtn">新增</button>
-                            <button onclick="javascript:location.reload();" class="layui-btn layui-btn-primary">刷新</button>
-
                         </div>
 
+                        <div class="layui-inline">
+                            <label class="layui-form-label">角色</label>
+                            <div class="layui-input-inline" style="width: 120px;">
+                                <select id="select_role_id" name="select_role_id" lay-verify="required">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="layui-inline">
+                            <label class="layui-form-label">登陆时间</label>
+                            <div class="layui-input-inline">
+                                <input type="text" class="layui-input" id="select_datetime" name="select_datetime" placeholder="开始时间 - 结束时间" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button class="layui-btn layui-btn-blue" onclick="return false;" data-type="reload" id="searchBtn">查询</button>
+                        </div>
                     </div>
 
                     <table id="dataDable" lay-filter="dataDable"></table>
@@ -70,66 +62,71 @@
                 </div>
             </div>
         </div>
-    </div>
 
     </div>
-
-    <!-- 行工具栏 -->
-    <script type="text/html" id="barHandle">
-        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-    </script>
-
-    <!-- 新增视图 -->
-    <div id="layer_view" style="margin: 5%;" hidden>
-        <form class="layui-form layui-form-pane" id="layer_view_form" method="post" lay-filter="example">
-            <input type="text" id="layer_view_id" name="id" hidden>
-            <div class="layui-form-item">
-                <label class="layui-form-label">用户名</label>
-                <div class="layui-input-block">
-                    <input type="text" id="user_name" name="user_name" lay-verify="required" placeholder="5~30位字符" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">密码</label>
-                <div class="layui-input-block">
-                    <input type="password" id="password" name="password" lay-verify="required" placeholder="不小于6位数" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">角色</label>
-                <div class="layui-input-block">
-                    <select id="select_role" name="role" lay-verify="required">
-                        <option value=""></option>
-                    </select>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">上级ID</label>
-                <div class="layui-input-block">
-                    <select id="select_pid" name="pid" lay-verify="required">
-                        <option value=""></option>
-                    </select>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">状态</label>
-                <div class="layui-input-block">
-                    <select id="select_status" name="status" lay-verify="required">
-                        <option value="1">启用</option>
-                        <option value="0">禁用</option>
-                    </select>
-                </div>
-            </div>
-        </form>
-    </div>
-
 </body>
+
+<!-- 新增&编辑 视图 -->
+<div id="layer_view" style="margin: 5%;" hidden>
+    <form class="layui-form layui-form-pane" id="layer_view_form" method="post" lay-filter="example">
+        <input type="text" id="layer_view_id" name="id" hidden>
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-block">
+                <input type="text" id="user_name" name="user_name" lay-verify="required" placeholder="5~30位字符" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-block">
+                <input type="password" id="password" name="password" lay-verify="required" placeholder="不小于6位数" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色</label>
+            <div class="layui-input-block">
+                <select id="select_role" name="role" lay-verify="required">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">上级ID</label>
+            <div class="layui-input-block">
+                <select id="select_pid" name="pid" lay-verify="required">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-block">
+                <select id="select_status" name="status" lay-verify="required">
+                    <option value="1">启用</option>
+                    <option value="0">禁用</option>
+                </select>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- 表格行工具栏 -->
+<script type="text/html" id="barHandle">
+<div class="layui-btn-group">
+    <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="edit">编辑</button>
+    <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</button>
+</div>
+</script>
+
+<!-- 表格头部工具栏 -->
+<script type="text/html" id="tableToolBar">
+    <button class="layui-btn layui-btn-green" onclick="addAdmin();return false;"><i class="layui-icon layui-icon-add-circle"></i> 新增</button>
+    <button class="layui-btn layui-btn-warm" onclick="reloadTable();return false;"><i class="layui-icon layui-icon-refresh-3"></i> 加载</button>
+</script>
 
 <script src="../../public/static/layui/layui.js"></script>
 <script src="../../public/static/layui/js/jquery-3.3.1.min.js"></script>
 <script>
-    var element = layui.element;
     var table = layui.table;
     var form = layui.form;
     var layer = layui.layer;
@@ -190,12 +187,12 @@
             { field: 'user_name', title: '用户名' },
             { field: 'role_name', title: '角色' },
             { field: 'pid', title: '上级ID' },
+            { field: 'last_login_ip', title: '最后登陆IP' },
             { field: 'created_at', title: '创建时间' },
             { field: 'updated_at', title: '更新时间' },
             { field: 'last_login_time', title: '最后登陆时间' },
-            { field: 'last_login_ip', title: '最后登陆IP' },
             {
-                field: 'status', title: '状态', width: 85, unresize: true, templet: function (data) {
+                field: 'status', title: '状态', width: 95, templet: function (data) {
                     var tpl1 = '<input type="checkbox" name="status" value="' + data.id + '" lay-skin="switch" lay-text="正常|禁用" lay-filter="statusCheckbox">'
                     var tpl2 = '<input type="checkbox" name="status" value="' + data.id + '" lay-skin="switch" lay-text="正常|禁用" lay-filter="statusCheckbox" checked>';
                     if (data.status == 1) {
@@ -205,11 +202,13 @@
                     }
                 }
             },
-            { fixed: 'right', title: '操作', toolbar: '#barHandle' }
+            { width: 120, title: '操作', toolbar: '#barHandle' }
         ]],
+        toolbar: "#tableToolBar",
+        defaultToolbar: ['filter', 'exports', 'print'],
         page: true,
-        limits: [10, 20, 50, 100, 500],
-        limit: 10,
+        limits: [13, 10, 20, 50, 100, 500, 1000, 10000],
+        limit: 13,
         id: 'dbTableReload',
     });
 
