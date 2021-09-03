@@ -186,9 +186,10 @@
     table.render({
         elem: '#dataDable',
         url: '/admin/adm/get',
+        // totalRow: true, // 是否开启合计行区域
         cols: [[
-            { field: 'id', title: 'ID', sort: true },
-            { field: 'user_name', title: '用户名' },
+            { field: 'id', title: 'ID', sort: true, /*totalRowText: "合计"*/ },
+            { field: 'user_name', title: '用户名', /*totalRow: true,*/ },
             { field: 'role_name', title: '角色' },
             { field: 'pid', title: '上级ID' },
             { field: 'last_login_ip', title: '最后登陆IP' },
@@ -211,10 +212,12 @@
         toolbar: "#tableToolBar",
         defaultToolbar: ['filter', 'exports', 'print'],
         page: true,
-        limits: [13, 10, 20, 50, 100, 500, 1000, 10000],
+        limits: [10, 13, 20, 50, 100, 1000, 10000],
         limit: 13,
         id: 'dbTableReload',
         done: function (res) { layer.close(index); },
+        escape: true, // 是否开启 xss 字符过滤（默认 false）layui 2.6.8 新增
+        height: 'full-231', // full- 固定语法,数字标识: 表格容器距离浏览器顶部和底部的距离“和”
     });
 
     //监听Checkbox操作

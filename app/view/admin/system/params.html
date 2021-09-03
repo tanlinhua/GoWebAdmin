@@ -100,10 +100,11 @@
             { width: 120, title: '操作', toolbar: '#barSysParams' }
         ]],
         page: true,
-        limits: [10, 20, 50, 100, 500],
-        limit: 10,
+        limits: [10, 15, 20, 50, 100],
+        limit: 15,
         id: 'paramsReload',
         done: function (res) { layer.close(index); },
+        escape: true,
     });
 
     //查询并表格重载
