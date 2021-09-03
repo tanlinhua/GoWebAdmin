@@ -133,6 +133,8 @@
     var form = layui.form;
     var layer = layui.layer;
 
+    var index = layer.load();
+
     layui.laydate.render({
         elem: '#select_datetime',
         type: 'datetime',
@@ -212,6 +214,7 @@
         limits: [13, 10, 20, 50, 100, 500, 1000, 10000],
         limit: 13,
         id: 'dbTableReload',
+        done: function (res) { layer.close(index); },
     });
 
     //监听Checkbox操作
@@ -252,13 +255,14 @@
             table.reload('dbTableReload', {
                 page: {
                     curr: currpage
-                }
-                , where: {
+                },
+                where: {
                     search: searchInput.val(),
                     role: role_id,
                     t1: dt_arr[0],
                     t2: dt_arr[1],
-                }
+                },
+                done: function (res) { layer.close(index); },
             });
         }
     };
