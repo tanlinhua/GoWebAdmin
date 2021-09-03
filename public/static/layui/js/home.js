@@ -102,9 +102,6 @@ layui.define(['element', 'layer'], function (exports) {
                 .removeClass('layui-nav-itemed');
         });
 
-        // 默认触发第一个子菜单的点击事件
-        $('#Nav li.layui-nav-item:eq(0) > dl.layui-nav-child > dd > a:eq(0)').trigger('click');
-
         var iframeIndex = 0; // 当前TAB页码编号
 
         tabs.onChange(function (data) {
@@ -143,6 +140,9 @@ layui.define(['element', 'layer'], function (exports) {
                 layer.msg("请勿频繁刷新!", { icon: 5, anim: 6, time: 3000 });
             }
         });
+
+        // 默认触发第一个子菜单的点击事件
+        $('#Nav li.layui-nav-item:eq(0) > dl.layui-nav-child > dd > a:eq(0)').trigger('click');
 
         this.slideSideBar();
     }
