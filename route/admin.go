@@ -53,7 +53,7 @@ func initAdmResources(e *gin.Engine) {
 	e.StaticFS("public", http.FS(public.Static))
 
 	e.GET("favicon.ico", func(c *gin.Context) {
-		file, _ := public.Static.ReadFile("favicon.ico")
+		file, _ := public.Static.ReadFile("static/favicon.ico")
 		c.Data(http.StatusOK, "image/x-icon", file)
 	})
 }
