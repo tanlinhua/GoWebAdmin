@@ -139,11 +139,9 @@ func InitVueAdminServer() {
 
 ## TODO
 
-### 1.layui form验证
+### 1. layui form验证
 
-### 2. 首次进入后台[控制台]子菜单未选中状态
-
-### 3. 增加系统操作日志
+### 2. 增加系统操作日志
 ```
 记录: 修改/新增/删除
 id,admin_id,msg,craete_time
