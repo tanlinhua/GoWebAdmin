@@ -12,9 +12,9 @@ var (
 	AdminPort string
 	ExtIP     string
 
-	AdminId   int
-	AdminName string
-	LoginAuth int
+	AdminId    int
+	AdminName  string
+	GoogleAuth int
 
 	Db         string
 	DbHost     string
@@ -61,7 +61,7 @@ func loadServer(file *ini.File) {
 func loadAdmin(file *ini.File) {
 	AdminId = file.Section("admin").Key("id").MustInt(1)
 	AdminName = file.Section("admin").Key("name").MustString("admin")
-	LoginAuth = file.Section("admin").Key("LoginAuth").MustInt(2)
+	GoogleAuth = file.Section("admin").Key("GoogleAuth").MustInt(2)
 }
 
 func loadDatabase(file *ini.File) {

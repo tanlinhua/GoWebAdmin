@@ -28,16 +28,22 @@
                     <span class="label-title">密码</span>
                 </label>
             </div>
+            {{ if eq .GoogleAuth 1 }}
+            <div class="input-group">
+                <input type="text" id="g_code" class="input-field" style="flex:1" autocomplete="off">
+                <label for="g_code" class="input-label">
+                    <span class="label-title">安全码</span>
+                </label>
+            </div>
+            {{ else }}
+            <input type="text" id="g_code" value="0" hidden>
+            {{ end }}
             <div class="input-group" style="display: flex; padding-right: 0;">
                 <input type="text" id="code" class="input-field" style="flex:1" autocomplete="off">
                 <label for="code" class="input-label">
                     <span class="label-title">验证码</span>
                 </label>
-                {{ if eq .LoginAuth 1 }}
-                <image src="" onclick="getCaptcha();return false;" id="captcha" style="width:145px;z-index:999;display:none;"></image>
-                {{ else }}
                 <image src="" onclick="getCaptcha();return false;" id="captcha" style="width:145px;z-index:999;"></image>
-                {{ end }}
             </div>
             <button type="button" id="btn_submit" onclick="login();return false;" class="login-button">登录<i class="ai ai-enter"></i></button>
         </form>
@@ -48,9 +54,7 @@
 <script src="../public/static/layui/js/jquery-3.3.1.min.js"></script>
 <script src="../public/static/layui/js/index.js" data-main="login"></script>
 <script>
-    layui.use('layer', function () {
-        var layer = layui.layer;
-    });
+    var layer = layui.layer;
 
     document.onkeydown = function (e) {
         if (!e) e = window.event;
@@ -60,7 +64,6 @@
     };
 
     var curCaptId = "";
-    getCaptcha();
     function getCaptcha() {
         $.ajax({
             type: "GET",
@@ -77,12 +80,19 @@
             }
         });
     }
+    getCaptcha();
 
     function login() {
         $.ajax({
             url: '/admin/check',
             method: 'post',
-            data: { user_name: $('#username').val(), password: $('#password').val(), code: $('#code').val(), cid: curCaptId },
+            data: {
+                user_name: $('#username').val(),
+                password: $('#password').val(),
+                code: $('#code').val(),
+                g_code: $('#g_code').val(),
+                cid: curCaptId,
+            },
             dataType: 'JSON',
             success: function (res) {
                 if (res.code === 0) {

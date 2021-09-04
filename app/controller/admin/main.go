@@ -16,7 +16,7 @@ import (
 
 // 登录页面
 func AdminLogin(c *gin.Context) {
-	c.HTML(http.StatusOK, "main/login.html", gin.H{"LoginAuth": config.LoginAuth})
+	c.HTML(http.StatusOK, "main/login.html", gin.H{"GoogleAuth": config.GoogleAuth})
 }
 
 // 后台首页
@@ -47,6 +47,8 @@ type googleAuth struct {
 }
 
 // 生成google authenticator信息并存入数据库
+// iOS: AppStore搜索 Google Authenticator
+// Android: GooglePlay搜索Google身份验证器或者其他安卓市场下载
 func GenGoogleAuth(c *gin.Context) {
 	var save model.SysParams
 	resp := response.New(c)
@@ -102,6 +104,7 @@ func AdminLoginCheck(c *gin.Context) {
 	user_name := c.PostForm("user_name")
 	password := c.PostForm("password")
 	code := c.PostForm("code")
+	g_code := c.PostForm("g_code")
 	cid := c.PostForm("cid")
 
 	if utils.Empty(user_name) || utils.Empty(password) || utils.Empty(code) || utils.Empty(cid) {
@@ -109,7 +112,13 @@ func AdminLoginCheck(c *gin.Context) {
 		return
 	}
 
-	if config.LoginAuth == 1 {
+	capt_ok = captcha.CaptchaVerify(cid, code)
+	if !capt_ok {
+		resp.Error(-1, "验证码错误")
+		return
+	}
+
+	if config.GoogleAuth == 1 {
 		value := model.ParamsGetValueByKey("GoogleAuthenticator")
 		if utils.Empty(value) {
 			resp.Error(-1, "GoogleAuthenticator信息不存在")
@@ -117,14 +126,11 @@ func AdminLoginCheck(c *gin.Context) {
 		}
 		authJson, _ := utils.Json_decode(value)
 		secret := authJson["secret"]
-		capt_ok = google.NewGoogleAuth().VerifyCode(secret.(string), code)
-	} else {
-		capt_ok = captcha.CaptchaVerify(cid, code)
-	}
-
-	if !capt_ok {
-		resp.Error(-1, "验证码错误")
-		return
+		capt_ok = google.NewGoogleAuth().VerifyCode(secret.(string), g_code)
+		if !capt_ok {
+			resp.Error(-1, "安全码错误")
+			return
+		}
 	}
 
 	ok, id, msg := model.AdminLogin(user_name, password)
