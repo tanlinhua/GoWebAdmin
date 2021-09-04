@@ -1,16 +1,16 @@
-layui.define(['element'],function(exports){
+layui.define(['element'], function (exports) {
 
     var $ = layui.$;
-    $('.input-field').on('change',function(){
-        var $this = $(this),
-            value = $.trim($this.val()),
-            $parent = $this.parent();
+    $('.input-field').on('change', function () {
+        var $this = $(this);
+        var value = $.trim($this.val());
+        var $parent = $this.parent();
 
-        if(value !== '' && !$parent.hasClass('field-focus')){
+        if (value !== '') {
             $parent.addClass('field-focus');
-        }else{
+        } else {
             $parent.removeClass('field-focus');
         }
-    })
+    });
     exports('login');
 });
