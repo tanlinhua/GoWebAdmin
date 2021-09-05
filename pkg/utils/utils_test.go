@@ -4,6 +4,13 @@ import (
 	"testing"
 )
 
+func TestSubStrByFlag(t *testing.T) {
+	dest := SubStrByFlag("user_name=test&password=123456", "user_name=", "&")
+	t.Log(dest)
+	dest = SubStrByFlag("password=123456&user_name=admin", "user_name=", "&")
+	t.Log(dest)
+}
+
 func TestPassWord(t *testing.T) {
 	password := "123456"
 	hash, _ := PasswordHash(password)

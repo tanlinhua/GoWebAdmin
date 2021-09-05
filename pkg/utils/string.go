@@ -44,3 +44,17 @@ func Strstr(haystack string, needle string, before_needle bool) string {
 		return haystack[idx+len([]byte(needle))-1:]
 	}
 }
+
+// 截取字符串
+// source		-> 源字符串
+// flagStart	-> 起始字符串
+// flagEnd		-> 结束字符串
+// return		-> flagStart到flagEnd的中间字符串
+func SubStrByFlag(source, flagStart, flagEnd string) string {
+	start := strings.Index(source, flagStart) + len(flagStart)
+	end := strings.Index(source[start:], flagEnd) + start
+	if end == start-1 {
+		end = len(source)
+	}
+	return source[start:end]
+}
