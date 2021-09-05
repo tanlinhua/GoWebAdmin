@@ -139,14 +139,6 @@ func InitVueAdminServer() {
 
 ## TODO
 
-### 1. layui form验证
-
-### 2. 增加系统操作日志
-```
-记录: 修改/新增/删除
-id,admin_id,msg,craete_time
-```
-
 ### casbin
 - 百度&b站: golang casbin
 - 参考gin-vue-admin
