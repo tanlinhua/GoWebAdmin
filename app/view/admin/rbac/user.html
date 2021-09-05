@@ -245,33 +245,25 @@
     });
 
     //查询并表格重载
-    var $ = layui.$, active = {
-        reload: function () {
-            var role_id = $('#select_role_id').val();
-            var searchInput = $('#searchInput');
-            let currpage = 1;//$('.layui-laypage-em').next().text(); //当前页
-
-            var datetime_val = $('#select_datetime').val();
-            var dt_arr = datetime_val.split(" - ");
-
-            //执行重载
-            table.reload('dbTableReload', {
-                page: {
-                    curr: currpage
-                },
-                where: {
-                    search: searchInput.val(),
-                    role: role_id,
-                    t1: dt_arr[0],
-                    t2: dt_arr[1],
-                },
-                done: function (res) { layer.close(index); },
-            });
-        }
-    };
     $('#searchBtn').on('click', function () {
-        var type = $(this).data('type');
-        active[type] ? active[type].call(this) : '';
+        let role_id = $('#select_role_id').val();
+        let searchInput = $('#searchInput').val();
+        let currpage = 1;//$('.layui-laypage-em').next().text(); //当前页
+        var datetime_val = $('#select_datetime').val();
+        var dt_arr = datetime_val.split(" - ");
+
+        table.reload('dbTableReload', {
+            page: {
+                curr: currpage
+            },
+            where: {
+                search: searchInput,
+                role: role_id,
+                t1: dt_arr[0],
+                t2: dt_arr[1],
+            },
+            done: function (res) { layer.close(index); },
+        });
     });
 
     //新增管理员
@@ -320,7 +312,7 @@
             layer.confirm('真的删除吗?', function (index) {
                 $.ajax({
                     url: "/admin/adm/del",
-                    type: "GET",
+                    type: "POST",
                     dataType: "json",
                     data: { id: data.id },
                     success: function (result) {
@@ -389,9 +381,7 @@
     function reloadTable() {
         let currpage = $('.layui-laypage-em').next().text();
         table.reload('dbTableReload', {
-            page: {
-                curr: currpage
-            }
+            page: { curr: currpage }
         });
     }
 </script>

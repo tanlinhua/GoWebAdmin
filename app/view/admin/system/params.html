@@ -161,7 +161,7 @@
             layer.confirm('真的删除吗?', function (index) {
                 $.ajax({
                     url: "/admin/params/del",
-                    type: "GET",
+                    type: "POST",
                     dataType: "json",
                     data: { id: data.id },
                     success: function (result) {

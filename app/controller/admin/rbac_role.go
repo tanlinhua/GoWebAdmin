@@ -34,7 +34,7 @@ func RoleAdd(c *gin.Context) {
 
 // 删除角色
 func RoleDel(c *gin.Context) {
-	id, _ := strconv.Atoi(c.Query("id"))
+	id, _ := strconv.Atoi(c.PostForm("id"))
 	ok, msg := model.RoleDel(id)
 	if ok {
 		response.New(c).Success(nil, 0)

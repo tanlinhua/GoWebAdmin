@@ -36,7 +36,7 @@ func AdmAdd(c *gin.Context) {
 
 // 删除后台用户
 func AdmDel(c *gin.Context) {
-	id, _ := strconv.Atoi(c.Query("id"))
+	id, _ := strconv.Atoi(c.PostForm("id"))
 	ok, msg := model.AdminDel(id)
 	if ok {
 		response.New(c).Success(nil, 0)

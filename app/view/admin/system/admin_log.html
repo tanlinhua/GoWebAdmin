@@ -1,0 +1,134 @@
+{{define "system/adminlog.html"}}
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../public/static/layui/css/layui.css">
+    <link rel="stylesheet" href="../../public/static/layui/css/view.css" />
+    <link rel="icon" href="/favicon.ico">
+    <title>操作日志</title>
+</head>
+
+<body class="layui-view-body">
+    <div class="layui-content">
+
+        <div class="layui-page-header">
+            <div class="pagewrap">
+                <span class="layui-breadcrumb">
+                    <a href="">首页</a>
+                    <a href="">系统配置</a>
+                    <a><cite>操作日志</cite></a>
+                </span>
+            </div>
+        </div>
+
+        <div class="layui-row">
+            <div class="layui-card">
+                <div class="layui-card-body">
+
+                    <div class="layui-form layui-form-item layui-form-pane">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">用户名</label>
+                            <div class="layui-input-inline">
+                                <input id="name" name="name" type="text" placeholder="输入完整用户名" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-inline">
+                            <label class="layui-form-label">标题</label>
+                            <div class="layui-input-inline">
+                                <input id="title" name="title" type="text" placeholder="支持模糊查询" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-inline">
+                            <label class="layui-form-label">IP</label>
+                            <div class="layui-input-inline">
+                                <input id="ip" name="ip" type="text" placeholder="请输入完整IP" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-inline">
+                            <label class="layui-form-label">时间</label>
+                            <div class="layui-input-inline">
+                                <input id="datetime" name="datetime" type="text" placeholder="开始时间 - 结束时间" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button class="layui-btn layui-btn-blue" onclick="return false;" data-type="reload" id="searchBtn">查询</button>
+                        </div>
+                    </div>
+
+                    <table id="dataDable" lay-filter="dataDable"></table>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+<script src="../../public/static/layui/layui.js"></script>
+<script src="../../public/static/layui/js/jquery-3.3.1.min.js"></script>
+<script>
+    var table = layui.table;
+    var layer = layui.layer;
+
+    var index = layer.load();
+
+    layui.laydate.render({
+        elem: '#datetime',
+        type: 'datetime',
+        range: true
+    });
+
+    // 表格渲染
+    table.render({
+        elem: '#dataDable',
+        url: '/admin/adminlog/get',
+        cols: [[
+            { field: 'id', title: 'ID', sort: true, },
+            { field: 'user_name', title: 'user', },
+            { field: 'title', title: 'action' },
+            { field: 'body', title: 'content' },
+            { field: 'uri', title: 'resource' },
+            { field: 'ip', title: 'IP' },
+            { field: 'created_at', title: 'time' },
+        ]],
+        page: true,
+        limits: [10, 14, 20, 50, 100, 1000, 10000],
+        limit: 14,
+        id: 'dbTableReload',
+        done: function (res) { layer.close(index); },
+        escape: true, // 是否开启 xss 字符过滤（默认 false）layui 2.6.8 新增
+        height: 'full-250', // full- 固定语法,数字标识: 表格容器距离浏览器顶部和底部的距离“和”
+    });
+
+    //查询并表格重载
+    $('#searchBtn').on('click', function () {
+        var title = $('#title').val();
+        var name = $('#name').val();
+        var ip = $('#ip').val();
+        var datetime_val = $('#datetime').val();
+        var dt_arr = datetime_val.split(" - ");
+        // 执行重载
+        table.reload('dbTableReload', {
+            page: {
+                curr: 1
+            },
+            where: {
+                title: title,
+                name: name,
+                ip: ip,
+                t1: dt_arr[0],
+                t2: dt_arr[1],
+            },
+        });
+    });
+</script>
+
+</html>
+{{end}}
