@@ -68,8 +68,8 @@
 
 <!-- 新增&编辑 视图 -->
 <div id="layer_view" style="margin: 5%;" hidden>
-    <form class="layui-form layui-form-pane" id="layer_view_form" method="post" lay-filter="example">
-        <input type="text" id="layer_view_id" name="id" hidden>
+    <form class="layui-form layui-form-pane" id="layer_fomr_id" method="post" lay-filter="layer_form_filter">
+        <input type="text" id="user_id" name="id" hidden>
         <div class="layui-form-item">
             <label class="layui-form-label">用户名</label>
             <div class="layui-input-block">
@@ -85,7 +85,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">角色</label>
             <div class="layui-input-block">
-                <select id="select_role" name="role" lay-verify="required">
+                <select id="select_view_role" name="role" lay-verify="required">
                     <option value=""></option>
                 </select>
             </div>
@@ -93,7 +93,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">上级ID</label>
             <div class="layui-input-block">
-                <select id="select_pid" name="pid" lay-verify="required">
+                <select id="select_pid" name="pid">
                     <option value=""></option>
                 </select>
             </div>
@@ -133,8 +133,9 @@
     var form = layui.form;
     var layer = layui.layer;
 
-    var index = layer.load();
+    var loading = layer.load();
 
+    //初始化日期
     layui.laydate.render({
         elem: '#select_datetime',
         type: 'datetime',
@@ -149,7 +150,7 @@
         success: function (result) {
             if (result.code == 0) {
                 for (var i = 0; i < result.count; i++) {
-                    $("#select_role").append(new Option(result.data[i].role_name, result.data[i].id));
+                    $("#select_view_role").append(new Option(result.data[i].role_name, result.data[i].id));
                     $("#select_role_id").append(new Option(result.data[i].role_name, result.data[i].id));
                 }
                 layui.form.render("select");
@@ -214,8 +215,8 @@
         page: true,
         limits: [10, 13, 20, 50, 100, 1000, 10000],
         limit: 13,
-        id: 'dbTableReload',
-        done: function (res) { layer.close(index); },
+        id: 'tableReloadId',
+        done: function (res) { layer.close(loading); },
         escape: true, // 是否开启 xss 字符过滤（默认 false）layui 2.6.8 新增
         height: 'full-231', // full- 固定语法,数字标识: 表格容器距离浏览器顶部和底部的距离“和”
     });
@@ -249,10 +250,10 @@
         let role_id = $('#select_role_id').val();
         let searchInput = $('#searchInput').val();
         let currpage = 1;//$('.layui-laypage-em').next().text(); //当前页
-        var datetime_val = $('#select_datetime').val();
-        var dt_arr = datetime_val.split(" - ");
+        let datetime_val = $('#select_datetime').val();
+        let dt_arr = datetime_val.split(" - ");
 
-        table.reload('dbTableReload', {
+        table.reload('tableReloadId', {
             page: {
                 curr: currpage
             },
@@ -262,31 +263,60 @@
                 t1: dt_arr[0],
                 t2: dt_arr[1],
             },
-            done: function (res) { layer.close(index); },
         });
     });
 
     //新增管理员
     function addAdmin() {
-        index = layer.open({
+        openLayerView('新增管理员', '/admin/adm/add');
+    };
+
+    //监听行工具事件
+    table.on('tool(dataDable)', function (obj) {
+        var data = obj.data;
+        if (obj.event === 'del') {
+            layer.confirm('真的删除吗?', function (index) {
+                deleteUser(data.id);
+            });
+        } else if (obj.event === 'edit') {
+            openLayerView('修改管理员', '/admin/adm/update', data);
+        }
+    });
+
+    //打开弹出层(新增&编辑)
+    function openLayerView(title, url, data) {
+        layer.open({
             type: 1,
-            title: "新增管理员",
-            area: ['550px', '550px'],
+            title: title,
+            area: '500px',
             shade: 0,
             anim: 2,
             scrollbar: false,
             maxmin: true,
             content: $('#layer_view'),
             btn: ['提交', '取消'],
+            success: function (layero, index) {
+                layero.find('.layui-layer-content').css('overflow', 'visible');//隐藏点击下拉框的时候layer的滚动条
+                if (data) {
+                    form.val('layer_form_filter', {
+                        id: data.id,
+                        user_name: data.user_name,
+                        role: data.role,
+                        pid: data.pid,
+                        status: data.status,
+                    });
+                    $('#user_name').prop('disabled', true);
+                }
+            },
             yes: function (index, layero) {
                 $.ajax({
-                    url: "/admin/adm/add",
+                    url: url,
                     type: "POST",
-                    dataType: "json",
-                    data: $('#layer_view_form').serialize(),
+                    dataType: "JSON",
+                    data: $('#layer_fomr_id').serialize(),
                     success: function (result) {
                         if (result.code == 0) {
-                            layer.msg("新增成功");
+                            layer.msg("成功");
                             layer.close(index);
                             reloadTable();
                             return
@@ -300,87 +330,37 @@
             },
             end: function () {
                 $('#layer_view').hide();//隐藏div
-                $('#layer_view_form')[0].reset();//重置表单
+                $('#layer_fomr_id')[0].reset();//重置表单
+                $('#user_name').prop('disabled', false);
             },
         });
-    };
+    }
 
-    //监听行工具事件
-    table.on('tool(dataDable)', function (obj) {
-        var data = obj.data;
-        if (obj.event === 'del') {
-            layer.confirm('真的删除吗?', function (index) {
-                $.ajax({
-                    url: "/admin/adm/del",
-                    type: "POST",
-                    dataType: "json",
-                    data: { id: data.id },
-                    success: function (result) {
-                        if (result.code == 0) {
-                            layer.msg("成功")
-                            reloadTable();
-                        } else {
-                            layer.msg(result.msg);
-                        }
-                    },
-                    error: function () {
-                        layer.msg("系统异常！");
-                    }
-                });
-            });
-        } else if (obj.event === 'edit') {
-            index = layer.open({
-                type: 1,
-                title: "修改管理员",
-                area: ['550px', '550px'],
-                shade: 0,
-                anim: 2,
-                scrollbar: false,
-                maxmin: true,
-                content: $('#layer_view'),
-                btn: ['提交', '取消'],
-                success: function (layero, index) {
-                    $("#layer_view_id").val(data.id);
-                    $("#user_name").val(data.user_name);
-                    $('#user_name').prop('disabled', true);
-                    $("#select_role").val(data.role);
-                    $("#select_pid").val(data.pid);
-                    $("#select_status").val(data.status);
-                    layui.form.render("select");
-                },
-                yes: function (index, layero) {
-                    $.ajax({
-                        url: "/admin/adm/update",
-                        type: "POST",
-                        dataType: "json",
-                        data: $('#layer_view_form').serialize(),
-                        success: function (result) {
-                            if (result.code == 0) {
-                                layer.msg("修改成功");
-                                layer.close(index);
-                                reloadTable();
-                                return
-                            }
-                            layer.msg(result.msg);
-                        },
-                        error: function () {
-                            layer.msg("系统异常！");
-                        }
-                    });
-                },
-                end: function () {
-                    $('#user_name').prop('disabled', false);
-                    $('#layer_view').hide();//隐藏div
-                    $('#layer_view_form')[0].reset();//重置表单
-                },
-            });
-        }
-    });
+    //删除管理员
+    function deleteUser(id) {
+        $.ajax({
+            url: "/admin/adm/del",
+            type: "POST",
+            dataType: "json",
+            data: { id: id },
+            success: function (result) {
+                if (result.code == 0) {
+                    layer.msg("成功")
+                    reloadTable();
+                } else {
+                    layer.msg(result.msg);
+                }
+            },
+            error: function () {
+                layer.msg("系统异常！");
+            }
+        });
+    }
 
     //重载表格
     function reloadTable() {
         let currpage = $('.layui-laypage-em').next().text();
-        table.reload('dbTableReload', {
+        table.reload('tableReloadId', {
             page: { curr: currpage }
         });
     }
