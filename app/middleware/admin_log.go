@@ -73,11 +73,11 @@ func getAdminLogTitle(uri string) string {
 	}
 
 	var model string = "model"
-	if find := strings.Contains(uri, "params"); find {
+	if find := strings.Contains(uri, "/params/"); find {
 		model = "系统参数"
-	} else if find := strings.Contains(uri, "role"); find {
+	} else if find := strings.Contains(uri, "/role/"); find {
 		model = "角色"
-	} else if find := strings.Contains(uri, "adm"); find { // 这是个坑 admin/ 包含adm,所以放最后吧
+	} else if find := strings.Contains(uri, "/adm/"); find {
 		model = "用户"
 	}
 
