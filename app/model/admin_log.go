@@ -1,6 +1,8 @@
 package model
 
 import (
+	"time"
+
 	"github.com/tanlinhua/go-web-admin/app/config"
 	"github.com/tanlinhua/go-web-admin/pkg/trace"
 )
@@ -69,4 +71,14 @@ func AdminLogGet(adminId, page, limit int, title, name, ip, startTime, endTime s
 	}
 
 	return &data, total
+}
+
+// 清理记录 beforeDay(-7) 天之前的数据
+func AdminLogClean(beforeDay int) {
+	before := time.Now().AddDate(0, 0, beforeDay).Format("2006-01-02 15:04:05")
+	trace.Info("AdminLogClean.before=" + before)
+	err := db.Where("created_at < ?", before).Delete(&AdminLog{}).Error
+	if err != nil {
+		trace.Error("AdminLogClean.err=" + err.Error())
+	}
 }

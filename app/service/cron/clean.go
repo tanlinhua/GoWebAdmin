@@ -1,22 +1,25 @@
 package cron
 
 import (
-	"fmt"
-	"time"
+	"github.com/tanlinhua/go-web-admin/app/model"
+	"github.com/tanlinhua/go-web-admin/pkg/trace"
 )
 
-var specSecond = "*/30 * * * * ?" // 每N秒执行一次
-var specMinute = "0 */5 * * * ?"  // 每N分钟执行一次
-var specHour = "0 0 1 * * ?"      // 每天凌晨1点执行一次	[ "0 0 */2 * * ?" -> 每2个小时执行一次 ]
-
-func test1() {
-	fmt.Println("CRON.每N秒执行一次!", specSecond, time.Now())
-}
+var SpecSecondLoop = "*/30 * * * * ?"  // 每N秒执行一次
+var SpecMinuteLoop = "0 */5 * * * ?"   // 每N分钟执行一次
+var SpecHourLoop = "0 0 */2 * * ?"     // 每N小时执行一次
+var SpecCleanTrashData = "0 0 1 * * ?" // 每天凌晨1点执行一次
 
 func test2() {
-	fmt.Println("CRON.每N分钟执行一次!", specMinute, time.Now())
+	trace.Debug("CRON.每N分钟执行一次!")
 }
 
-func cleanLog() {
-	fmt.Println("CRON.每天凌晨1点执行一次!", specHour, time.Now())
+func test3() {
+	trace.Debug("CRON.每N小时执行一次!")
+}
+
+// 清理冗余数据
+func cleanTrashData() {
+	trace.Info("清理冗余数据")
+	model.AdminLogClean(-7)
 }

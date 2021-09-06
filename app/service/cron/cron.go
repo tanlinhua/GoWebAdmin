@@ -7,9 +7,9 @@ import (
 func Run() {
 	c := cron.New(cron.WithSeconds())
 
-	c.AddFunc(specSecond, test1)
-	c.AddFunc(specMinute, test2)
-	c.AddFunc(specHour, cleanLog)
+	c.AddFunc(SpecMinuteLoop, test2)
+	c.AddFunc(SpecHourLoop, test3)
+	c.AddFunc(SpecCleanTrashData, cleanTrashData)
 
 	c.Start()
 	select {} //阻塞主线程停止
