@@ -14,11 +14,13 @@ import (
 func StaticFileHandler() gin.HandlerFunc {
 
 	data := []byte(time.Now().String())
-	etag := fmt.Sprintf("W/%x", md5.Sum(data))     // ETag值
-	maxAge := int((time.Hour * 24 * 30).Seconds()) // 浏览器缓存时间
+	maxAge := int((time.Hour * 24 * 30).Seconds())
+
+	etag := fmt.Sprintf("W/%x", md5.Sum(data))       // ETag值
+	ctl := fmt.Sprintf("public, max-age=%d", maxAge) // 浏览器缓存时间
 
 	return func(c *gin.Context) {
-		c.Header("Cache-Control", fmt.Sprintf("public, max-age=%d", maxAge))
+		c.Header("Cache-Control", ctl)
 		c.Header("ETag", etag)
 
 		if match := c.GetHeader("If-None-Match"); match != "" {
