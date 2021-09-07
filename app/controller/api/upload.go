@@ -15,10 +15,10 @@ func TestUpload(c *gin.Context) {
 		c.String(500, "上传文件出错:"+err.Error())
 		return
 	}
-
-	dst := "runtime/upload/" + utils.UUID() + "_" + file.Filename
+	fileName := utils.UUID() + "_" + file.Filename
+	dst := "runtime/upload/" + fileName
 	if err := c.SaveUploadedFile(file, dst); err != nil {
 		c.String(http.StatusBadRequest, fmt.Sprintf("upload file err: %s", err.Error()))
 	}
-	c.String(http.StatusOK, "success: "+file.Filename)
+	c.String(http.StatusOK, fileName)
 }

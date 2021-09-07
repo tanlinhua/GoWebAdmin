@@ -57,6 +57,8 @@ func initSwagger(e *gin.Engine) {
 
 // 路由配置 -> API
 func initApiRouter(e *gin.Engine) {
+	e.Static("upload", "runtime/upload") // 上传文件路由
+
 	e.POST("api/user/login", api.UserLogin)
 	e.POST("api/user/reg", api.UserRegister)
 
