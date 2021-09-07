@@ -48,10 +48,14 @@ func initAdmResources(e *gin.Engine) {
 	// e.StaticFile("favicon.ico", "view/static/favicon.ico")
 	// e.LoadHTMLGlob("view/admin/**/*")
 
-	templ := template.Must(template.New("").ParseFS(view.Admin, "admin/**/*"))
-	e.SetHTMLTemplate(templ)
+	tpl := template.Must(template.New("").ParseFS(view.Admin, "admin/**/*"))
+	e.SetHTMLTemplate(tpl)
 
-	e.StaticFS("public", http.FS(public.Static))
+	s := e.Group("public")
+	s.Use(middleware.StaticFileHandler()) // 静态资源缓存
+	{
+		s.StaticFS("", http.FS(public.Static))
+	}
 
 	e.GET("favicon.ico", func(c *gin.Context) {
 		file, _ := public.Static.ReadFile("static/favicon.ico")
