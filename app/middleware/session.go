@@ -77,7 +77,7 @@ func timeOutHandler(c *gin.Context) {
 	if c.Request.RequestURI == "/admin/main" {
 		c.Redirect(http.StatusFound, "/admin/login")
 	} else {
-		c.String(http.StatusBadRequest, "登录超时,请重新登录! 😎")
+		c.String(http.StatusBadRequest, "权限不足! 😎")
 	}
 	c.Abort()
 }
