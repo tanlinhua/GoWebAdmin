@@ -86,14 +86,12 @@ func initAdmRouter(e *gin.Engine) {
 		auth.POST("adm/del", admin.AdmDel)       // 删
 		auth.POST("adm/update", admin.AdmUpdate) // 改
 		auth.GET("adm/get", admin.AdmGet)        // 查
-
 		// 权限配置-角色管理
 		auth.GET("role/view", admin.RoleView)      // view
 		auth.POST("role/add", admin.RoleAdd)       // 增
 		auth.POST("role/del", admin.RoleDel)       // 删
 		auth.POST("role/update", admin.RoleUpdate) // 改
 		auth.GET("role/get", admin.RoleGet)        // 查
-
 		// 权限配置-权限管理
 		auth.GET("per/view", admin.PermissionView) // view
 		auth.GET("per/get", admin.PermissionGet)   // 查
@@ -104,7 +102,6 @@ func initAdmRouter(e *gin.Engine) {
 		auth.POST("params/del", admin.ParamsDelete)    // 删
 		auth.POST("params/update", admin.ParamsUpdate) // 改
 		auth.GET("params/get", admin.ParamsGet)        // 查
-
 		// 系统配置-操作日志
 		auth.GET("adminlog/view", admin.AdminLogView) // view
 		auth.GET("adminlog/get", admin.AdminLogGet)   // 查
