@@ -25,7 +25,7 @@ func InitApiServer() {
 
 	initApiMiddleware(engine)
 	initSwagger(engine)
-	initApiRouter(engine)
+	initApiRouterV1(engine)
 
 	engine.Run(":" + config.APIPort)
 }
@@ -56,15 +56,18 @@ func initSwagger(e *gin.Engine) {
 }
 
 // 路由配置 -> API
-func initApiRouter(e *gin.Engine) {
-	e.Static("upload", "runtime/upload") // 上传文件路由
+func initApiRouterV1(e *gin.Engine) {
+	// 公共路由
+	public := e.Group("/api/v1")
+	{
+		public.POST("user/login", api.UserLogin)
+		public.POST("user/reg", api.UserRegister)
 
-	e.POST("api/user/login", api.UserLogin)
-	e.POST("api/user/reg", api.UserRegister)
-
-	e.POST("api/test/upload", api.TestUpload)
-
-	auth := e.Group("/api")
+		public.POST("/upload", api.TestUpload)    // 测试!
+		public.Static("upload", "runtime/upload") // test for api/v1/upload
+	}
+	// 鉴权路由
+	auth := public
 	auth.Use(middleware.CheckJWT())
 	{
 		auth.POST("user/cpw", api.UserCpw)
