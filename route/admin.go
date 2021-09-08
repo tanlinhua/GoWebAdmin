@@ -33,13 +33,12 @@ func initAdmMiddleware(e *gin.Engine) {
 
 	var xss middleware.XssMw
 
-	e.Use(gin.Recovery())                      // 如果存在恐慌(panics)，中间件恢复(recovers)写入500
-	e.Use(middleware.Logger("admin"))          // 自定义日志记录&切割
-	e.Use(middleware.IpLimiter())              // IP请求限制器
-	e.Use(xss.RemoveXss())                     // xss
-	e.Use(sessions.Sessions("cookie", store))  // session
-	middleware.PprofRegister(e, "jason/pprof") // 性能分析
-	e.Use(middleware.AdminLog())               // 管理员操作日志
+	e.Use(gin.Recovery())                     // 如果存在恐慌(panics)，中间件恢复(recovers)写入500
+	e.Use(middleware.Logger("admin"))         // 自定义日志记录&切割
+	e.Use(middleware.IpLimiter())             // IP请求限制器
+	e.Use(xss.RemoveXss())                    // xss
+	e.Use(sessions.Sessions("cookie", store)) // session
+	e.Use(middleware.AdminLog())              // 管理员操作日志
 }
 
 // 静态资源
@@ -65,16 +64,20 @@ func initAdmResources(e *gin.Engine) {
 
 // 路由配置 -> ADMIN
 func initAdmRouter(e *gin.Engine) {
-	e.GET("admin/google/auth", admin.GenGoogleAuth) // 生成googleAuth信息
-	e.GET("admin/captcha", admin.Captcha)           // 获取图形验证码
-
-	e.GET("admin/login", admin.AdminLogin)       // 登录页面
-	e.POST("admin/check", admin.AdminLoginCheck) // 登录校验
-	e.GET("admin/logout", admin.AdminLogout)     // 退出登录
-
-	auth := e.Group("/admin")
+	// 公共路由
+	public := e.Group("/admin")
+	{
+		public.GET("login", admin.AdminLogin)       // 登录页面
+		public.POST("check", admin.AdminLoginCheck) // 登录校验
+		public.GET("logout", admin.AdminLogout)     // 退出登录
+		public.GET("captcha", admin.Captcha)        // 获取图形验证码
+	}
+	// 鉴权路由
+	auth := public
 	auth.Use(middleware.CheckSession())
 	{
+		auth.GET("google", admin.GenGoogleAuth)       // 生成googleAuth信息
+		middleware.RouteRegister(auth, "jason/pprof") // 性能分析
 		// 后台首页
 		auth.GET("main", admin.AdminMain)       // view
 		auth.GET("console", admin.AdminConsole) // 控制台
