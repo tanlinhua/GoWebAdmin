@@ -105,7 +105,7 @@ func initAdmRouter(e *gin.Engine) {
 		auth.POST("params/update", admin.ParamsUpdate) // 改
 		auth.GET("params/get", admin.ParamsGet)        // 查
 
-		// 系统配置-参数配置
+		// 系统配置-操作日志
 		auth.GET("adminlog/view", admin.AdminLogView) // view
 		auth.GET("adminlog/get", admin.AdminLogGet)   // 查
 	}
