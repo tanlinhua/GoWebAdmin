@@ -38,6 +38,9 @@ func InitDB() {
 			TablePrefix:   "go_", // 表名前缀，`User`表为`t_users`
 			SingularTable: true,  // 使用单数表名，启用该选项后，`User` 表将是`user`
 		},
+		// 为了确保数据一致性，GORM 会在事务里执行写入操作（创建、更新、删除）
+		// 如果没有这方面的要求，您可以在初始化时禁用它，这将获得大约 30%+ 性能提升
+		// SkipDefaultTransaction: true, // 禁用默认事务
 	})
 	if err != nil {
 		log.Panic("连接数据库失败，err：", err)
