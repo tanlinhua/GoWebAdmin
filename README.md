@@ -35,6 +35,8 @@ kill -9 pid
 ```
 2. [Supervisor](docs/一些笔记/Supervisor.md)
 
+3. [nodejs pm2](https://cloud.tencent.com/developer/article/1677403)
+
 ### [WEB安全](docs/一些笔记/Web安全.md)
 
 - [Web安全学习笔记](https://github.com/LyleMi/Learn-Web-Hacking)
