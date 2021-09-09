@@ -17,13 +17,13 @@ type RedisClient struct {
 }
 
 func init() {
-	err := new()
+	err := newClient()
 	if err != nil {
 		fmt.Println("redis初始化失败", err.Error())
 	}
 }
 
-func new() error {
+func newClient() error {
 	if Handler != nil {
 		return nil
 	}
@@ -67,7 +67,7 @@ func new() error {
 // 获取redis操作对象
 func GetClient() (*RedisClient, error) {
 	if Handler == nil {
-		err := new()
+		err := newClient()
 		if err != nil {
 			return nil, err
 		}
