@@ -83,14 +83,23 @@
     getCaptcha();
 
     function login() {
+        var user_name = $('#username').val();
+        var password = $('#password').val();
+        var code = $('#code').val();
+        var g_code = $('#g_code').val();
+
+        if (user_name == "" || password == "" || code == "") {
+            layer.msg("请检查输入");
+            return;
+        }
         $.ajax({
             url: '/admin/check',
             method: 'post',
             data: {
-                user_name: $('#username').val(),
-                password: $('#password').val(),
-                code: $('#code').val(),
-                g_code: $('#g_code').val(),
+                user_name: user_name,
+                password: password,
+                code: code,
+                g_code: g_code,
                 cid: curCaptId,
             },
             dataType: 'JSON',
