@@ -63,8 +63,8 @@ func RoleUpdate(c *gin.Context) {
 
 // 查询角色
 func RoleGet(c *gin.Context) {
-	page, _ := strconv.Atoi(c.Query("page"))
-	limit, _ := strconv.Atoi(c.Query("limit"))
+	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
+	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "10"))
 	search := c.Query("search")
 
 	datas, total := model.RoleGet(page, limit, search)

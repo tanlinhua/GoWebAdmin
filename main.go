@@ -32,7 +32,7 @@ var (
 	AppVersion = "1.0"
 	GoVersion  = runtime.Version()
 	ApiDoc     = "http://" + config.ExtIP + ":" + config.APIPort + "/api/doc/index.html"
-	Pprof      = "http://" + config.ExtIP + ":" + config.AdminPort + "/jason/pprof"
+	Pprof      = "http://" + config.ExtIP + ":" + config.AdminPort + "/admin/jason/pprof"
 )
 
 func versionInfo() {

@@ -73,3 +73,26 @@ func initApiRouterV1(e *gin.Engine) {
 		auth.POST("user/cpw", api.UserCpw)
 	}
 }
+
+/*
+RESTful API 设计指南👇
+https://www.ruanyifeng.com/blog/2014/05/restful_api.html
+
+1.路由定义
+auth.POST("/user", api.UserAdd)
+auth.DELETE("/user/:id", api.UserDel) // 单用户来调用接口可以通过jwt或session中的内容来获取
+auth.PUT("/user/:id", api.UserUpdate)
+auth.GET("/user", api.UserGets)
+auth.GET("/user/:id", api.UserGet)
+
+2.参数获取 (c *gin.Context)
+api参数 -> id := c.Param("id") // 获取user/:id中id的值
+url参数 -> page := c.Query("page") // 获取?后面的参数
+表单参数 -> c.PostForm & c.DefaultPostForm
+jsonBody绑定	-> c.ShouldBindJSON
+表单body绑定	-> c.Bind
+uri数据绑定	-> r.GET("/:user/:password") // c.ShouldBindUri
+
+tips: Shouldxxx和Bindxxx区别就是Bindxxx会在head中添加400的返回信息，而Shouldxxx不会
+更多可以查看 c.Bind IDE的提示阅读gin源码
+*/

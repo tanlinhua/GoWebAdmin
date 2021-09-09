@@ -76,14 +76,16 @@ func initAdmRouter(e *gin.Engine) {
 	auth := public
 	auth.Use(middleware.CheckSession())
 	{
+		// other
 		auth.GET("google", admin.GenGoogleAuth)       // 生成googleAuth信息
 		middleware.RouteRegister(auth, "jason/pprof") // 性能分析
+
 		// 后台首页
 		auth.GET("main", admin.AdminMain)       // view
 		auth.GET("console", admin.AdminConsole) // 控制台
 		auth.POST("cpw", admin.AdminCpw)        // 修改密码
 
-		// 权限配置-后台用户管理
+		// 权限配置-后台用户管理 Manager
 		auth.GET("adm/view", admin.AdmView)      // view
 		auth.POST("adm/add", admin.AdmAdd)       // 增
 		auth.POST("adm/del", admin.AdmDel)       // 删

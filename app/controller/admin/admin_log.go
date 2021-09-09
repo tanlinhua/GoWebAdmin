@@ -16,8 +16,8 @@ func AdminLogView(c *gin.Context) {
 
 // 查询操作日志
 func AdminLogGet(c *gin.Context) {
-	page, _ := strconv.Atoi(c.Query("page"))
-	limit, _ := strconv.Atoi(c.Query("limit"))
+	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
+	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "10"))
 	title := c.Query("title")
 	name := c.Query("name")
 	ip := c.Query("ip")

@@ -30,8 +30,8 @@ func PermissionGet(c *gin.Context) {
 		return
 	}
 	//查询权限list
-	page, _ := strconv.Atoi(c.Query("page"))
-	limit, _ := strconv.Atoi(c.Query("limit"))
+	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
+	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "10"))
 	search := c.Query("search")
 
 	datas, total := model.PermissionGet(page, limit, search)
