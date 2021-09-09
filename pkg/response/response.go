@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/tanlinhua/go-web-admin/app/lang"
 )
 
 type Result struct {
@@ -41,7 +42,7 @@ func (r *Result) Error(code int, msg string) {
 	res := ResultData{}
 
 	res.Code = code
-	res.Msg = msg
+	res.Msg = lang.Get(msg)
 	res.Total = 0
 	res.Data = gin.H{}
 	r.Ctx.JSON(http.StatusOK, res)
