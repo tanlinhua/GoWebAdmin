@@ -8,8 +8,19 @@ import (
 // 邮箱
 func Is_Email(email string) bool {
 	pattern := `^[0-9a-z][_.0-9a-z-]{0,31}@([0-9a-z][0-9a-z-]{0,30}[0-9a-z]\.){1,4}[a-z]{2,4}$`
+	// pattern := `\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*` //匹配电子邮箱
 	reg := regexp.MustCompile(pattern)
 	return reg.MatchString(email)
+}
+
+func IsUrl(v string) (r bool) {
+	reg := regexp.MustCompile(`(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?`)
+	m := reg.MatchString(v)
+	if m {
+		r = true
+		return
+	}
+	return
 }
 
 // 手机号-中国
