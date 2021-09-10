@@ -36,26 +36,28 @@
         },
         "list": [
             {
-                "name": "CMD",
-                //"colorScheme": "Frost",
-                "cursorColor": "#ff0000", // 光标颜色
-                "acrylicOpacity": 0.69999999999999996,
-                "commandline": "cmd.exe",
-                "fontFace": "Cascadia Code PL", // 字体
-                "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
-                "hidden": false,
-                "useAcrylic": true
-            },
-            {
                 "name": "PowerShell",
                 //"colorScheme": "Frost",
+                //"acrylicOpacity": 0.69999999999999996, // 使用毛玻璃效果的透明度
+                "acrylicOpacity": 0.9, // 使用德古拉的透明度
                 "cursorColor": "#ff0000", // 光标颜色
-                "acrylicOpacity": 0.69999999999999996,
                 "commandline": "powershell.exe",
                 "fontFace": "Cascadia Code PL", // 字体
                 "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
                 "hidden": false,
-                "useAcrylic": true
+                "useAcrylic": true // 是否透明
+            },
+            {
+                "name": "CMD",
+                //"colorScheme": "Frost",
+                //"acrylicOpacity": 0.69999999999999996, // 使用毛玻璃效果的透明度
+                "acrylicOpacity": 0.9, // 使用德古拉的透明度
+                "cursorColor": "#ff0000", // 光标颜色
+                "commandline": "cmd.exe",
+                "fontFace": "Cascadia Code PL", // 字体
+                "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+                "hidden": false,
+                "useAcrylic": true // 是否透明
             },
             {
                 "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
