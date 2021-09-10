@@ -36,6 +36,7 @@ func initAdmMiddleware(e *gin.Engine) {
 	e.Use(gin.Recovery())                     // 如果存在恐慌(panics)，中间件恢复(recovers)写入500
 	e.Use(middleware.Logger("admin"))         // 自定义日志记录&切割
 	e.Use(middleware.IpLimiter())             // IP请求限制器
+	e.Use(middleware.Secure())                // Secure
 	e.Use(xss.RemoveXss())                    // xss
 	e.Use(sessions.Sessions("cookie", store)) // session
 	e.Use(middleware.AdminLog())              // 管理员操作日志

@@ -41,6 +41,7 @@ require (
 	github.com/swaggo/gin-swagger v1.3.1
 	github.com/swaggo/swag v1.7.1
 	github.com/tidwall/gjson v1.8.1
+	github.com/unrolled/secure v1.0.9
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5
 	golang.org/x/image v0.0.0-20210628002857-a66eb6448b8d // indirect
 	golang.org/x/net v0.0.0-20210825183410-e898025ed96a // indirect

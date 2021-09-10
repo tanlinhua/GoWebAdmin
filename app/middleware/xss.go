@@ -16,6 +16,8 @@ import (
 	"github.com/microcosm-cc/bluemonday"
 )
 
+// https://github.com/dvwright/xss-mw
+
 type XssMw struct {
 	FieldsToSkip []string
 	BmPolicy     string
