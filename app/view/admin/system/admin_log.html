@@ -99,12 +99,12 @@
             { field: 'created_at', title: 'time' },
         ]],
         page: true,
-        limits: [10, 14, 20, 50, 100, 1000, 10000],
-        limit: 14,
+        limits: [10, 15, 20, 50, 100, 1000, 10000],
+        limit: 15,
         id: 'dbTableReload',
         done: function (res) { layer.close(index); },
         escape: true, // 是否开启 xss 字符过滤（默认 false）layui 2.6.8 新增
-        height: 'full-218', // full- 固定语法,数字标识: 表格容器距离浏览器顶部和底部的距离“和”
+        height: 'full-212', // full- 固定语法,数字标识: 表格容器距离浏览器顶部和底部的距离“和”
     });
 
     //查询并表格重载
