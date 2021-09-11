@@ -28,6 +28,9 @@ func newClient() error {
 		return nil
 	}
 	client := redis.NewClient(&redis.Options{
+		// Addr:     "127.0.0.1:6379",
+		// Password: "",
+		// DB:       0,
 		Addr:     config.RedisAddr, //HOST
 		Password: config.RedisPWD,  //密码
 		DB:       config.RedisDB,   //DB
