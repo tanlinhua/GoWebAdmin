@@ -16,9 +16,12 @@ var db *gorm.DB
 
 // 初始化数据库
 func InitDB() {
-	connect := fmt.Sprintf("%s:%s@(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local",
+
+	// MySQL连接信息
+	connect := fmt.Sprintf("%s:%s@(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 		config.DbUser, config.DbPassWord, config.DbHost, config.DbPort, config.DbName)
 
+	// SQL Log
 	var sqlLogger logger.Interface = nil
 	if config.AppMode == "debug" {
 		sqlLogger = logger.Default.LogMode(logger.Info) // logger.Warn 只打印慢查询
@@ -46,11 +49,19 @@ func InitDB() {
 		log.Panic("连接数据库失败，err：", err)
 	}
 
-	sqlDb, e := db.DB()
+	sqlDB, e := db.DB()
 	if e != nil {
 		log.Panic("获取sql.DB失败,error=", e)
 	}
-	sqlDb.SetMaxIdleConns(10)                  // 设置连接池中的最大闲置连接数
-	sqlDb.SetMaxOpenConns(200)                 // 设置数据库的最大连接数量
-	sqlDb.SetConnMaxLifetime(10 * time.Second) // 设置连接的最大可复用时间
+	if err := sqlDB.Ping(); err != nil {
+		log.Panic("Ping.err=", err)
+	}
+
+	// 自动迁移
+	// db.AutoMigrate(&model.Admin{}, &model.AdminLog{}, &model.SysParams{}, &model.Permission{}, &model.Role{}, &model.User{})
+
+	sqlDB.SetConnMaxIdleTime(time.Hour)      // 设置连接可能空闲的最长时间 默认值2
+	sqlDB.SetConnMaxLifetime(24 * time.Hour) // 设置连接的最大可复用时间 默认值0,永不过期
+	sqlDB.SetMaxIdleConns(100)               // 设置连接池中的最大闲置连接数
+	sqlDB.SetMaxOpenConns(500)               // 设置数据库的最大连接数量 默认值0,无限制
 }
