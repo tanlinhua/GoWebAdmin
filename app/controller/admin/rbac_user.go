@@ -65,8 +65,8 @@ func AdmUpdate(c *gin.Context) {
 
 // 查询后台用户
 func AdmGet(c *gin.Context) {
-	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
-	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "10"))
+	page, _ := strconv.Atoi(c.Query("page"))
+	limit, _ := strconv.Atoi(c.Query("limit"))
 	search := c.Query("search")
 	role := c.Query("role")
 	startTime := c.Query("t1")
