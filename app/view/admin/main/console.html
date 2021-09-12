@@ -119,7 +119,7 @@
                     <div class="layui-tab layui-tab-brief">
                         <ul class="layui-tab-title">
                             <li class="layui-this">仪表盘</li>
-                            <li>其他预览数据</li>
+                            <li>服务器信息</li>
                         </ul>
                         <div class="layui-tab-content">
                             <!-- Tab1 -->
@@ -160,13 +160,112 @@
 
                             <!-- Tab2 -->
                             <div class="layui-tab-item">
-                                <p>这是一些其他附带预览数据 ( •̀ ω •́ )✧</p>
+
+                                <!-- OS -->
+                                <div class="layui-col-sm6 layui-col-md3">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><span class="layui-badge layui-bg-cyan">系统信息</span></div>
+                                        <div class="layui-card-body">
+                                            <table class="layui-table">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>操作系统</th>
+                                                        <th>{{.serverInfo.Os.GOOS}}</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>物理核心数</th>
+                                                        <th>{{.serverInfo.Cpu.Cores}}</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>逻辑CPU数</th>
+                                                        <th>{{.serverInfo.Os.NumCPU}}</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>GO版本</th>
+                                                        <th>{{.serverInfo.Os.GoVersion}}</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>编译器</th>
+                                                        <th>{{.serverInfo.Os.Compiler}}</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>协程数量</th>
+                                                        <th>{{.serverInfo.Os.NumGoroutine}}</th>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- RAM -->
+                                <div class="layui-col-sm6 layui-col-md3">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><span class="layui-badge layui-bg-cyan">内存信息</span></div>
+                                        <div class="layui-card-body">
+                                            <table class="layui-table">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>总量</th>
+                                                        <th>{{.serverInfo.Ram.TotalMB}} MB</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>使用</th>
+                                                        <th>{{.serverInfo.Ram.UsedMB}} MB</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>占比</th>
+                                                        <th>{{.serverInfo.Ram.UsedPercent}}%</th>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- DISK -->
+                                <div class="layui-col-sm6 layui-col-md3">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><span class="layui-badge layui-bg-cyan">磁盘信息</span></div>
+                                        <div class="layui-card-body">
+                                            <table class="layui-table">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>总量</th>
+                                                        <th>{{.serverInfo.Disk.TotalGB}} GB</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>使用</th>
+                                                        <th>{{.serverInfo.Disk.UsedGB}} GB</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>占比</th>
+                                                        <th>{{.serverInfo.Disk.UsedPercent}}%</th>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- CPU -->
+                                <div class="layui-col-sm6 layui-col-md3">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><span class="layui-badge layui-bg-cyan">CPU使用情况</span></div>
+                                        <div class="layui-card-body">
+                                            {{ range $k, $item := .serverInfo.Cpu.Cpus }}
+                                            <br>
+                                            <div class="layui-progress" lay-showPercent="yes">
+                                                <div class="layui-progress-bar" lay-percent="{{$item}}%"></div>
+                                            </div>
+                                            {{ end }}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </body>

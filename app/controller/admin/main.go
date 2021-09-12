@@ -32,7 +32,8 @@ func AdminMain(c *gin.Context) {
 func AdminConsole(c *gin.Context) {
 	// 根据角色ID,查询所属预览数据展示到页面
 	// 推荐先渲染页面异步请求数据
-	c.HTML(http.StatusOK, "main/console.html", nil)
+	serverInfo, _ := utils.ServerInfo()
+	c.HTML(http.StatusOK, "main/console.html", gin.H{"serverInfo": serverInfo})
 }
 
 // 验证码
