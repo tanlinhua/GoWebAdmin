@@ -60,8 +60,14 @@ func InitDB() {
 	// 自动迁移
 	// db.AutoMigrate(&model.Admin{}, &model.AdminLog{}, &model.SysParams{}, &model.Permission{}, &model.Role{}, &model.User{})
 
-	sqlDB.SetConnMaxIdleTime(time.Hour)      // 设置连接可能空闲的最长时间 默认值2
-	sqlDB.SetConnMaxLifetime(24 * time.Hour) // 设置连接的最大可复用时间 默认值0,永不过期
-	sqlDB.SetMaxIdleConns(100)               // 设置连接池中的最大闲置连接数
-	sqlDB.SetMaxOpenConns(500)               // 设置数据库的最大连接数量 默认值0,无限制
+	sqlDB.SetConnMaxIdleTime(30 * time.Second) // 设置连接可能空闲的最长时间
+	sqlDB.SetConnMaxLifetime(60 * time.Second) // 设置连接的最大可复用时间
+	sqlDB.SetMaxIdleConns(10)                  // 设置连接池中的最大闲置连接数
+	sqlDB.SetMaxOpenConns(200)                 // 设置数据库的最大连接数量
+
+	// [invalid connection] 👇
+	// sqlDB.SetConnMaxIdleTime(time.Hour)
+	// sqlDB.SetConnMaxLifetime(24 * time.Hour)
+	// sqlDB.SetMaxIdleConns(100)
+	// sqlDB.SetMaxOpenConns(500)
 }
