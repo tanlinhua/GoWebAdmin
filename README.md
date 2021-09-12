@@ -82,8 +82,6 @@ func InitVueAdminServer() {
 
 > [QrCode](https://github.com/skip2/go-qrcode)
 
-> [psutil for golang](https://github.com/shirou/gopsutil)
-
 > [Json解析.gjson](https://github.com/tidwall/gjson)
 
 > [Json解析.fastjson](https://github.com/valyala/fastjson)
