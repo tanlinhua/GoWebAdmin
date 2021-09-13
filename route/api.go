@@ -79,11 +79,11 @@ RESTful API 设计指南👇
 https://www.ruanyifeng.com/blog/2014/05/restful_api.html
 
 1.路由定义
-auth.POST("/user", api.UserAdd)
-auth.DELETE("/user/:id", api.UserDel) // 单用户来调用接口可以通过jwt或session中的内容来获取
-auth.PUT("/user/:id", api.UserUpdate)
-auth.GET("/user", api.UserGets)
-auth.GET("/user/:id", api.UserGet)
+auth.POST("/user", api.AddUser)
+auth.DELETE("/user/:id", api.DeleteUser) // 单用户来调用接口可以通过jwt或session中的内容来获取
+auth.PUT("/user/:id", api.UpdateUser)
+auth.GET("/user", api.GetsUser)
+auth.GET("/user/:id", api.GetUser)
 
 2.参数获取 (c *gin.Context)
 api参数 -> id := c.Param("id") // 获取user/:id中id的值
