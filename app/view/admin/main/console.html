@@ -173,11 +173,11 @@
                                                         <th>{{.serverInfo.Os.GOOS}}</th>
                                                     </tr>
                                                     <tr>
-                                                        <th>物理核心数</th>
+                                                        <th>CPU核心数</th>
                                                         <th>{{.serverInfo.Cpu.Cores}}</th>
                                                     </tr>
                                                     <tr>
-                                                        <th>逻辑CPU数</th>
+                                                        <th>CPU线程数</th>
                                                         <th>{{.serverInfo.Os.NumCPU}}</th>
                                                     </tr>
                                                     <tr>
@@ -213,8 +213,8 @@
                                                         <th>{{.serverInfo.Ram.UsedMB}} MB</th>
                                                     </tr>
                                                     <tr>
-                                                        <th>占比</th>
-                                                        <th>{{.serverInfo.Ram.UsedPercent}}%</th>
+                                                        <th>剩余</th>
+                                                        <th>{{.serverInfo.Ram.FreePercent}}%</th>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -237,8 +237,8 @@
                                                         <th>{{.serverInfo.Disk.UsedGB}} GB</th>
                                                     </tr>
                                                     <tr>
-                                                        <th>占比</th>
-                                                        <th>{{.serverInfo.Disk.UsedPercent}}%</th>
+                                                        <th>剩余</th>
+                                                        <th>{{.serverInfo.Disk.FreePercent}}%</th>
                                                     </tr>
                                                 </tbody>
                                             </table>

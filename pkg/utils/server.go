@@ -35,6 +35,7 @@ type Ram struct {
 	UsedMB      int `json:"usedMb"`
 	TotalMB     int `json:"totalMb"`
 	UsedPercent int `json:"usedPercent"`
+	FreePercent int `json:"freePercent"`
 }
 
 type Disk struct {
@@ -43,6 +44,7 @@ type Disk struct {
 	TotalMB     int `json:"totalMb"`
 	TotalGB     int `json:"totalGb"`
 	UsedPercent int `json:"usedPercent"`
+	FreePercent int `json:"freePercent"`
 }
 
 type Server struct {
@@ -85,6 +87,7 @@ func ServerInfo() (*Server, error) {
 		s.Ram.UsedMB = int(u.Used) / MB
 		s.Ram.TotalMB = int(u.Total) / MB
 		s.Ram.UsedPercent = int(u.UsedPercent)
+		s.Ram.FreePercent = int(100 - u.UsedPercent)
 	}
 
 	// Disk
@@ -96,6 +99,7 @@ func ServerInfo() (*Server, error) {
 		s.Disk.TotalMB = int(u.Total) / MB
 		s.Disk.TotalGB = int(u.Total) / GB
 		s.Disk.UsedPercent = int(u.UsedPercent)
+		s.Disk.FreePercent = int(100 - u.UsedPercent)
 	}
 	return &s, nil
 }
