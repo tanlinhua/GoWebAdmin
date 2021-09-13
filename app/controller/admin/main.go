@@ -15,12 +15,12 @@ import (
 )
 
 // 登录页面
-func AdminLogin(c *gin.Context) {
+func Login(c *gin.Context) {
 	c.HTML(http.StatusOK, "main/login.html", gin.H{"GoogleAuth": config.GoogleAuth})
 }
 
 // 后台首页
-func AdminMain(c *gin.Context) {
+func Main(c *gin.Context) {
 	adminName, _ := c.Get("adminName")
 	adminId, _ := c.Get("admin_id")
 	menuData := model.PerMenuDataByAdmId(adminId.(int))
@@ -29,7 +29,7 @@ func AdminMain(c *gin.Context) {
 }
 
 // 控制台页面
-func AdminConsole(c *gin.Context) {
+func Console(c *gin.Context) {
 	// 根据角色ID,查询所属预览数据展示到页面
 	// 推荐先渲染页面异步请求数据
 	serverInfo, _ := utils.ServerInfo()
@@ -90,7 +90,7 @@ func Captcha(c *gin.Context) {
 }
 
 // 退出登录
-func AdminLogout(c *gin.Context) {
+func Logout(c *gin.Context) {
 	session := sessions.Default(c)
 	session.Clear()
 	session.Save()
@@ -98,7 +98,7 @@ func AdminLogout(c *gin.Context) {
 }
 
 // 校验管理员用户名密码
-func AdminLoginCheck(c *gin.Context) {
+func LoginCheck(c *gin.Context) {
 	capt_ok := false
 	resp := response.New(c)
 
@@ -149,7 +149,7 @@ func AdminLoginCheck(c *gin.Context) {
 }
 
 // 修改密码
-func AdminCpw(c *gin.Context) {
+func Cpw(c *gin.Context) {
 	pwd1 := c.PostForm("pwd1")
 	pwd2 := c.PostForm("pwd2")
 	pwd3 := c.PostForm("pwd3")

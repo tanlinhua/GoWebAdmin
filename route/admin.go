@@ -68,10 +68,10 @@ func initAdmRouter(e *gin.Engine) {
 	// 公共路由
 	public := e.Group("/admin")
 	{
-		public.GET("login", admin.AdminLogin)       // 登录页面
-		public.POST("check", admin.AdminLoginCheck) // 登录校验
-		public.GET("logout", admin.AdminLogout)     // 退出登录
-		public.GET("captcha", admin.Captcha)        // 获取图形验证码
+		public.GET("login", admin.Login)       // 登录页面
+		public.POST("check", admin.LoginCheck) // 登录校验
+		public.GET("logout", admin.Logout)     // 退出登录
+		public.GET("captcha", admin.Captcha)   // 获取图形验证码
 	}
 	// 鉴权路由
 	auth := public
@@ -82,9 +82,9 @@ func initAdmRouter(e *gin.Engine) {
 		middleware.RouteRegister(auth, "jason/pprof") // 性能分析
 
 		// 后台首页
-		auth.GET("main", admin.AdminMain)       // view
-		auth.GET("console", admin.AdminConsole) // 控制台
-		auth.POST("cpw", admin.AdminCpw)        // 修改密码
+		auth.GET("main", admin.Main)       // view
+		auth.GET("console", admin.Console) // 控制台
+		auth.POST("cpw", admin.Cpw)        // 修改密码
 
 		// 权限配置-后台用户管理 Manager
 		auth.GET("adm/view", admin.AdmView)      // view
