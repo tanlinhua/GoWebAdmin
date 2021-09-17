@@ -6,7 +6,7 @@ import "embed"
 var Static embed.FS
 
 // //go:embed app/*
-// var AppView embed.FS
+// var AppStatic embed.FS
 
 // Tips👇
 // https://www.cnblogs.com/apocelipes/p/13907858.html
