@@ -46,8 +46,11 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">{{.adminName}} 😎</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="#" id="main_cpw">修改密码</a></dd>
-                        <dd><a href="logout">退出</a></dd>
+                        <dd><a href="javascript:;" id="main_cpw">修改密码</a></dd>
+                        <dd>
+                            <hr />
+                        </dd>
+                        <dd><a href="javascript:;" id="main_logout">退出登录</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -216,6 +219,13 @@
             },
         });
     });
+
+    $("#main_logout").click(function () {
+        layer.confirm("确定要退出吗？", { icon: 3, title: '提示' }, function (index) {
+            window.location = "logout";
+        });
+    });
+
 </script>
 
 </html>
