@@ -104,6 +104,8 @@ func InitVueAdminServer() {
 
 > [微服务.rpcx](https://github.com/smallnest/rpcx)
 
+> [getty网络框架](https://github.com/AlexStocks/getty-examples)
+
 > [gnet网络框架](https://github.com/panjf2000/gnet)
 
 > [协程池](https://github.com/panjf2000/ants)
@@ -122,6 +124,8 @@ func InitVueAdminServer() {
 > [简单易用的各种数据结构](https://github.com/emirpasic/gods)
 
 > [爬虫框架](https://github.com/gocolly/colly)
+
+> [今日头条rpc框架 Kitex](https://www.cloudwego.io/zh/)
 
 ## 一些值得学习的项目
 
