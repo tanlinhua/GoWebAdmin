@@ -33,7 +33,7 @@ nohup ./main >> /www/wwwroot/nohup.output.log 2>&1 &
 ps -ef|grep main
 kill -9 pid
 ```
-2. [Supervisor](docs/一些笔记/Supervisor.md)
+2. [Supervisor](docs/一些笔记/部署/Supervisor.md)
 
 3. [nodejs pm2](https://cloud.tencent.com/developer/article/1677403)
 
