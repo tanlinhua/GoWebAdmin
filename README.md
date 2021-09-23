@@ -127,6 +127,10 @@ func InitVueAdminServer() {
 
 > [今日头条rpc框架 Kitex](https://www.cloudwego.io/zh/)
 
+> [分布式事务管理器](https://github.com/yedf/dtm)
+
+> [开源即时通讯框架](https://github.com/tinode/chat)
+
 ## 一些值得学习的项目
 
 > 阅读Gin,Gorm,ants的源码
