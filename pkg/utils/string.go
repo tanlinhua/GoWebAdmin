@@ -7,6 +7,25 @@ import (
 	"time"
 )
 
+// 变量替换 替换字符串content中所有的char字符
+// content = utils.ReplaceContent(content, "#")
+// content = utils.ReplaceContent(content, "@")
+func ReplaceContent(content string, char string) string {
+	count := strings.Count(content, char)
+	if count <= 0 {
+		return content
+	}
+
+	var chars string
+	for i := 0; i < count; i++ {
+		chars += char
+	}
+	rand := RandString(count)
+
+	new := strings.ReplaceAll(content, chars, rand)
+	return new
+}
+
 // 生成随机字符串
 func RandString(n int) string {
 	var letters = []rune("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
