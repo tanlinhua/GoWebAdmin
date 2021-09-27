@@ -37,6 +37,12 @@ kill -9 pid
 
 3. [nodejs pm2](https://cloud.tencent.com/developer/article/1677403)
 
+### BT破解
+```
+sed -i "s|if (bind_user == 'True') {|if (bind_user == 'REMOVED') {|g" /www/server/panel/BTPanel/static/js/index.js
+rm -rf /www/server/panel/data/bind.pl
+```
+
 ### [WEB安全](docs/一些笔记/Web安全.md)
 
 - [Web安全学习笔记](https://github.com/LyleMi/Learn-Web-Hacking)
@@ -144,6 +150,31 @@ func InitVueAdminServer() {
 > [go-shadowsocks2](https://github.com/shadowsocks/go-shadowsocks2)
 
 > [Gin-vue-admin](https://github.com/flipped-aurora/gin-vue-admin)
+
+## Layui
+```
+Layui重要公告
+
+所有对 layui 为之热爱、鞭策、奉献，和支持过的开发者：
+请接受我用意念和字节传达的深深歉意。这是一个无力、无奈，甚至无助的决定：
+
+layui 官网将于 2021年10月13日 进行下线。
+届时，包括新版下载、文档和示例在内的所有框架日常维护工作，将全部迁移到 Github 和 Gitee。
+此后，layui 仍会在代码托管平台所活跃，且 2.7 正式版也将在其间首发。而 layui 官网将不复存在。
+这不是终结，只是重归到开源的纯粹中来。
+
+再者，对于 layuiAdmin 和 layim 专区，将会迁移到新站进行保留，以便老用户还能下载使用，且此二者不再面向新用户。
+
+过去五年，layui 有幸被应用在不计其数的 Web 平台，在前端工程化迅速席来的浪潮中，我们仍然感受到一丝来自于 jQuery 的余晖，这是一种带有热量的冰冷（反之亦可。
+使命已达，便纵有万般遗憾，更与何人说？！
+
+最后，请大家怀揣对 Web 前端技术的热忱，去拥抱 Vue.js、拥抱 Element UI、拥抱更好的新时代，
+以及，所有那些值得去追求的美好事物。
+
+—— 贤心
+```
+[github](https://github.com/sentsin/layui)
+[gitee](https://gitee.com/sentsin/layui)
 
 ## TODO
 
