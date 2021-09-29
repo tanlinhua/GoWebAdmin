@@ -94,7 +94,8 @@ func Logout(c *gin.Context) {
 	session := sessions.Default(c)
 	session.Clear()
 	session.Save()
-	c.Redirect(http.StatusFound, "login")
+	// c.Redirect(http.StatusFound, "login")
+	Success("退出成功", "login", c)
 }
 
 // 校验管理员用户名密码
