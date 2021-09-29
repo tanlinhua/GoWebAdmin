@@ -151,6 +151,8 @@ func InitVueAdminServer() {
 
 > [Gin-vue-admin](https://github.com/flipped-aurora/gin-vue-admin)
 
+> [数据结构与算法](https://github.com/TheAlgorithms)
+
 ## Layui
 ```
 Layui重要公告
