@@ -3,10 +3,10 @@
 ## 一些记录
 
 ### VSCode插件安装报错解决方案：
-```
-开启代理设置，Go 1.13 以上默认启用，可跳过此步
+```shell
+# 开启Go module，Go 1.13 以上默认启用，可跳过此步
 go env -w GO111MODULE=on
-设置代理
+# 设置代理
 go env -w GOPROXY=https://goproxy.io,direct
 ```
 
@@ -19,17 +19,17 @@ go build -o main main.go
 ```
 
 ### go mod
-```
-go get -u								工程目录下执行,更新所有依赖包,
-go get -u github.com/gin-gonic/gin		只更新这一个依赖包
-go mod why -m all						分析所有依赖的依赖链
-go mod tidy								整理依赖
+```shell
+go get -u								#工程目录下执行,更新所有依赖包
+go get -u github.com/gin-gonic/gin		#只更新这一个依赖包
+go mod why -m all						#分析所有依赖的依赖链
+go mod tidy								#整理依赖
 ```
 
 ### 部署
 1. nohup
-```
-nohup ./main >> /www/wwwroot/nohup.output.log 2>&1 &
+```shell
+nohup ./main >> /www/wwwroot/log/main.nohup.log 2>&1 &
 ps -ef|grep main
 kill -9 pid
 ```
@@ -38,7 +38,7 @@ kill -9 pid
 3. [nodejs pm2](https://cloud.tencent.com/developer/article/1677403)
 
 ### BT破解
-```
+```shell
 sed -i "s|if (bind_user == 'True') {|if (bind_user == 'REMOVED') {|g" /www/server/panel/BTPanel/static/js/index.js
 rm -rf /www/server/panel/data/bind.pl
 ```
