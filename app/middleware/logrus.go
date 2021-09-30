@@ -14,6 +14,8 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// uber-zap -> https://blog.csdn.net/weixin_43881017/article/details/111277435
+
 // 自定义日志中间件
 func Logger(tag string) gin.HandlerFunc {
 	filePath := "runtime/log/" + tag + "/"
