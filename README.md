@@ -43,7 +43,7 @@ sed -i "s|if (bind_user == 'True') {|if (bind_user == 'REMOVED') {|g" /www/serve
 rm -rf /www/server/panel/data/bind.pl
 ```
 
-### [WEB安全](docs/一些笔记/Web安全.md)
+### [WEB安全](docs/一些笔记/学习笔记/Web安全.md)
 
 - [Web安全学习笔记](https://github.com/LyleMi/Learn-Web-Hacking)
 - [在线阅读](https://websec.readthedocs.io/zh/latest/)
