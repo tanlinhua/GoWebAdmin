@@ -100,6 +100,16 @@ layui 官网将于 2021年10月13日 进行下线。
 [github](https://github.com/sentsin/layui)
 [gitee](https://gitee.com/sentsin/layui)
 
+## Vue后台框架
+
+> [GinVueAdmin.Web](https://github.com/flipped-aurora/gin-vue-admin)
+
+> [naive-ui-admin](https://github.com/jekip/naive-ui-admin)
+
+> [vue-element-admin](https://github.com/PanJiaChen)
+
+> [vue-admin-beautiful-pro](https://github.com/chuzhixin/vue-admin-beautiful-pro)
+
 ## 一些库👇
 
 > [合集1](https://learnku.com/articles/56078)
