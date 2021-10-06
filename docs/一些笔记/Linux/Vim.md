@@ -1,8 +1,13 @@
-# VIM
+# [VIM](https://github.com/wsdjeg/vim-galore-zh_cn)
+
+## Vim 从入门到精通
+https://github.com/wsdjeg/vim-galore-zh_cn
 
 ## 安装
-centos: yum -y install vim
-```
+centos
+```shell
+yum -y install vim
+
 # 卸载老的vim
 yum remove vim-* -y
 
@@ -16,7 +21,11 @@ yum  install vim-enhanced sudo -y
 rpm -qa |grep vim
 ```
 
-ubuntu: 
+ubuntu
+```shell
+sudo apt-get remove vim-common # 如果报错卸载不兼容
+sudo apt-get install vim
+```
 
 ## 安装插件
 ```
@@ -31,7 +40,10 @@ set encoding=utf-8
 filetype plugin indent on
 syntax on
 
+let g:go_version_warning = 0
+
 call plug#begin('~/.vim/plugged')
+Plug 'scrooloose/nerdtree'
 Plug 'fatih/vim-go'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -45,54 +57,23 @@ vim-startify
 nerdtree
 vim-interestingwords
 vim-fugitive
-
 ```
+
+https://github.com/rafi/vim-config
+
+https://github.com/PegasusWang/linux_config
+
+https://github.com/tao12345666333/vim
+
+搜索优化Vim配置
+> golang vim
+
+> php vim
+
+> vue vim
 
 ## 快捷键
 
 https://www.jianshu.com/p/868e63940e11
 
-### 一、移动光标
-
-| 按键    | 功能           |
-| ------- | -------------- |
-| h,j,k,l | 上，下，左，右 |
-| ctrl-e  | 移动页面       |
-| ctrl-f  | 上翻一页       |
-| ctrl-b  | 下翻一页       |
-| ctrl-u  | 上翻半页       |
-| ctrl-d  | 下翻半页       |
-|         |                |
-|         |                |
-|         |                |
-|         |                |
-|         |                |
-|         |                |
-|         |                |
-|         |                |
-|         |                |
-|         |                |
-|         |                |
-|         |                |
-|         |                |
-|         |                |
-|         |                |
-|         |                |
-|         |                |
-|         |                |
-|         |                |
-|         |                |
-|         |                |
-|         |                |
-|         |                |
-|         |                |
-|         |                |
-|         |                |
-|         |                |
-|         |                |
-|         |                |
-|         |                |
-|         |                |
-|         |                |
-|         |                |
-
+https://www.cnblogs.com/sinsenliu/p/9353939.html
