@@ -110,6 +110,10 @@ layui 官网将于 2021年10月13日 进行下线。
 
 > [vue-admin-beautiful-pro](https://github.com/chuzhixin/vue-admin-beautiful-pro)
 
+> [2021，排名前 15 的 Vue 后台管理模板](https://mp.weixin.qq.com/s/4RVwmY8lOi4EmjR3iAW2nw)
+
+> [Creative Tim](https://github.com/creativetimofficial)
+
 ## 一些库👇
 
 > [合集1](https://learnku.com/articles/56078)
