@@ -178,6 +178,8 @@ layui 官网将于 2021年10月13日 进行下线。
 
 > [权限控制 casbin](https://github.com/casbin)
 
+> [hyperf/gotask](https://github.com/hyperf/gotask)
+
 ## 一些值得学习的项目
 
 > 阅读Gin,Gorm,ants的源码
