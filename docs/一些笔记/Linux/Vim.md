@@ -29,35 +29,25 @@ sudo apt-get install vim
 
 ## 安装插件
 ```
-1. 安装插件管理器,https://github.com/junegunn/vim-plug
-下载plug.vim到~/.vim/autoload目录
+1. 安装插件管理器,下载plug.vim到~/.vim/autoload目录. https://github.com/junegunn/vim-plug,
+
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 2. vim ~/.vimrc
-set number
-set encoding=utf-8
-filetype plugin indent on
-syntax on
-
-let g:go_version_warning = 0
 
 call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree'
 Plug 'fatih/vim-go'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 call plug#end()
 
 3. :source ~/.vimrc
 4. :PlugInstall
+```
+
+## 插件
 
 https://zhuanlan.zhihu.com/p/139847548
-vim-startify
-nerdtree
-vim-interestingwords
-vim-fugitive
-```
 
 https://github.com/rafi/vim-config
 
@@ -65,7 +55,8 @@ https://github.com/PegasusWang/linux_config
 
 https://github.com/tao12345666333/vim
 
-搜索优化Vim配置
+## 搜索并优化
+
 > golang vim
 
 > php vim
