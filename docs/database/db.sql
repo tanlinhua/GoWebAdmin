@@ -12,6 +12,8 @@ CREATE TABLE `go_admin` (
   `last_login_time` datetime DEFAULT NULL COMMENT '最后登陆时间',
   `last_login_ip` varchar(20) DEFAULT NULL COMMENT '最后登录IP',
   UNIQUE KEY `user_name` (`user_name`) USING BTREE
+  -- FOREIGN KEY (`role`) REFERENCES go_role(`id`)
+  -- FOREIGN KEY (`pid`) REFERENCES go_admin(`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='管理员表';
 
 INSERT INTO `go_admin` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1', '2020-12-12 00:00:00', '2020-12-12 00:00:00', null, null);
