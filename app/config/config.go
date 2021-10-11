@@ -7,29 +7,28 @@ import (
 )
 
 var (
-	AppMode       string
-	APIPort       string
-	AdminPort     string
-	ExtIP         string
-	AdminId       int
-	AdminName     string
-	GoogleAuth    int
-	Db            string
-	DbHost        string
-	DbPort        string
-	DbUser        string
-	DbPassWord    string
-	DbName        string
-	RedisAddr     string
-	RedisPWD      string
-	RedisDB       int
-	JwtKey        string
-	LangSwitch    bool
-	LangDefault   string
-	SwaggerIsOpen int
-	TgHost        string
-	TgToken       string
-	TgChatId      string
+	AppMode          string
+	AppHost          string
+	AdminPort        string
+	AdminId          int
+	AdminGoogleAuth  int
+	ApiPort          string
+	DbType           string
+	DbHost           string
+	DbPort           string
+	DbUser           string
+	DbPwd            string
+	DbName           string
+	RedisHost        string
+	RedisPWD         string
+	RedisDB          int
+	JwtKey           string
+	LangSwitch       bool
+	LangDefault      string
+	SwaggerOpen      int
+	TelegramHost     string
+	TelegramBotToken string
+	TelegramChatId   string
 )
 
 //配置文件
@@ -40,34 +39,34 @@ func init() {
 		return
 	}
 
-	AppMode = file.Section("server").Key("AppMode").MustString("debug")
-	APIPort = file.Section("server").Key("APIPort").MustString("3030")
-	AdminPort = file.Section("server").Key("AdminPort").MustString("3031")
-	ExtIP = file.Section("server").Key("ExtIP").MustString("")
+	AppMode = file.Section("App").Key("Mode").MustString("release")
+	AppHost = file.Section("App").Key("Host").MustString("localhost")
 
-	AdminId = file.Section("admin").Key("id").MustInt(1)
-	AdminName = file.Section("admin").Key("name").MustString("admin")
-	GoogleAuth = file.Section("admin").Key("GoogleAuth").MustInt(2)
+	AdminPort = file.Section("Admin").Key("Port").MustString("1991")
+	AdminId = file.Section("Admin").Key("Id").MustInt(1)
+	AdminGoogleAuth = file.Section("Admin").Key("GoogleAuth").MustInt(0)
 
-	Db = file.Section("database").Key("Db").MustString("mysql")
-	DbHost = file.Section("database").Key("DbHost").MustString("localhost")
-	DbPort = file.Section("database").Key("DbPort").MustString("3306")
-	DbUser = file.Section("database").Key("DbUser").MustString("root")
-	DbPassWord = file.Section("database").Key("DbPassWord").MustString("123456")
-	DbName = file.Section("database").Key("DbName").MustString("ginblog")
+	ApiPort = file.Section("Api").Key("Port").MustString("2014")
 
-	RedisAddr = file.Section("redis").Key("RedisAddr").MustString("127.0.0.1:6379")
-	RedisPWD = file.Section("redis").Key("RedisPWD").MustString("")
-	RedisDB = file.Section("redis").Key("RedisDB").MustInt(0)
+	DbType = file.Section("Db").Key("Type").MustString("")
+	DbHost = file.Section("Db").Key("Host").MustString("")
+	DbName = file.Section("Db").Key("Name").MustString("")
+	DbPort = file.Section("Db").Key("Port").MustString("")
+	DbUser = file.Section("Db").Key("User").MustString("")
+	DbPwd = file.Section("Db").Key("Pwd").MustString("")
 
-	JwtKey = file.Section("jwt").Key("key").MustString("89js82js72")
+	RedisHost = file.Section("Redis").Key("Host").MustString("127.0.0.1:6379")
+	RedisPWD = file.Section("Redis").Key("Pwd").MustString("")
+	RedisDB = file.Section("Redis").Key("Db").MustInt(0)
 
-	LangSwitch = file.Section("lang").Key("switch").MustBool(false)
-	LangDefault = file.Section("lang").Key("default").MustString("zh-cn")
+	JwtKey = file.Section("Jwt").Key("Key").MustString("")
 
-	SwaggerIsOpen = file.Section("swagger").Key("IsOpen").MustInt(0)
+	LangSwitch = file.Section("Lang").Key("Switch").MustBool(false)
+	LangDefault = file.Section("Lang").Key("Default").MustString("zh-cn")
 
-	TgHost = file.Section("notify").Key("TgHost").MustString("https://api.telegram.org/")
-	TgToken = file.Section("notify").Key("TgToken").MustString("")
-	TgChatId = file.Section("notify").Key("TgChatId").MustString("")
+	SwaggerOpen = file.Section("Swagger").Key("Open").MustInt(0)
+
+	TelegramHost = file.Section("Telegram").Key("Host").MustString("https://api.telegram.org/")
+	TelegramBotToken = file.Section("Telegram").Key("BotToken").MustString("")
+	TelegramChatId = file.Section("Telegram").Key("ChatId").MustString("")
 }

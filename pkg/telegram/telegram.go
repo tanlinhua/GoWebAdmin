@@ -9,10 +9,10 @@ import (
 
 // 发送telegram消息
 func SendMessage(msg string) {
-	url := config.TgHost + "bot" + config.TgToken + "/sendMessage"
+	url := config.TelegramHost + "bot" + config.TelegramBotToken + "/sendMessage"
 
 	var params = make(map[string]string)
-	params["chat_id"] = config.TgChatId
+	params["chat_id"] = config.TelegramChatId
 	params["text"] = msg
 
 	ok, result := utils.HttpGet(url, params)

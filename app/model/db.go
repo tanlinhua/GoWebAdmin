@@ -19,7 +19,7 @@ func InitDB() {
 
 	// MySQL连接信息
 	connect := fmt.Sprintf("%s:%s@(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
-		config.DbUser, config.DbPassWord, config.DbHost, config.DbPort, config.DbName)
+		config.DbUser, config.DbPwd, config.DbHost, config.DbPort, config.DbName)
 
 	// SQL Log
 	var sqlLogger logger.Interface = nil

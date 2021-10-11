@@ -16,7 +16,7 @@ import (
 
 // 登录页面
 func Login(c *gin.Context) {
-	c.HTML(http.StatusOK, "main/login.html", gin.H{"GoogleAuth": config.GoogleAuth})
+	c.HTML(http.StatusOK, "main/login.html", gin.H{"GoogleAuth": config.AdminGoogleAuth})
 }
 
 // 后台首页
@@ -120,7 +120,7 @@ func LoginCheck(c *gin.Context) {
 		return
 	}
 
-	if config.GoogleAuth == 1 {
+	if config.AdminGoogleAuth == 1 {
 		value := model.ParamsGetValueByKey("GoogleAuthenticator")
 		if utils.Empty(value) {
 			resp.Error(-1, "GoogleAuthenticator信息不存在")

@@ -31,7 +31,7 @@ func newClient() error {
 		// Addr:     "127.0.0.1:6379",
 		// Password: "",
 		// DB:       0,
-		Addr:     config.RedisAddr, //HOST
+		Addr:     config.RedisHost, //HOST
 		Password: config.RedisPWD,  //密码
 		DB:       config.RedisDB,   //DB
 		PoolSize: 10,               //连接池大小

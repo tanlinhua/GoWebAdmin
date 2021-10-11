@@ -31,8 +31,8 @@ var (
 	AppName    = "GoWebAdmin"
 	AppVersion = "1.0"
 	GoVersion  = runtime.Version()
-	ApiDoc     = "http://" + config.ExtIP + ":" + config.APIPort + "/api/doc/index.html"
-	Pprof      = "http://" + config.ExtIP + ":" + config.AdminPort + "/admin/jason/pprof"
+	ApiDoc     = "http://" + config.AppHost + ":" + config.ApiPort + "/api/doc/index.html"
+	Pprof      = "http://" + config.AppHost + ":" + config.AdminPort + "/admin/jason/pprof"
 )
 
 func versionInfo() {
