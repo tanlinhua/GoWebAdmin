@@ -1,4 +1,4 @@
-# [VIM](https://github.com/wsdjeg/vim-galore-zh_cn)
+# VIM
 
 ## Vim 从入门到精通
 https://github.com/wsdjeg/vim-galore-zh_cn
@@ -36,6 +36,7 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 
 2. vim ~/.vimrc
 
+" 示例
 call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree'
 Plug 'fatih/vim-go'
@@ -53,6 +54,8 @@ https://github.com/rafi/vim-config
 
 https://github.com/PegasusWang/linux_config
 
+https://github.com/theniceboy/nvim
+
 https://github.com/tao12345666333/vim
 
 ## 搜索并优化
@@ -68,3 +71,42 @@ https://github.com/tao12345666333/vim
 https://www.jianshu.com/p/868e63940e11
 
 https://www.cnblogs.com/sinsenliu/p/9353939.html
+
+## .vimrc
+```
+let mapleader=','
+inoremap jj <Esc>
+
+set number
+set encoding=utf-8
+set foldenable
+
+syntax on
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'w0ng/vim-hybrid'
+Plug 'scrooloose/nerdtree'
+Plug 'fatih/vim-go'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'voldikss/vim-floaterm'
+Plug 'mhinz/vim-startify'
+
+call plug#end()
+
+
+let g:go_version_warning = 0
+
+nmap <leader>v :NERDTreeFind<cr>
+nmap <leader>g :NERDTreeToggle<cr>
+let NERDTreeShowHidden=1
+let NERDTreeIgnore = [
+            \ '\.git$', '\.hg$', '\.svn$', '\.stversions$', '\.pyc$', '\.pyo$', '\.svn$', '\.swp$',
+            \ '\.DS_Store$', '\.sass-cache$', '__pycache__$', '\.egg-info$', '\.ropeproject$',
+            \ ]
+
+
+set background=dark
+colorscheme hybrid
+```
