@@ -8,7 +8,7 @@ import (
 )
 
 // 发送telegram消息
-func SendMessage(msg string) {
+func Send(msg string) {
 	url := config.TelegramHost + "bot" + config.TelegramBotToken + "/sendMessage"
 
 	var params = make(map[string]string)
