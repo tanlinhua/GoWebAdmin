@@ -44,7 +44,12 @@ $ sudo systemctl enable docker
 拉取镜像
 $ docker pull shadowsocks/shadowsocks-libev
 运行
-$ docker run -e PASSWORD=ZheShiMima888 -e METHOD=chacha20-ietf-poly1305 -p 38388:8388 -p 38388:8388/udp -d --restart always shadowsocks/shadowsocks-libev
+$ docker run -e PASSWORD=ZheShiMima888 -e METHOD=chacha20-ietf-poly1305 -p 8865:8388 -p 8865:8388/udp -d --restart always shadowsocks/shadowsocks-libev
+
+停止所有容器
+$ docker stop $(docker ps -a -q)
+删除所有容器
+$ docker rm $(docker ps -a -q)
 ```
 
 ## Outline-server
