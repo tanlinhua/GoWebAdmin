@@ -128,3 +128,32 @@ mysql 密码： root+root
 ```
 brew install redis@4.0
 ```
+
+## nodejs
+```shell
+brew install nvm
+
+mkdir ~/.nvm
+
+vim ~/.zshrc  在 ~/.zshrc 配置文件后添加如下内容
+export NVM_DIR="$HOME/.nvm"
+  [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"
+
+source ~/.zshrc
+echo $NVM_DIR
+nvm --help
+nvm ls-remote
+
+nvm install 14
+nvm uninstall 14
+
+nvm list 是查找本电脑上所有的node版本
+nvm install <version> 安装指定版本node
+nvm use <version> 切换使用指定的版本node
+nvm ls 列出所有版本
+nvm current 显示当前版本
+nvm alias <name> <version> ## 给不同的版本号添加别名
+nvm unalias <name> ## 删除已定义的别名
+nvm reinstall-packages <version> ## 在当前版本node环境下，重新全局安装指定版本号的npm包
+```
