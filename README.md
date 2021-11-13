@@ -174,6 +174,8 @@ layui 官网将于 2021年10月13日 进行下线。
 
 > [爬虫框架](https://github.com/gocolly/colly)
 
+> [chromedp](https://github.com/chromedp/chromedp)
+
 > [今日头条rpc框架 Kitex](https://www.cloudwego.io/zh/)
 
 > [分布式事务管理器](https://github.com/yedf/dtm)
