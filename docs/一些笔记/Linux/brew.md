@@ -27,34 +27,34 @@ localhost:8080
 nginx配置tp5.0
 /usr/local/etc/nginx/servers/php-web-admin.conf
 server {
-    listen       1992;
-    server_name  localhost;
+        listen       1992;
+        server_name  localhost;
 
-    access_log  /Users/tanlinhua/Documents/Code/logs/access.log;
-    error_log   /Users/tanlinhua/Documents/Code/logs/error.log;
+        access_log  /Users/tanlinhua/Demo/logs/access.log;
+        error_log   /Users/tanlinhua/Demo/logs/error.log;
 
-    index index.php index.html index.htm;
-    root /Users/tanlinhua/Documents/Code/PhpWebAdmin/public/;
-    location / {
-    if (!-e $request_filename ) {
-        rewrite ^(.*)$ /index.php?s=/$1 last;
-        break;
+        index index.php index.html index.htm;
+    	root /Users/tanlinhua/Code/Php/PhpWebAdmin/public/;
+    	location / {
+		if (!-e $request_filename ) {
+			rewrite ^(.*)$ /index.php?s=/$1 last;
+			break;
+		}
+		 try_files $uri $uri/ /index.php?$args;
+    	}
+    	location ~ \.php$ {
+		fastcgi_pass 127.0.0.1:9000;
+		fastcgi_index index.php;
+		fastcgi_split_path_info       ^(.+\.php)(/?.+)$;
+            	fastcgi_param PATH_INFO       $fastcgi_path_info;
+            	fastcgi_param PATH_TRANSLATED $document_root$fastcgi_path_info;
+            	fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            	include                       fastcgi_params;
+    	}
+        location ~ /\.ht {
+            deny  all;
         }
-        try_files $uri $uri/ /index.php?$args;
     }
-    location ~ \.php$ {
-        fastcgi_pass 127.0.0.1:9000;
-        fastcgi_index index.php;
-        fastcgi_split_path_info       ^(.+\.php)(/?.+)$;
-        fastcgi_param PATH_INFO       $fastcgi_path_info;
-        fastcgi_param PATH_TRANSLATED $document_root$fastcgi_path_info;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        include                       fastcgi_params;
-    }
-    location ~ /\.ht {
-        deny  all;
-    }
-}
 
 nginx 打开nginx
 nginx  重新加载配置|重启|停止|退出
