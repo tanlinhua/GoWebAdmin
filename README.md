@@ -186,6 +186,12 @@ layui 官网将于 2021年10月13日 进行下线。
 
 > [hyperf/gotask](https://github.com/hyperf/gotask)
 
+> [Python 资源大全中文版](https://blog.csdn.net/u013128262/article/details/79483998)
+
+> [直播后台-GO](https://github.com/gwuhaolin/livego)
+
+> [直播前端-JS](https://github.com/bilibili/flv.js)
+
 ## 一些值得学习的项目
 
 > 阅读Gin,Gorm,ants的源码
