@@ -57,6 +57,8 @@ require (
 	gorm.io/gorm v1.21.14
 )
 
+require github.com/matoous/go-nanoid/v2 v2.0.0
+
 require (
 	github.com/KyleBanks/depth v1.2.1 // indirect
 	github.com/PuerkitoBio/purell v1.1.1 // indirect
