@@ -149,6 +149,8 @@ layui 官网将于 2021年10月13日 进行下线。
 
 > [日志.zap](https://github.com/uber-go/zap)
 
+> [日志.zerolog](https://github.com/rs/zerolog)
+
 > [微服务.go-zero](https://github.com/tal-tech/go-zero)
 
 > [微服务.rpcx](https://github.com/smallnest/rpcx)
