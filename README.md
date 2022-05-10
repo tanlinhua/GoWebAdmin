@@ -7,7 +7,7 @@
 # 开启Go module，Go 1.13 以上默认启用，可跳过此步
 go env -w GO111MODULE=on
 # 设置代理
-go env -w GOPROXY=https://goproxy.io,direct
+go env -w GOPROXY=https://goproxy.cn,direct
 ```
 
 ### 交叉编译
