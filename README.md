@@ -12,10 +12,14 @@ go env -w GOPROXY=https://goproxy.io,direct
 
 ### 交叉编译
 ```shell
+Windwos
 SET CGO_ENABLED=0		#交叉编译不支持 CGO 所以要禁用它
 SET GOOS=linux			#目标平台的操作系统 (darwin freebsd linux windows)
 SET GOARCH=amd64		#目标平台的体系架构 (386 amd64 arm)
 go build -o main main.go
+
+Mac
+CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build main.go
 ```
 
 ### go mod
