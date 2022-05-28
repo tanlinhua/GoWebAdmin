@@ -1,18 +1,30 @@
 # brew
-```
-本地软件库列表：brew ls
-查找软件：brew search google（其中google替换为要查找的关键字）
-查看brew版本：brew -v  更新brew版本：brew update
-安装cask软件：brew install --cask firefox 把firefox换成你要安装的
-启动服务： brew services start redis@4.0
-查看服务： brew services list
 
-查询可更新的包： brew outdated
-更新所有软件： brew upgrade
-清理缓存： brew cleanup
+## 常用命令
+
+```
+本地软件库列表 brew ls
+查找软件 brew search google（其中google替换为要查找的关键字）
+查看brew版本 brew -v  更新brew版本：brew update
+安装cask软件 brew install --cask firefox 把firefox换成你要安装的
+启动服务 brew services start redis@4.0
+查看服务 brew services list
+安装软件 brew install name
+桌面端软件 brew cask install name
+联网搜索软件是否存在brew中 brew search name
+更新软件 brew upgrade name
+查询可更新的包 brew outdated
+卸载软件 brew unistall name
+重新安装软件 brew reinstall name
+查看软件安装地址 brew info name
+清理缓存 brew cleanup
+查看建议，例如升级等 brew doctor
+链接 brew link name
+
 ```
 
 ## ngnix
+
 ```shell
 安装： brew install nginx
 启动： brew services start nginx
@@ -30,11 +42,11 @@ server {
         listen       1992;
         server_name  localhost;
 
-        access_log  /Users/tanlinhua/Demo/logs/access.log;
-        error_log   /Users/tanlinhua/Demo/logs/error.log;
+        access_log  /Users/jason/Code/apps/nginx/logs/access.log;
+        error_log   /Users/jason/Code/apps/nginx/logs/error.log;
 
         index index.php index.html index.htm;
-    	root /Users/tanlinhua/Code/Php/PhpWebAdmin/public/;
+    	root /Users/jason/Code/Php/PhpWebAdmin/public/;
     	location / {
 		if (!-e $request_filename ) {
 			rewrite ^(.*)$ /index.php?s=/$1 last;
@@ -63,6 +75,7 @@ nginx -t 测试配置是否有语法错误
 ```
 
 ## php
+
 ```
 brew安装php
 
@@ -97,14 +110,18 @@ pecl install http://pecl.php.net/get/redis-4.2.0.tgz 安装指定版本扩展
 ```
 
 ## mysql
-如果之前没有安装过MySQL 5.7
+
+如果之前没有安装过 MySQL 5.7
+
 ```
 brew install mysql@5.7  // 安装
 brew link --force mysql@5.7 // 链接
 brew services start mysql@5.7 // 启动服务
 echo 'export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"' >> ~/.zshrc // 输出到环境变量
 ```
+
 如果之前安装了 MySQL 5.7
+
 ```
 brew uninstall mysql@5.7
 rm -rf /usr/local/var/mysql
@@ -117,7 +134,9 @@ brew link --force mysql@5.7 // 链接
 brew services start mysql@5.7 // 启动服务
 echo 'export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"' >> ~/.zshrc // 输出到环境变量
 ```
-❗️重要的一步，设置安全的访问
+
+❗️ 重要的一步，设置安全的访问
+
 ```
 mysql_secure_installation
 ```
@@ -125,11 +144,13 @@ mysql_secure_installation
 mysql 密码： root+root
 
 ## redis
+
 ```
 brew install redis@4.0
 ```
 
 ## nodejs
+
 ```shell
 brew install nvm
 
@@ -137,8 +158,8 @@ mkdir ~/.nvm
 
 vim ~/.zshrc  在 ~/.zshrc 配置文件后添加如下内容
 export NVM_DIR="$HOME/.nvm"
-  [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"
+  [ -s "/opt/homebrew/Cellar/nvm/0.39.1_1/nvm.sh" ] && . "/opt/homebrew/Cellar/nvm/0.39.1_1/nvm.sh"
+  [ -s "/opt/homebrew/Cellar/nvm/0.39.1_1/etc/bash_completion.d/nvm" ] && . "/opt/homebrew/Cellar/nvm/0.39.1_1/etc/bash_completion.d/nvm"
 
 source ~/.zshrc
 echo $NVM_DIR
