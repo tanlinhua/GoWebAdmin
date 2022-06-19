@@ -9,6 +9,10 @@ go env -w GO111MODULE=on
 # 设置代理
 go env -w GOPROXY=https://goproxy.cn,direct
 ```
+```
+composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
+npm config set registry  https://registry.npmmirror.com
+```
 
 ### 交叉编译
 ```shell
