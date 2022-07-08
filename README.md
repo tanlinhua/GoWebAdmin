@@ -217,3 +217,5 @@ layui 官网将于 2021年10月13日 进行下线。
 > [Gin-vue-admin](https://github.com/flipped-aurora/gin-vue-admin)
 
 > [数据结构与算法](https://github.com/TheAlgorithms)
+
+> [goploy](https://docs.goploy.icu/#/start/index)
