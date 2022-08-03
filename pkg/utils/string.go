@@ -77,3 +77,18 @@ func SubStrByFlag(source, flagStart, flagEnd string) string {
 	}
 	return source[start:end]
 }
+
+// 获取字符串str中start到end中间的字符串
+func GetBetweenStr(str, start, end string) string {
+	n := strings.Index(str, start) + len(start)
+	if n == -1 {
+		n = 0
+	}
+	str = string([]byte(str)[n:])
+	m := strings.Index(str, end)
+	if m == -1 {
+		m = len(str)
+	}
+	str = string([]byte(str)[:m])
+	return str
+}
