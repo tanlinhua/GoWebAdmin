@@ -5,8 +5,13 @@ import (
 	"crypto/md5"
 	"encoding/json"
 	"fmt"
+	"image/gif"
+	"image/jpeg"
+	"image/png"
 	"io"
+	"os"
 	"reflect"
+	"strings"
 
 	"golang.org/x/crypto/bcrypt"
 )
@@ -73,4 +78,24 @@ func Empty(val interface{}) bool {
 		return v.IsNil()
 	}
 	return reflect.DeepEqual(val, reflect.Zero(v.Type()).Interface())
+}
+
+// 校验图片
+func CheckImageFile(path, style string) error {
+	f, err := os.Open(path)
+	if err != nil {
+		return err
+	}
+	switch strings.ToUpper(style) {
+	case "JPG", "JPEG":
+		_, err = jpeg.Decode(f)
+	case "PNG":
+		_, err = png.Decode(f)
+	case "GIF":
+		_, err = gif.Decode(f)
+	}
+	if err != nil {
+		return err
+	}
+	return nil
 }
