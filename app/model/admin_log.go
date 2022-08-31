@@ -67,7 +67,7 @@ func AdminLogGet(adminId, page, limit int, title, name, ip, startTime, endTime s
 
 	err := Db.Scan(&data).Error
 	if err != nil {
-		trace.Error("AdminGet.err:" + err.Error())
+		trace.Error("AdminLogGet.err:" + err.Error())
 	}
 
 	return &data, total

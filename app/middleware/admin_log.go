@@ -59,7 +59,10 @@ func getAdminLogTitle(uri string) string {
 		return "登录后台"
 	}
 	if find := strings.Contains(uri, "admin/cpw"); find {
-		return "修改登录密码"
+		return "修改-登录密码"
+	}
+	if find := strings.Contains(uri, "admin/message/update"); find {
+		return "修改-通知消息"
 	}
 
 	var action string = "action"

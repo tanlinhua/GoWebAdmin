@@ -180,7 +180,7 @@ html, body, .app-container {
 }
 
 .layui-layout-admin .layui-side.custom-admin, .layui-layout-admin .layui-side.custom-admin .layui-nav-tree {
-    width: 220px;
+    width: 180px;
 }
 
 .layui-layout-admin .layui-side.custom-admin .layui-side-scroll {
@@ -188,7 +188,7 @@ html, body, .app-container {
 }
 
 .layui-body, .layui-layout-admin .layui-footer, .layui-layout-admin .custom-header .layui-nav.layui-layout-left {
-    left: 220px;
+    left: 180px;
 }
 
 .layui-layout-admin .layui-side.custom-admin {

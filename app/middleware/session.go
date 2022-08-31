@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/gin-contrib/sessions"
@@ -66,6 +67,12 @@ func CheckSession() gin.HandlerFunc {
 // 验证管理用户是否有该uri操作权限
 func checkAdminPermission(adminId int, uri string, method string) (bool, string) {
 	newUri := utils.Strstr(uri, "?", true)
+
+	// 兼容vue通过角色id获取权限ids
+	if find := strings.Contains(uri, "admin/role/get?id="); find {
+		return true, "SUCCESS"
+	}
+
 	ok := model.PerCheck(adminId, newUri, method) //校验权限
 	if ok {
 		return true, "SUCCESS"

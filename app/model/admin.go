@@ -145,12 +145,12 @@ func AdminGet(adminId, page, limit int, search, role string, startTime, endTime 
 }
 
 // 管理登录
-func AdminLogin(user_name, password string) (bool, int, string) {
+func AdminLogin(user_name, password string) (bool, int, int, string) {
 	result := false
 	msg := "用户名或密码错误"
 	var admin Admin
 
-	db.Select("id,status").Where("user_name=?", user_name).Where("password=?", utils.Md5(password)).First(&admin)
+	db.Select("id,role,status").Where("user_name=?", user_name).Where("password=?", utils.Md5(password)).First(&admin)
 	if admin.Id > 0 {
 		result = true
 		msg = "登录成功"
@@ -159,7 +159,7 @@ func AdminLogin(user_name, password string) (bool, int, string) {
 			msg = "状态错误"
 		}
 	}
-	return result, admin.Id, msg
+	return result, admin.Id, admin.Role, msg
 }
 
 // 记录最后登录时间及IP

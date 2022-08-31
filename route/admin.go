@@ -61,6 +61,17 @@ func initAdmResources(e *gin.Engine) {
 		file, _ := public.Static.ReadFile("static/favicon.ico")
 		c.Data(http.StatusOK, "image/x-icon", file)
 	})
+
+	// vue.1
+	e.Static("static/js", "vue/static/js")
+	e.Static("static/css", "vue/static/css")
+	e.Static("static/gif", "vue/static/gif")
+	e.Static("static/png", "vue/static/png")
+	e.StaticFile("/favicon.ico", "vue/favicon.ico")
+	e.LoadHTMLGlob("vue/index.html")
+	e.GET("admin", func(c *gin.Context) {
+		c.HTML(200, "index.html", nil)
+	})
 }
 
 // 路由配置 -> ADMIN
@@ -68,23 +79,27 @@ func initAdmRouter(e *gin.Engine) {
 	// 公共路由
 	public := e.Group("/admin")
 	{
-		public.GET("login", admin.Login)       // 登录页面
-		public.POST("check", admin.LoginCheck) // 登录校验
-		public.GET("logout", admin.Logout)     // 退出登录
-		public.GET("captcha", admin.Captcha)   // 获取图形验证码
+		public.GET("login", admin.Login)             // 登录页面
+		public.POST("check", admin.LoginCheck)       // 登录校验
+		public.GET("logout", admin.Logout)           // 退出登录
+		public.GET("captcha", admin.Captcha)         // 获取图形验证码
+		public.GET("sys/params", admin.SystemParams) // 一些公共的系统参数
+		public.GET("ga/gen", admin.GenGoogleAuth)    // 生成googleAuth信息
 	}
 	// 鉴权路由
 	auth := public
 	auth.Use(middleware.CheckSession())
 	{
 		// other
-		auth.GET("google", admin.GenGoogleAuth)       // 生成googleAuth信息
 		middleware.RouteRegister(auth, "jason/pprof") // 性能分析
 
-		// 后台首页
-		auth.GET("main", admin.Main)       // view
-		auth.GET("console", admin.Console) // 控制台
-		auth.POST("cpw", admin.Cpw)        // 修改密码
+		// 后台首页-控制台
+		auth.GET("main", admin.Main)                         // view
+		auth.GET("console", admin.Console)                   // 控制台view
+		auth.GET("console/get", admin.Dashboard)             // 查
+		auth.POST("cpw", admin.Cpw)                          // 修改密码
+		auth.POST("message/update", admin.UpdateMainMessage) // 修改通知消息
+		auth.GET("message/get", admin.GetMainMessage)        // 获取通知消息
 
 		// 权限配置-后台用户管理 Manager
 		auth.GET("adm/view", admin.AdmView)      // view

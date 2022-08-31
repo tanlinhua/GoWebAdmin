@@ -160,7 +160,7 @@
 
                             <!-- Tab2 -->
                             <div class="layui-tab-item">
-
+                                {{ if eq .serverInfo nil }}
                                 <!-- OS -->
                                 <div class="layui-col-sm6 layui-col-md3">
                                     <div class="layui-card">
@@ -259,6 +259,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                {{end}}
                             </div>
 
                         </div>

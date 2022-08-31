@@ -56,7 +56,7 @@ func GenGoogleAuth(c *gin.Context) {
 
 	value := model.ParamsGetValueByKey("GoogleAuthenticator")
 	if !utils.Empty(value) {
-		response.New(c).Error(-1, "请勿重复请求")
+		resp.Error(-1, "请勿重复请求")
 		return
 	}
 
@@ -74,7 +74,7 @@ func GenGoogleAuth(c *gin.Context) {
 	if err != nil {
 		resp.Error(-1, err.Error())
 	}
-	resp.Success(nil, 0)
+	resp.Success(map[string]interface{}{"qr_url": url}, 0)
 }
 
 // 生成图形验证码
@@ -95,7 +95,8 @@ func Logout(c *gin.Context) {
 	session.Clear()
 	session.Save()
 	// c.Redirect(http.StatusFound, "login")
-	Success("退出成功", "login", c)
+	// Success("退出成功", "login", c)
+	response.New(c).Success(nil, 0)
 }
 
 // 校验管理员用户名密码
@@ -135,7 +136,7 @@ func LoginCheck(c *gin.Context) {
 		}
 	}
 
-	ok, id, msg := model.AdminLogin(user_name, password)
+	ok, id, role_id, msg := model.AdminLogin(user_name, password)
 	if ok {
 		model.AdminLoginTimeAndIp(id, c.ClientIP(), time.Now()) //记录最后登录时间及IP
 		session := sessions.Default(c)
@@ -143,7 +144,7 @@ func LoginCheck(c *gin.Context) {
 		session.Set("adminName", user_name)
 		session.Set("adminId", id)
 		session.Save()
-		resp.Success(nil, 0)
+		resp.Success(map[string]interface{}{"role": role_id}, 1)
 		return
 	}
 	resp.Error(-1, msg)
@@ -163,4 +164,39 @@ func Cpw(c *gin.Context) {
 		return
 	}
 	response.New(c).Error(-1, msg)
+}
+
+// 获取通知消息
+func GetMainMessage(c *gin.Context) {
+	msg := model.ParamsGetValueByKey("admin_message")
+	response.New(c).Success(map[string]string{"msg": msg}, 1)
+}
+
+// 更新通知消息
+func UpdateMainMessage(c *gin.Context) {
+	msg := c.PostForm("msg")
+	if err := model.ParamsUpdateByKey("admin_message", msg); err != nil {
+		response.New(c).Error(-1, "更新失败:"+err.Error())
+	} else {
+		response.New(c).Success(nil, 0)
+	}
+}
+
+// 一些公共的系统参数
+func SystemParams(c *gin.Context) {
+	var data = make(map[string]interface{})
+
+	// 谷歌安全码相关信息
+	var ready bool = false
+	if !utils.Empty(model.ParamsGetValueByKey("GoogleAuthenticator")) {
+		ready = true
+	}
+	data["g_open"] = config.AdminGoogleAuth // 是否开启
+	data["g_ready"] = ready                 // 是否初始化
+
+	response.New(c).Success(data, 1)
+}
+
+// 首页数据
+func Dashboard(c *gin.Context) {
 }

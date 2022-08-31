@@ -47,6 +47,11 @@ func ParamsUpdate(id int, value string) (bool, string) {
 	return true, "修改成功"
 }
 
+// 修改系统配置数据
+func ParamsUpdateByKey(key string, value string) error {
+	return db.Model(&SysParams{}).Where("`key`=?", key).Update("value", value).Error
+}
+
 // 增加系统配置
 func (s *SysParams) Add() error {
 	err := db.Create(s).Error
@@ -59,9 +64,9 @@ func (s *SysParams) Add() error {
 // 查询指定key的value值
 func ParamsGetValueByKey(key string) string {
 	var row SysParams
-	err := db.Where("`key`=?", key).Select("value").First(&row).Error
+	err := db.Model(&SysParams{}).Select("value").Where("`key`=?", key).Scan(&row).Error
 	if err != nil {
-		trace.Error("ParamsGetValueByKey.err=" + err.Error())
+		trace.Error("ParamsGetValueByKey.err=" + err.Error() + ",key=" + key)
 	}
 	return row.Value
 }

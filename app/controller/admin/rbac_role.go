@@ -18,18 +18,15 @@ func RoleView(c *gin.Context) {
 func RoleAdd(c *gin.Context) {
 	resp := response.New(c)
 	var role model.Role
-
-	err := c.Bind(&role)
-	if err != nil {
+	if err := c.Bind(&role); err != nil {
 		resp.Error(-1, err.Error())
 		return
 	}
-	ok, msg := model.RoleAdd(&role)
-	if ok {
-		resp.Success(nil, 0)
-	} else {
-		resp.Error(-1, msg)
+	if err := model.RoleAdd(&role); err != nil {
+		resp.Error(-1, err.Error())
+		return
 	}
+	resp.Success(nil, 0)
 }
 
 // 删除角色
@@ -63,11 +60,12 @@ func RoleUpdate(c *gin.Context) {
 
 // 查询角色
 func RoleGet(c *gin.Context) {
-	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
-	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "10"))
+	roleId, _ := strconv.Atoi(c.Query("id")) //查询指定角色的权限tree
+	page, _ := strconv.Atoi(c.Query("page"))
+	limit, _ := strconv.Atoi(c.Query("limit"))
 	search := c.Query("search")
 
-	datas, total := model.RoleGet(page, limit, search)
+	datas, total := model.RoleGet(page, limit, roleId, search)
 
 	response.New(c).Success(datas, total)
 }

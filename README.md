@@ -202,6 +202,16 @@ layui 官网将于 2021年10月13日 进行下线。
 
 > [直播前端-JS](https://github.com/bilibili/flv.js)
 
+> [Open-IM](https://www.rentsoft.cn/)
+
+> [excel](https://github.com/qax-os/excelize)
+
+> [carbon-时间处理库](https://github.com/golang-module/carbon)
+
+> [dongle-编码解码&加密解密库](https://github.com/golang-module/dongle)
+
+> [lancet-工具函数库](https://github.com/duke-git/lancet)
+
 ## 一些值得学习的项目
 
 > 阅读Gin,Gorm,ants的源码

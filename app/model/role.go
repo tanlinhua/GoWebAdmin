@@ -1,6 +1,8 @@
 package model
 
 import (
+	"errors"
+
 	"github.com/tanlinhua/go-web-admin/pkg/trace"
 	"github.com/tanlinhua/go-web-admin/pkg/validator"
 )
@@ -37,16 +39,12 @@ func RoleGetPerIdsByRoleId(roleId int) string {
 }
 
 // 增
-func RoleAdd(data *Role) (bool, string) {
+func RoleAdd(data *Role) error {
 	ok, msg := validator.Validate(data)
 	if !ok {
-		return ok, msg
+		return errors.New(msg)
 	}
-	err := db.Create(data).Error
-	if err != nil {
-		return false, err.Error()
-	}
-	return true, "success"
+	return db.Create(data).Error
 }
 
 // 删
@@ -74,11 +72,14 @@ func RoleUpdate(data *Role) (bool, string) {
 }
 
 // 查
-func RoleGet(page, limit int, search string) (*[]Role, int64) {
+func RoleGet(page, limit, id int, search string) (*[]Role, int64) {
 	var total int64
 	var data []Role
 	Db := db
 
+	if id > 0 {
+		Db = Db.Where("id=?", id)
+	}
 	if len(search) > 0 {
 		Db = Db.Where("`role_name` LIKE ?", "%"+search+"%")
 	}
