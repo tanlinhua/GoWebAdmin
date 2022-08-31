@@ -63,15 +63,15 @@ func initAdmResources(e *gin.Engine) {
 	})
 
 	// vue.1
-	e.Static("static/js", "vue/static/js")
-	e.Static("static/css", "vue/static/css")
-	e.Static("static/gif", "vue/static/gif")
-	e.Static("static/png", "vue/static/png")
-	e.StaticFile("/favicon.ico", "vue/favicon.ico")
-	e.LoadHTMLGlob("vue/index.html")
-	e.GET("admin", func(c *gin.Context) {
-		c.HTML(200, "index.html", nil)
-	})
+	// e.Static("static/js", "vue/static/js")
+	// e.Static("static/css", "vue/static/css")
+	// e.Static("static/gif", "vue/static/gif")
+	// e.Static("static/png", "vue/static/png")
+	// e.StaticFile("/favicon.ico", "vue/favicon.ico")
+	// e.LoadHTMLGlob("vue/index.html")
+	// e.GET("admin", func(c *gin.Context) {
+	// 	c.HTML(200, "index.html", nil)
+	// })
 }
 
 // 路由配置 -> ADMIN
