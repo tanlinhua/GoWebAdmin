@@ -1,8 +1,6 @@
 package model
 
 import (
-	"errors"
-
 	"github.com/tanlinhua/go-web-admin/pkg/trace"
 	"github.com/tanlinhua/go-web-admin/pkg/validator"
 )
@@ -40,9 +38,8 @@ func RoleGetPerIdsByRoleId(roleId int) string {
 
 // 增
 func RoleAdd(data *Role) error {
-	ok, msg := validator.Validate(data)
-	if !ok {
-		return errors.New(msg)
+	if err := validator.Validate(data); err != nil {
+		return err
 	}
 	return db.Create(data).Error
 }
@@ -59,11 +56,9 @@ func RoleDel(id int) (bool, string) {
 
 // 改
 func RoleUpdate(data *Role) (bool, string) {
-	ok, msg := validator.Validate(data)
-	if !ok {
-		return ok, msg
+	if err := validator.Validate(data); err != nil {
+		return false, err.Error()
 	}
-
 	err := db.Save(data).Error
 	if err != nil {
 		return false, err.Error()

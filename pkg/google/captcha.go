@@ -6,11 +6,10 @@ import (
 	"crypto/sha1"
 	"encoding/base32"
 	"encoding/binary"
+	"errors"
 	"fmt"
 	"strings"
 	"time"
-
-	"github.com/tanlinhua/go-web-admin/pkg/trace"
 )
 
 type GoogleAuth struct {
@@ -92,14 +91,13 @@ func (ga *GoogleAuth) GetQrcodeUrl(name, secret string) string {
 }
 
 // 验证动态码
-func (ga *GoogleAuth) VerifyCode(secret, code string) bool {
+func (ga *GoogleAuth) VerifyCode(secret, code string) error {
 	_code, err := ga.getCode(secret)
 	if err != nil {
-		trace.Error("VerifyCode.error = " + err.Error())
-		return false
+		return err
 	}
 	if _code == code {
-		return true
+		return nil
 	}
-	return false
+	return errors.New("验证码不匹配")
 }

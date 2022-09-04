@@ -8,11 +8,10 @@ import (
 	unTrans "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
 	zhTrans "github.com/go-playground/validator/v10/translations/zh"
-	"github.com/tanlinhua/go-web-admin/pkg/trace"
 )
 
 // 验证器
-func Validate(data interface{}) (bool, string) {
+func Validate(data interface{}) error {
 	validate := validator.New()
 
 	validate.RegisterTagNameFunc(func(field reflect.StructField) string {
@@ -24,7 +23,7 @@ func Validate(data interface{}) (bool, string) {
 	trans, _ := uni.GetTranslator("zh_Hans_CN")
 	err := zhTrans.RegisterDefaultTranslations(validate, trans)
 	if err != nil {
-		trace.Error("zhTrans err:" + err.Error())
+		return err
 	}
 
 	//自定义校验字段及翻译方法
@@ -37,10 +36,10 @@ func Validate(data interface{}) (bool, string) {
 	err = validate.Struct(data)
 	if err != nil {
 		for _, err := range err.(validator.ValidationErrors) {
-			return false, err.Translate(trans)
+			return err
 		}
 	}
-	return true, "SUCCSE"
+	return nil
 }
 
 // 为自定义字段添加翻译功能

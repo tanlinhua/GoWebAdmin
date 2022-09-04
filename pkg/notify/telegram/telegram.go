@@ -1,14 +1,15 @@
 package telegram
 
 import (
+	"errors"
+
 	"github.com/tanlinhua/go-web-admin/app/config"
-	"github.com/tanlinhua/go-web-admin/pkg/trace"
 	"github.com/tanlinhua/go-web-admin/pkg/utils"
 	"github.com/tidwall/gjson"
 )
 
 // 发送telegram消息
-func Send(msg string) {
+func Send(msg string) error {
 	url := config.TelegramHost + "bot" + config.TelegramBotToken + "/sendMessage"
 
 	var params = make(map[string]string)
@@ -21,8 +22,9 @@ func Send(msg string) {
 
 	// 如果发送失败暂时只记录日志
 	if !ok || tg_ok.Value() != true {
-		trace.Error(result)
+		return errors.New(result)
 	}
+	return nil
 }
 
 // 1.创建机器人

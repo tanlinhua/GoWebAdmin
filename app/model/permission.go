@@ -25,7 +25,7 @@ type Permission struct {
 // 后台首页,获取后台用户权限内的菜单数据
 func PerMenuDataByAdmId(adminId int) []Permission {
 	roleId := AdminGetRoleIdByAdmId(adminId) //获取角色ID
-	if -1 == roleId {
+	if roleId < 0 {
 		return nil
 	}
 	ok, data := PerMenuDataByRoleId(roleId)

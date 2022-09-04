@@ -25,9 +25,8 @@ type Admin struct {
 
 // 增
 func AdmAdd(adminId int, data *Admin) (bool, string) {
-	ok, msg := validator.Validate(data)
-	if !ok {
-		return ok, msg
+	if err := validator.Validate(data); err != nil {
+		return false, err.Error()
 	}
 	exist := AdmExist(data.UserName)
 	if exist {

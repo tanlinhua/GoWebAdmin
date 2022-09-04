@@ -129,9 +129,8 @@ func LoginCheck(c *gin.Context) {
 		}
 		authJson, _ := utils.Json_decode(value)
 		secret := authJson["secret"]
-		capt_ok = google.NewGoogleAuth().VerifyCode(secret.(string), g_code)
-		if !capt_ok {
-			resp.Error(-1, "安全码错误")
+		if err := google.NewGoogleAuth().VerifyCode(secret.(string), g_code); err != nil {
+			resp.Error(-1, err.Error())
 			return
 		}
 	}
