@@ -28,7 +28,7 @@
   // "terminal.integrated.shell.osx": "zsh",
   // "editor.fontFamily": "Cascadia Code", // https://github.com/microsoft/cascadia-code
   "editor.fontFamily": "Fira Code", // https://github.com/tonsky/FiraCode
-  "terminal.integrated.fontFamily": "Meslo LG S for Powerline",
+  "terminal.integrated.fontFamily": "Meslo LG S for Powerline", // https://github.com/powerline/fonts
   "editor.stickyScroll.enabled": true,
   // 一些编辑器颜色配置 START
   "workbench.colorCustomizations": {
