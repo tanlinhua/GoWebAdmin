@@ -1,3 +1,7 @@
+# vscode
+
+## settings.json
+``` json
 {
   // GO.START
   "go.useLanguageServer": true, //gopls解决vscode提示缓慢
@@ -22,7 +26,8 @@
   "terminal.integrated.fontSize": 16, //控制终端的字号(以像素为单位)。
   // "terminal.external.osxExec": "iTerm.app",
   // "terminal.integrated.shell.osx": "zsh",
-  "editor.fontFamily": "Cascadia Code",
+  // "editor.fontFamily": "Cascadia Code", // https://github.com/microsoft/cascadia-code
+  "editor.fontFamily": "Fira Code", // https://github.com/tonsky/FiraCode
   "terminal.integrated.fontFamily": "Meslo LG S for Powerline",
   "editor.stickyScroll.enabled": true,
   // 一些编辑器颜色配置 START
@@ -93,3 +98,4 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
 }
+```
