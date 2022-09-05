@@ -8,16 +8,20 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func Debug(msg string) {
-	writer(msg, "debug")
-}
-
 func Error(msg string) {
 	writer(msg, "error")
 }
 
+func Debug(msg string) {
+	writer(msg, "debug")
+}
+
 func Info(msg string) {
 	writer(msg, "info")
+}
+
+func Warn(msg string) {
+	writer(msg, "warn")
 }
 
 func writer(msg string, level string) {
@@ -53,6 +57,8 @@ func writer(msg string, level string) {
 		entry.Error()
 	case "info":
 		entry.Info()
+	case "warn":
+		entry.Warn()
 	default:
 		entry.Warn()
 	}
