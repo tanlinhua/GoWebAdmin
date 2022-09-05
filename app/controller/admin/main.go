@@ -101,7 +101,6 @@ func Logout(c *gin.Context) {
 
 // 校验管理员用户名密码
 func LoginCheck(c *gin.Context) {
-	capt_ok := false
 	resp := response.New(c)
 
 	user_name := c.PostForm("user_name")
@@ -115,8 +114,7 @@ func LoginCheck(c *gin.Context) {
 		return
 	}
 
-	capt_ok = captcha.CaptchaVerify(cid, code)
-	if !capt_ok {
+	if ok := captcha.CaptchaVerify(cid, code); !ok {
 		resp.Error(-1, "验证码错误")
 		return
 	}

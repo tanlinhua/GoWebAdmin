@@ -46,7 +46,7 @@ func InitDB() {
 		// SkipDefaultTransaction: true, // 禁用默认事务
 	})
 	if err != nil {
-		log.Panic("连接数据库失败，err：", err)
+		log.Panic("连接数据库失败,err:", err)
 	}
 
 	sqlDB, e := db.DB()
