@@ -71,3 +71,9 @@ func InitDB() {
 	// sqlDB.SetMaxIdleConns(100)
 	// sqlDB.SetMaxOpenConns(500)
 }
+
+/*
+GORM分表
+https://github.com/go-gorm/sharding
+https://gorm.io/zh_CN/docs/scopes.html#%E5%8A%A8%E6%80%81%E8%A1%A8
+*/
