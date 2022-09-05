@@ -94,8 +94,10 @@ func Logout(c *gin.Context) {
 	session := sessions.Default(c)
 	session.Clear()
 	session.Save()
-	// c.Redirect(http.StatusFound, "login")
-	// Success("退出成功", "login", c)
+	if c.Query("layui") == "1" {
+		Success("退出成功", "login", c) // c.Redirect(http.StatusFound, "login")
+		return
+	}
 	response.New(c).Success(nil, 0)
 }
 

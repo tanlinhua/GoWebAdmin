@@ -92,7 +92,7 @@ CREATE TABLE `go_sys_params` (
   `remarks` varchar(255) DEFAULT NULL,
   UNIQUE KEY `key` (`key`) USING BTREE
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='系统配置表';
-INSERT INTO `go_sys_params` VALUES ('1', '0', 'admin_message', '消息内容', '管理后台通知消息');
+INSERT INTO `go_sys_params` VALUES ('1', '1', 'admin_message', '消息内容', '管理后台通知消息');
 INSERT INTO `go_sys_params` VALUES ('2', '1', 'admin_log_day', '7', '系统配置-操作日志 保留多少天');
 
 -- 用户表
