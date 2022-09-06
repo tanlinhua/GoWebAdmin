@@ -36,10 +36,10 @@ require (
 	github.com/shirou/gopsutil v3.21.11+incompatible
 	github.com/sirupsen/logrus v1.9.0
 	github.com/spf13/cast v1.5.0
-	github.com/swaggo/gin-swagger v1.5.2
+	github.com/swaggo/gin-swagger v1.5.3
 	github.com/swaggo/swag v1.8.5
 	github.com/tidwall/gjson v1.14.3
-	github.com/unrolled/secure v1.12.0
+	github.com/unrolled/secure v1.13.0
 	golang.org/x/crypto v0.0.0-20220829220503-c86fa9a7ed90
 	golang.org/x/image v0.0.0-20220902085622-e7cb96979f69 // indirect
 	golang.org/x/net v0.0.0-20220826154423-83b083e8dc8b // indirect
