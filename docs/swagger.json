@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "golang web template.",
-        "title": "GoWeb",
+        "title": "GoWebAdmin",
         "contact": {},
         "version": "1.0"
     },
@@ -139,9 +139,7 @@
                 "count": {
                     "type": "integer"
                 },
-                "data": {
-                    "type": "object"
-                },
+                "data": {},
                 "msg": {
                     "type": "string"
                 }

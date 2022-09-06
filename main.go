@@ -10,7 +10,7 @@ import (
 	"github.com/tanlinhua/go-web-admin/route"
 )
 
-// @title GoWeb
+// @title GoWebAdmin
 // @version 1.0
 // @description golang web template.
 // @securityDefinitions.apikey ApiKeyAuth

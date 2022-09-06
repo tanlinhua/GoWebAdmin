@@ -3,15 +3,14 @@ package route
 import (
 	"os"
 
+	files "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	"github.com/swaggo/gin-swagger/swaggerFiles"
-	_ "github.com/tanlinhua/go-web-admin/docs"
 
 	"github.com/gin-gonic/gin"
-
 	"github.com/tanlinhua/go-web-admin/app/config"
 	"github.com/tanlinhua/go-web-admin/app/controller/api"
 	"github.com/tanlinhua/go-web-admin/app/middleware"
+	_ "github.com/tanlinhua/go-web-admin/docs"
 	"github.com/tanlinhua/go-web-admin/pkg/response"
 )
 
@@ -52,7 +51,7 @@ func initSwagger(e *gin.Engine) {
 		os.Setenv(disablingKey, "true") // 禁用swagger
 	}
 	// http://host:port/api/doc/index.html
-	e.GET("/api/doc/*any", ginSwagger.DisablingWrapHandler(swaggerFiles.Handler, disablingKey))
+	e.GET("/api/doc/*any", ginSwagger.DisablingWrapHandler(files.Handler, disablingKey))
 }
 
 // 路由配置 -> API

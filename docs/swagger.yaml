@@ -17,15 +17,14 @@ definitions:
         type: integer
       count:
         type: integer
-      data:
-        type: object
+      data: {}
       msg:
         type: string
     type: object
 info:
   contact: {}
   description: golang web template.
-  title: GoWeb
+  title: GoWebAdmin
   version: "1.0"
 paths:
   /api/user/cpw:
