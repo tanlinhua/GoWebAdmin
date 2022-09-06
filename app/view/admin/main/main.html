@@ -220,17 +220,17 @@
 
     $("#main_logout").click(function () {
         layer.confirm("确定要退出吗？", { icon: 3, title: '提示' }, function (index) {
-            // window.location = "logout";
-            $.ajax({
-                    url: "/admin/logout",
-                    type: "GET",
-                    success: function (result) {
-                        window.location = "/admin/login";
-                    },
-                    error: function () {
-                        window.location = "admin/login";
-                    }
-                });
+            window.location = "logout?layui=1";
+            // $.ajax({
+            //         url: "/admin/logout",
+            //         type: "GET",
+            //         success: function (result) {
+            //             window.location = "/admin/login";
+            //         },
+            //         error: function () {
+            //             window.location = "admin/login";
+            //         }
+            //     });
         });
     });
 </script>
