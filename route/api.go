@@ -18,6 +18,7 @@ import (
 func InitApiServer() {
 	gin.SetMode(config.AppMode)
 	engine := gin.New()
+	engine.SetTrustedProxies(nil)
 
 	engine.NoRoute(HandleNotFound)
 	engine.NoMethod(HandleNotFound)

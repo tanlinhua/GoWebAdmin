@@ -19,6 +19,10 @@ func InitAdmServer() {
 	gin.SetMode(config.AppMode)
 	engine := gin.New()
 
+	// 不使用任何代理，禁用此功能Engine.SetTrustedProxies(nil)
+	// 然后Context.ClientIP()将直接返回远程地址，以避免一些不必要的计算。
+	engine.SetTrustedProxies(nil)
+
 	initAdmResources(engine)
 	initAdmMiddleware(engine)
 	initAdmRouter(engine)
