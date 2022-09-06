@@ -32,11 +32,10 @@ func RoleAdd(c *gin.Context) {
 // 删除角色
 func RoleDel(c *gin.Context) {
 	id, _ := strconv.Atoi(c.PostForm("id"))
-	ok, msg := model.RoleDel(id)
-	if ok {
-		response.New(c).Success(nil, 0)
+	if err := model.RoleDel(id); err != nil {
+		response.New(c).Error(-1, err.Error())
 	} else {
-		response.New(c).Error(-1, msg)
+		response.New(c).Success(nil, 0)
 	}
 }
 
@@ -45,16 +44,14 @@ func RoleUpdate(c *gin.Context) {
 	resp := response.New(c)
 	var role model.Role
 
-	err := c.Bind(&role)
-	if err != nil {
+	if err := c.Bind(&role); err != nil {
 		resp.Error(-1, err.Error())
 		return
 	}
-	ok, msg := model.RoleUpdate(&role)
-	if ok {
-		resp.Success(nil, 0)
+	if err := model.RoleUpdate(&role); err != nil {
+		resp.Error(-1, err.Error())
 	} else {
-		resp.Error(-1, msg)
+		resp.Success(nil, 0)
 	}
 }
 

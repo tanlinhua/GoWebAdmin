@@ -157,12 +157,11 @@ func Cpw(c *gin.Context) {
 
 	adminId := sessions.Default(c).Get("adminId")
 
-	r, msg := model.AdminCpw(adminId.(int), pwd1, pwd2, pwd3)
-	if r {
-		response.New(c).Success(nil, 0)
+	if err := model.AdminCpw(adminId.(int), pwd1, pwd2, pwd3); err != nil {
+		response.New(c).Error(-1, err.Error())
 		return
 	}
-	response.New(c).Error(-1, msg)
+	response.New(c).Success(nil, 0)
 }
 
 // 获取通知消息

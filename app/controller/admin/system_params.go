@@ -30,13 +30,11 @@ func ParamsUpdate(c *gin.Context) {
 	id, _ := strconv.Atoi(c.PostForm("id"))
 	value := c.PostForm("value")
 
-	r, msg := model.ParamsUpdate(id, value)
-
-	if r {
-		response.New(c).Success(nil, 0)
-	} else {
-		response.New(c).Error(-1, msg)
+	if err := model.ParamsUpdate(id, value); err != nil {
+		response.New(c).Error(-1, err.Error())
+		return
 	}
+	response.New(c).Success(nil, 0)
 }
 
 // 删除配置数据

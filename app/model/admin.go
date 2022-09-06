@@ -1,6 +1,7 @@
 package model
 
 import (
+	"errors"
 	"time"
 
 	"github.com/tanlinhua/go-web-admin/app/config"
@@ -24,13 +25,13 @@ type Admin struct {
 }
 
 // 增
-func AdmAdd(adminId int, data *Admin) (bool, string) {
+func AdmAdd(adminId int, data *Admin) error {
 	if err := validator.Validate(data); err != nil {
-		return false, err.Error()
+		return err
 	}
 	exist := AdmExist(data.UserName)
 	if exist {
-		return false, "用户名已存在"
+		return errors.New("用户名已存在")
 	}
 	data.Password = utils.Md5(data.Password)
 	data.LastLoginTime = TimeNormal{time.Now()}
@@ -38,11 +39,7 @@ func AdmAdd(adminId int, data *Admin) (bool, string) {
 	if adminId != config.AdminId {
 		data.Pid = adminId
 	}
-	err := db.Create(data).Error
-	if err != nil {
-		return false, err.Error()
-	}
-	return true, "success"
+	return db.Create(data).Error
 }
 
 // 查询用户名是否已存在
@@ -57,19 +54,15 @@ func AdmExist(user_name string) bool {
 }
 
 // 删
-func AdminDel(id int) (bool, string) {
+func AdminDel(id int) error {
 	if id == config.AdminId {
-		return false, "超级管理员不允许删除"
+		return errors.New("超级管理员不允许删除")
 	}
-	err := db.Delete(&Admin{}, id).Error
-	if err != nil {
-		return false, err.Error()
-	}
-	return true, "删除成功"
+	return db.Delete(&Admin{}, id).Error
 }
 
 // 改
-func AdmUpdate(data *Admin) (bool, string) {
+func AdmUpdate(data *Admin) error {
 	var update = make(map[string]interface{})
 	if !utils.Empty(data.Password) {
 		update["password"] = utils.Md5(data.Password)
@@ -83,11 +76,7 @@ func AdmUpdate(data *Admin) (bool, string) {
 	if data.Status == 0 || data.Status == 1 {
 		update["status"] = data.Status //fuck,存在0值必须用map替代
 	}
-	err := db.Model(&Admin{}).Where("id=?", data.Id).Updates(update).Error
-	if err != nil {
-		return false, err.Error()
-	}
-	return true, "success"
+	return db.Model(&Admin{}).Where("id=?", data.Id).Updates(update).Error
 }
 
 type AdminGetResult struct {
@@ -174,37 +163,33 @@ func AdminLoginTimeAndIp(id int, ip string, loginTime time.Time) {
 }
 
 // 修改密码
-func AdminCpw(adminId int, pwd1, pwd2, pwd3 string) (result bool, msg string) {
+func AdminCpw(adminId int, pwd1, pwd2, pwd3 string) error {
 	var admin Admin
 
 	if pwd2 != pwd3 {
-		return false, "新密码与确认密码不一致"
+		return errors.New("新密码与确认密码不一致")
 	}
 	if len(pwd2) < 6 {
-		return false, "新密码不能小于6位数"
+		return errors.New("新密码不能小于6位数")
 	}
 	db.Select("id").Where("id=?", adminId).Where("password=?", utils.Md5(pwd1)).First(&admin)
 	if admin.Id == 0 {
-		return false, "原密码不正确"
+		return errors.New("原密码不正确")
 	}
-	err := db.Model(&Admin{}).Where("id=?", adminId).Update("password", utils.Md5(pwd2)).Error
-	if err != nil {
-		return false, err.Error()
-	}
-	return true, "修改成功"
+	return db.Model(&Admin{}).Where("id=?", adminId).Update("password", utils.Md5(pwd2)).Error
 }
 
 // 检测用户状态
-func AdminStatusIsNormal(id int) (bool, string) {
+func AdminStatusCheck(id int) error {
 	var admin Admin
-	err := db.Select("status").Where("id=?", id).Find(&admin).Error
-	if err != nil {
-		return false, err.Error()
+	if err := db.Select("status").Where("id=?", id).Find(&admin).Error; err != nil {
+		return err
 	}
 	if admin.Status == 1 {
-		return true, "启用"
+		return nil
+	} else {
+		return errors.New("账户已禁用")
 	}
-	return false, "账户已禁用"
 }
 
 // 根据admId获取roleId

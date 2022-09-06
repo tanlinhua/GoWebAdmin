@@ -51,9 +51,8 @@ func CheckSession() gin.HandlerFunc {
 		}
 
 		// 3.校验用户状态
-		normal, cmsg := model.AdminStatusIsNormal(adminId.(int))
-		if !normal {
-			response.New(c).Error(-1, cmsg)
+		if err := model.AdminStatusCheck(adminId.(int)); err != nil {
+			response.New(c).Error(-1, err.Error())
 			c.Abort()
 			return
 		}

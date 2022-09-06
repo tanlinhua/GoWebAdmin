@@ -39,12 +39,8 @@ func ParamsGet(page, limit int, search string) (*[]SysParams, int64) {
 }
 
 // 修改系统配置数据
-func ParamsUpdate(id int, value string) (bool, string) {
-	err := db.Model(&SysParams{}).Where("id=?", id).Update("value", value).Error
-	if err != nil {
-		return false, err.Error()
-	}
-	return true, "修改成功"
+func ParamsUpdate(id int, value string) error {
+	return db.Model(&SysParams{}).Where("id=?", id).Update("value", value).Error
 }
 
 // 修改系统配置数据
@@ -54,11 +50,7 @@ func ParamsUpdateByKey(key string, value string) error {
 
 // 增加系统配置
 func (s *SysParams) Add() error {
-	err := db.Create(s).Error
-	if err != nil {
-		return err
-	}
-	return nil
+	return db.Create(s).Error
 }
 
 // 查询指定key的value值

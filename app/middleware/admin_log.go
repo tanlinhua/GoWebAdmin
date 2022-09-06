@@ -48,7 +48,9 @@ func AdminLog() gin.HandlerFunc {
 			adminLog.Title = getAdminLogTitle(c.Request.RequestURI)
 			adminLog.Body = string(byteData)
 			adminLog.Ip = c.ClientIP()
-			adminLog.Add()
+			if err := adminLog.Add(); err != nil {
+				trace.Error("adminLog.Add.err=" + err.Error())
+			}
 		}
 	}
 }

@@ -26,23 +26,21 @@ func AdmAdd(c *gin.Context) {
 	}
 	adminId, _ := c.Get("admin_id")
 
-	ok, msg := model.AdmAdd(adminId.(int), &admin)
-	if ok {
-		resp.Success(nil, 0)
-	} else {
-		resp.Error(-1, msg)
+	if err := model.AdmAdd(adminId.(int), &admin); err != nil {
+		resp.Error(-1, err.Error())
+		return
 	}
+	resp.Success(nil, 0)
 }
 
 // 删除后台用户
 func AdmDel(c *gin.Context) {
 	id, _ := strconv.Atoi(c.PostForm("id"))
-	ok, msg := model.AdminDel(id)
-	if ok {
-		response.New(c).Success(nil, 0)
-	} else {
-		response.New(c).Error(-1, msg)
+	if err := model.AdminDel(id); err != nil {
+		response.New(c).Error(-1, err.Error())
+		return
 	}
+	response.New(c).Success(nil, 0)
 }
 
 // 修改后台用户
@@ -55,11 +53,10 @@ func AdmUpdate(c *gin.Context) {
 		resp.Error(-1, err.Error())
 		return
 	}
-	ok, msg := model.AdmUpdate(&admin)
-	if ok {
-		resp.Success(nil, 0)
+	if err := model.AdmUpdate(&admin); err != nil {
+		resp.Error(-1, err.Error())
 	} else {
-		resp.Error(-1, msg)
+		resp.Success(nil, 0)
 	}
 }
 

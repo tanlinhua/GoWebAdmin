@@ -19,11 +19,8 @@ type AdminLog struct {
 }
 
 // 增
-func (s *AdminLog) Add() {
-	err := db.Create(s).Error
-	if err != nil {
-		trace.Error("model.admin_log.Add.err=" + err.Error())
-	}
+func (s *AdminLog) Add() error {
+	return db.Create(s).Error
 }
 
 type AdminLogResult struct {

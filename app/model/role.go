@@ -1,6 +1,8 @@
 package model
 
 import (
+	"errors"
+
 	"github.com/tanlinhua/go-web-admin/pkg/trace"
 	"github.com/tanlinhua/go-web-admin/pkg/validator"
 )
@@ -45,25 +47,17 @@ func RoleAdd(data *Role) error {
 }
 
 // 删
-func RoleDel(id int) (bool, string) {
-	return false, "出于系统考虑,暂不支持后台删除角色,如需删除请联系IT人员."
-	// err := db.Delete(&Role{}, id).Error
-	// if err != nil {
-	// 	return false, err.Error()
-	// }
-	// return true, "删除成功"
+func RoleDel(id int) error {
+	return errors.New("出于系统考虑,暂不支持后台删除角色,如需删除请联系IT人员")
+	// return db.Delete(&Role{}, id).Error
 }
 
 // 改
-func RoleUpdate(data *Role) (bool, string) {
+func RoleUpdate(data *Role) error {
 	if err := validator.Validate(data); err != nil {
-		return false, err.Error()
+		return err
 	}
-	err := db.Save(data).Error
-	if err != nil {
-		return false, err.Error()
-	}
-	return true, "success"
+	return db.Save(data).Error
 }
 
 // 查
