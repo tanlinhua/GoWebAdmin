@@ -14,20 +14,21 @@ var JwtKey = []byte(config.JwtKey)
 type Claims struct {
 	// UserName string
 	Id int64
-	jwt.StandardClaims
+	jwt.RegisteredClaims
 }
 
 // 生成token
 func GetJWT(uid int64) (bool, string) {
-	expireTime := time.Now().Add(1 * time.Hour).Unix() // expireTime = 3600
+	expireTime := jwt.NewNumericDate(time.Now().Add(24 * time.Hour))
 	claims := &Claims{
 		// UserName: username,
 		Id: uid, // 用户ID
-		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: expireTime,        //过期时间
-			IssuedAt:  time.Now().Unix(), //生成时间
-			Issuer:    "127.0.0.1",       //签名颁发者
-			Subject:   "apiToken",        //签名主题
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: expireTime,                     //过期时间
+			IssuedAt:  jwt.NewNumericDate(time.Now()), //生成时间
+			NotBefore: jwt.NewNumericDate(time.Now()), //nbf
+			Issuer:    "127.0.0.1",                    //签名颁发者
+			Subject:   "apiToken",                     //签名主题
 		},
 	}
 	reqClaim := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
@@ -67,11 +68,11 @@ func CheckJWT() gin.HandlerFunc {
 
 // 解析token
 func parseJWT(tokenString string) (*jwt.Token, *Claims, error) {
-	Claims := &Claims{}
-	token, err := jwt.ParseWithClaims(tokenString, Claims, func(token *jwt.Token) (i interface{}, err error) {
+	c := &Claims{}
+	token, err := jwt.ParseWithClaims(tokenString, c, func(token *jwt.Token) (i interface{}, err error) {
 		return JwtKey, nil
 	})
-	return token, Claims, err
+	return token, c, err
 }
 
 /*
