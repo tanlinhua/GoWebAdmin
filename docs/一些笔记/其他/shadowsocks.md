@@ -115,10 +115,8 @@ git config  --global  --unset http.proxy
 
 [仓库](https://github.com/TelegramMessenger/MTProxy)
 
-[教程1](http://www.vjsun.com/492.html)
+[教程1](https://www.it610.com/article/1305300310650032128.htm)
 
-[教程2](https://www.baikele.online/64.html)
-
-[教程3](https://www.it610.com/article/1305300310650032128.htm)
+[一键安装脚本](https://github.com/ToyoDAdoubi/doubi)
 
 更多自行搜索： Telegram MTProto
