@@ -1,26 +1,42 @@
 package utils
 
 import (
-	"fmt"
 	"regexp"
 )
 
+// str中是否为纯数字
+func Is_Number(str string) bool {
+	return regexp.MustCompile("^[0-9]+$").MatchString(str)
+}
+
+// 帐号校验,字母开头,允许5-16字节,允许字母数字下划线
+func Is_UserName(str string) bool {
+	reg := regexp.MustCompile(`^[a-zA-Z][a-zA-Z0-9_]{4,15}$`)
+	return reg.MatchString(str)
+}
+
 // 邮箱
 func Is_Email(email string) bool {
-	pattern := `^[0-9a-z][_.0-9a-z-]{0,31}@([0-9a-z][0-9a-z-]{0,30}[0-9a-z]\.){1,4}[a-z]{2,4}$`
-	// pattern := `\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*` //匹配电子邮箱
+	pattern := `\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}`
 	reg := regexp.MustCompile(pattern)
 	return reg.MatchString(email)
 }
 
-func IsUrl(v string) (r bool) {
-	reg := regexp.MustCompile(`(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?`)
-	m := reg.MatchString(v)
-	if m {
-		r = true
-		return
-	}
-	return
+// 身份证
+func Is_IDCard(email string) bool {
+	return regexp.MustCompile(`\d{17}[\d|x]|\d{15}`).MatchString(email)
+}
+
+// IP地址
+func Is_IP(email string) bool {
+	p := `(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)`
+	return regexp.MustCompile(p).MatchString(email)
+}
+
+// 网址
+func Is_Url(v string) (r bool) {
+	reg := regexp.MustCompile(`^((https|http|ftp|rtsp|mms)?:\/\/)[^\s]+`)
+	return reg.MatchString(v)
 }
 
 // 手机号-中国
@@ -32,10 +48,7 @@ func Is_Phone_China(mobileNum string) bool {
 
 // sql注入风险字符检查
 func SQLInjectCheck(to_match_str string) bool {
-	str := `(?:')|(?:--)|(/\\*(?:.|[\\n\\r])*?\\*/)|(\b(select|update|and|or|delete|insert|trancate|char|chr|into|substr|ascii|declare|exec|count|master|into|drop|execute)\b)`
-	re, err := regexp.Compile(str)
-	if err != nil {
-		fmt.Println("SQLInjectCheck.err", err.Error())
-	}
-	return re.MatchString(to_match_str)
+	p := `(?:')|(?:--)|(/\\*(?:.|[\\n\\r])*?\\*/)|(\b(select|update|and|or|delete|insert|trancate|char|chr|into|substr|ascii|declare|exec|count|master|into|drop|execute)\b)`
+	reg := regexp.MustCompile(p)
+	return reg.MatchString(to_match_str)
 }
