@@ -110,3 +110,15 @@ git config  --global  http.proxy 'http://localhost:1080'
 取消代理
 git config  --global  --unset http.proxy
 ```
+
+# Telegram.MTProto
+
+[仓库](https://github.com/TelegramMessenger/MTProxy)
+
+[教程1](http://www.vjsun.com/492.html)
+
+[教程2](https://www.baikele.online/64.html)
+
+[教程3](https://www.it610.com/article/1305300310650032128.htm)
+
+更多自行搜索： Telegram MTProto
