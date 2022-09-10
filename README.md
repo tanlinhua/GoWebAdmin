@@ -116,6 +116,11 @@ layui 官网将于 2021年10月13日 进行下线。
 [pearadmin](http://www.pearadmin.com/)
 [LayuiMini](http://layuimini.99php.cn/)
 
+快速构建表单
+
+[Pear-Admin-Layui](https://gitee.com/pear-admin/Pear-Admin-Layui) 已fork
+-> VsCode Live Server -> 开发工具-表单构建
+
 ## Vue后台框架
 
 > [GinVueAdmin.Web](https://github.com/flipped-aurora/gin-vue-admin)
