@@ -1,6 +1,6 @@
-layui.define(["element", "layer"], function (exports) {
+layui.define(['element', 'layer'], function (exports) {
   var $ = layui.$,
-    $body = $("body"),
+    $body = $('body'),
     element = layui.element,
     layer = layui.layer;
 
@@ -29,7 +29,7 @@ layui.define(["element", "layer"], function (exports) {
   };
 
   var isMobile = function () {
-    return isDevice("mobile");
+    return isDevice('mobile');
   };
 
   var Tab = function (el) {
@@ -38,10 +38,10 @@ layui.define(["element", "layer"], function (exports) {
   };
 
   Tab.prototype.content = function (src) {
-    var iframe = document.createElement("iframe");
-    iframe.setAttribute("frameborder", "0");
-    iframe.setAttribute("src", src);
-    iframe.setAttribute("data-id", this.urls.length);
+    var iframe = document.createElement('iframe');
+    iframe.setAttribute('frameborder', '0');
+    iframe.setAttribute('src', src);
+    iframe.setAttribute('data-id', this.urls.length);
     return iframe.outerHTML;
   };
 
@@ -69,12 +69,12 @@ layui.define(["element", "layer"], function (exports) {
   };
 
   Tab.prototype.onChange = function (callback) {
-    element.on("tab(" + this.el + ")", callback);
+    element.on('tab(' + this.el + ')', callback);
   };
 
   Tab.prototype.onDelete = function (callback) {
     var self = this;
-    element.on("tabDelete(" + this.el + ")", function (data) {
+    element.on('tabDelete(' + this.el + ')', function (data) {
       var i = data.index;
       self.urls.splice(i, 1);
       callback && callback(data);
@@ -82,15 +82,15 @@ layui.define(["element", "layer"], function (exports) {
   };
 
   var Home = function () {
-    var tabs = new Tab("tabs"),
+    var tabs = new Tab('tabs'),
       navItems = [];
 
-    $("#Nav a").on("click", function (event) {
+    $('#Nav a').on('click', function (event) {
       event.preventDefault();
       var $this = $(this),
-        url = $this.attr("href"),
+        url = $this.attr('href'),
         title = $.trim($this.text());
-      if (url && url !== "javascript:;") {
+      if (url && url !== 'javascript:;') {
         if (tabs.is(url)) {
           tabs.change(url);
         } else {
@@ -99,10 +99,10 @@ layui.define(["element", "layer"], function (exports) {
         }
       }
       $this
-        .closest("li.layui-nav-item")
-        .addClass("layui-nav-itemed")
+        .closest('li.layui-nav-item')
+        .addClass('layui-nav-itemed')
         .siblings()
-        .removeClass("layui-nav-itemed");
+        .removeClass('layui-nav-itemed');
     });
 
     var iframeIndex = 0; // 当前TAB页码编号
@@ -110,14 +110,14 @@ layui.define(["element", "layer"], function (exports) {
     tabs.onChange(function (data) {
       var i = data.index,
         $this = navItems[i];
-      if ($this && typeof $this === "object") {
-        $("#Nav dd").removeClass("layui-this");
-        $this.parent("dd").addClass("layui-this");
+      if ($this && typeof $this === 'object') {
+        $('#Nav dd').removeClass('layui-this');
+        $this.parent('dd').addClass('layui-this');
         $this
-          .closest("li.layui-nav-item")
-          .addClass("layui-nav-itemed")
+          .closest('li.layui-nav-item')
+          .addClass('layui-nav-itemed')
           .siblings()
-          .removeClass("layui-nav-itemed");
+          .removeClass('layui-nav-itemed');
       }
       iframeIndex = i;
     });
@@ -131,48 +131,46 @@ layui.define(["element", "layer"], function (exports) {
     });
 
     // 刷新事件处理
-    $(".refresh").click(function () {
-      var isRefresh = sessionStorage.getItem("isRefresh");
-      if (isRefresh !== "true") {
-        let iframe = $(".layui-tab-content").find("iframe");
+    $('.refresh').click(function () {
+      var isRefresh = sessionStorage.getItem('isRefresh');
+      if (isRefresh !== 'true') {
+        let iframe = $('.layui-tab-content').find('iframe');
         iframe[iframeIndex].contentWindow.location.reload(true);
 
-        sessionStorage.setItem("isRefresh", "true");
+        sessionStorage.setItem('isRefresh', 'true');
         setTimeout(function () {
-          sessionStorage.removeItem("isRefresh");
+          sessionStorage.removeItem('isRefresh');
         }, 1500);
       } else {
-        layer.msg("请勿频繁刷新!", { icon: 5, anim: 6, time: 3000 });
+        layer.msg('请勿频繁刷新!', { icon: 5, anim: 6, time: 3000 });
       }
     });
 
     // 默认触发第一个子菜单的点击事件
-    $(
-      "#Nav li.layui-nav-item:eq(0) > dl.layui-nav-child > dd > a:eq(0)"
-    ).trigger("click");
+    $('#Nav li.layui-nav-item:eq(0) > dl.layui-nav-child > dd > a:eq(0)').trigger('click');
 
     this.slideSideBar();
   };
 
   Home.prototype.slideSideBar = function () {
-    var $slideSidebar = $(".slide-sidebar"),
-      $pageContainer = $(".layui-body"),
-      $mobileMask = $(".mobile-mask");
+    var $slideSidebar = $('.slide-sidebar'),
+      $pageContainer = $('.layui-body'),
+      $mobileMask = $('.mobile-mask');
 
     var isFold = false;
     $slideSidebar.click(function (e) {
       e.preventDefault();
       var $this = $(this),
-        $icon = $this.find("i"),
-        $admin = $body.find(".layui-layout-admin");
-      var toggleClass = isMobile() ? "fold-side-bar-xs" : "fold-side-bar";
-      if ($icon.hasClass("ai-menufold")) {
-        $icon.removeClass("ai-menufold").addClass("ai-menuunfold");
+        $icon = $this.find('i'),
+        $admin = $body.find('.layui-layout-admin');
+      var toggleClass = isMobile() ? 'fold-side-bar-xs' : 'fold-side-bar';
+      if ($icon.hasClass('ai-menufold')) {
+        $icon.removeClass('ai-menufold').addClass('ai-menuunfold');
         $admin.addClass(toggleClass);
         isFold = true;
         if (isMobile()) $mobileMask.show();
       } else {
-        $icon.removeClass("ai-menuunfold").addClass("ai-menufold");
+        $icon.removeClass('ai-menuunfold').addClass('ai-menufold');
         $admin.removeClass(toggleClass);
         isFold = false;
         if (isMobile()) $mobileMask.hide();
@@ -181,11 +179,11 @@ layui.define(["element", "layer"], function (exports) {
 
     var tipIndex;
     // 菜单收起后的模块信息小提示
-    $("#Nav li > a").hover(
+    $('#Nav li > a').hover(
       function () {
         var $this = $(this);
         if (isFold) {
-          tipIndex = layer.tips($this.find("em").text(), $this);
+          tipIndex = layer.tips($this.find('em').text(), $this);
         }
       },
       function () {
@@ -198,10 +196,10 @@ layui.define(["element", "layer"], function (exports) {
 
     if (isMobile()) {
       $mobileMask.click(function () {
-        $slideSidebar.trigger("click");
+        $slideSidebar.trigger('click');
       });
     }
   };
 
-  exports("home", new Home());
+  exports('home', new Home());
 });

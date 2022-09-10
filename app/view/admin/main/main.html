@@ -1,68 +1,66 @@
 {{define "main/main.html"}}
 <!DOCTYPE html>
 <html lang="zh-CN">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="../public/static/layui/css/layui.css">
-    <link rel="stylesheet" href="../public/static/layui/css/admin.css">
-    <link rel="icon" href="/favicon.ico">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="../public/static/layui/css/layui.css" />
+    <link rel="stylesheet" href="../public/static/layui/css/admin.css" />
+    <link rel="icon" href="/favicon.ico" />
     <title>管理后台</title>
-</head>
+  </head>
 
-<body class="layui-layout-body" style="overflow:hidden">
+  <body class="layui-layout-body" style="overflow: hidden">
     <div class="layui-layout layui-layout-admin">
-        <div class="layui-header custom-header">
+      <div class="layui-header custom-header">
+        <ul class="layui-nav layui-layout-left">
+          <li class="layui-nav-item slide-sidebar" lay-unselect>
+            <a href="javascript:;" class="icon-font"><i class="ai ai-menufold"></i></a>
+          </li>
+        </ul>
 
-            <ul class="layui-nav layui-layout-left">
-                <li class="layui-nav-item slide-sidebar" lay-unselect>
-                    <a href="javascript:;" class="icon-font"><i class="ai ai-menufold"></i></a>
-                </li>
-            </ul>
+        <ul class="layui-nav layui-layout-right">
+          <li class="no-line layui-nav-item main_tips">
+            <a class="refresh" href="javascript:" tips="刷新">
+              <i class="layui-icon layui-icon-refresh-3"></i>
+            </a>
+          </li>
+          <li class="no-line layui-nav-item main_tips">
+            <a id="notice" href="javascript:" tips="系统公告">
+              <i class="layui-icon layui-icon-release"></i>
+            </a>
+          </li>
+          <li class="no-line layui-nav-item main_tips">
+            <a id="lock" href="javascript:" tips="锁屏">
+              <i class="layui-icon layui-icon-password"></i>
+            </a>
+          </li>
+          <li class="no-line layui-nav-item main_tips layui-hide-xs">
+            <a id="fullScreen" href="javascript:;" tips="全屏">
+              <i class="layui-icon layui-icon-screen-full"></i>
+            </a>
+          </li>
+          <li class="layui-nav-item">
+            <a href="javascript:;">{{.adminName}} 😎</a>
+            <dl class="layui-nav-child">
+              <dd><a href="javascript:;" id="main_cpw">修改密码</a></dd>
+              <dd><hr /></dd>
+              <dd><a href="javascript:;" id="main_logout">退出登录</a></dd>
+            </dl>
+          </li>
+        </ul>
+      </div>
 
-            <ul class="layui-nav layui-layout-right">
-                <li class="no-line layui-nav-item main_tips">
-                    <a class="refresh" href="javascript:" tips="刷新">
-                        <i class="layui-icon layui-icon-refresh-3"></i>
-                    </a>
-                </li>
-                <li class="no-line layui-nav-item main_tips">
-                    <a id="notice" href="javascript:" tips="系统公告">
-                        <i class="layui-icon layui-icon-release"></i>
-                    </a>
-                </li>
-                <li class="no-line layui-nav-item main_tips">
-                    <a id="lock" href="javascript:" tips="锁屏">
-                        <i class="layui-icon layui-icon-password"></i>
-                    </a>
-                </li>
-                <li class="no-line layui-nav-item main_tips layui-hide-xs">
-                    <a id="fullScreen" href="javascript:;" tips="全屏">
-                        <i class="layui-icon layui-icon-screen-full"></i>
-                    </a>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;">{{.adminName}} 😎</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" id="main_cpw">修改密码</a></dd>
-                        <dd><hr/></dd>
-                        <dd><a href="javascript:;" id="main_logout">退出登录</a></dd>
-                    </dl>
-                </li>
-            </ul>
-        </div>
-
-        <div class="layui-side custom-admin">
-            <div class="layui-side-scroll">
-                <div class="custom-logo">
-                    <img src="../public/static/layui/images/logo.png" alt="" />
-                    <h1>Admin Pro</h1>
-                </div>
-                <ul id="Nav" class="layui-nav layui-nav-tree">
-                    {{ range $k, $item := .menuData }}
-                    {{ if eq $item.Checked true }}
+      <div class="layui-side custom-admin">
+        <div class="layui-side-scroll">
+          <div class="custom-logo">
+            <img src="../public/static/img/logo.png" alt="" />
+            <h1>Admin Pro</h1>
+          </div>
+          <ul id="Nav" class="layui-nav layui-nav-tree">
+            {{ range $k, $item := .menuData }}
+                {{ if eq $item.Checked true }}
                     <li class="layui-nav-item">
                         <a href="javascript:;">
                             <i class="layui-icon">&#{{ $item.Icon }}</i>
@@ -76,163 +74,212 @@
                             {{end}}
                         </dl>
                     </li>
-                    {{ end}}
-                    {{ end}}
-                </ul>
-            </div>
+                {{ end}}
+            {{ end}}
+          </ul>
         </div>
+      </div>
 
-        <div class="layui-body">
-            <div class="layui-tab app-container" lay-allowClose="true" lay-filter="tabs">
-                <ul id="appTabs" class="layui-tab-title custom-tab"></ul>
-                <div id="appTabPage" class="layui-tab-content"></div>
-            </div>
+      <div class="layui-body">
+        <div class="layui-tab app-container" lay-allowClose="true" lay-filter="tabs">
+          <ul id="appTabs" class="layui-tab-title custom-tab"></ul>
+          <div id="appTabPage" class="layui-tab-content"></div>
         </div>
-        <!-- 
+      </div>
+      <!-- 
         <div class="layui-footer">
             <p>copyright@2021 AdminPro Powered by: <a href="https://layui.gitee.io/v2" target="_blank">Layui</a></p>
         </div>
         -->
-        <div class="mobile-mask"></div>
+      <div class="mobile-mask"></div>
     </div>
-</body>
+  </body>
 
-<!-- 锁屏 -->
-<div class="lock-screen">
+  <!-- 锁屏 -->
+  <div class="lock-screen">
     <div class="lock-bg">
-        <img class="active lock-gradual" src="../public/static/layui/images/wallpaper/1.jpg" alt="" />
-        <img class="lock-gradual" src="../public/static/layui/images/wallpaper/2.jpg" alt="" />
-        <img class="lock-gradual" src="../public/static/layui/images/wallpaper/3.jpg" alt="" />
-        <img class="lock-gradual" src="../public/static/layui/images/wallpaper/4.jpg" alt="" />
-        <img class="lock-gradual" src="../public/static/layui/images/wallpaper/5.jpg" alt="" />
+      <img class="active lock-gradual" src="../public/static/img/wallpaper/1.jpg" alt="" />
+      <img class="lock-gradual" src="../public/static/img/wallpaper/2.jpg" alt="" />
+      <img class="lock-gradual" src="../public/static/img/wallpaper/3.jpg" alt="" />
+      <img class="lock-gradual" src="../public/static/img/wallpaper/4.jpg" alt="" />
+      <img class="lock-gradual" src="../public/static/img/wallpaper/5.jpg" alt="" />
     </div>
     <div class="lock-content">
-        <!--雪花-->
-        <div class="snowflake">
-            <canvas id="snowflake"></canvas>
+      <!--雪花-->
+      <div class="snowflake">
+        <canvas id="snowflake"></canvas>
+      </div>
+      <!--雪花 END-->
+      <div class="time">
+        <div>
+          <div class="hhmmss"></div>
+          <div class="yyyymmdd"></div>
         </div>
-        <!--雪花 END-->
-        <div class="time">
-            <div>
-                <div class="hhmmss"></div>
-                <div class="yyyymmdd"></div>
+      </div>
+      <div class="quit" id="lockQuit">
+        <i class="layui-icon layui-icon-logout" title="退出登录"></i>
+      </div>
+      <table class="unlock">
+        <tr>
+          <td>
+            <div class="layui-form lock-form">
+              <div class="lock-head">
+                <img src="../public/static/img/logo.png" alt="avatar.png" />
+              </div>
+              <div class="layui-form-item">
+                <div class="layui-col-xs8 layui-col-sm8 layui-col-md8">
+                  <input
+                    type="password"
+                    required
+                    lay-verify="required"
+                    id="lockPassword"
+                    name="lock_password"
+                    style="border-radius: 0; border: 0; height: 44px"
+                    placeholder="请输入解锁密码"
+                    autocomplete="off"
+                    class="layui-input"
+                  />
+                </div>
+                <div class="layui-col-xs4 layui-col-sm4 layui-col-md4">
+                  <button
+                    style="width: 100%; box-sizing: border-box; border-radius: 0"
+                    type="button"
+                    lay-submit
+                    lay-filter="lockSubmit"
+                    class="layui-btn lock-btn layui-btn-lg layui-btn-normal"
+                  >
+                    确定
+                  </button>
+                </div>
+              </div>
             </div>
-        </div>
-        <div class="quit" id="lockQuit">
-            <i class="layui-icon layui-icon-logout" title="退出登录"></i>
-        </div>
-        <table class="unlock">
-            <tr>
-                <td>
-                    <div class="layui-form lock-form">
-                        <div class="lock-head">
-                            <img src="../public/static/layui/images/logo.png" alt="avatar.png" />
-                        </div>
-                        <div class="layui-form-item">
-                            <div class="layui-col-xs8 layui-col-sm8 layui-col-md8">
-                                <input type="password" required lay-verify="required" id="lockPassword" name="lock_password" style="border-radius: 0;border:0;height: 44px" placeholder="请输入解锁密码" autocomplete="off" class="layui-input" />
-                            </div>
-                            <div class="layui-col-xs4 layui-col-sm4 layui-col-md4">
-                                <button style="width: 100%;box-sizing:border-box;border-radius: 0;" type="button" lay-submit lay-filter="lockSubmit" class="layui-btn lock-btn layui-btn-lg layui-btn-normal">确定</button>
-                            </div>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        </table>
+          </td>
+        </tr>
+      </table>
     </div>
-</div>
+  </div>
 
-<!-- 锁屏输入密码 -->
-<div id="lock_screen_view" style="margin: 3%;" hidden>
-    <input type="text" id="lock_input_password" name="lock_input_password" lay-verify="required" autocomplete="off" class="layui-input">
-</div>
+  <!-- 锁屏输入密码 -->
+  <div id="lock_screen_view" style="margin: 3%" hidden>
+    <input
+      type="text"
+      id="lock_input_password"
+      name="lock_input_password"
+      lay-verify="required"
+      autocomplete="off"
+      class="layui-input"
+    />
+  </div>
 
-<!-- 修改密码view -->
-<div id="main_cpw_view" style="margin: 5%;" hidden>
+  <!-- 修改密码view -->
+  <div id="main_cpw_view" style="margin: 5%" hidden>
     <form class="layui-form layui-form-pane" id="main_cpw_form" method="post" lay-filter="example">
-        <div class="layui-form-item">
-            <label class="layui-form-label">原密码</label>
-            <div class="layui-input-block">
-                <input type="password" id="pwd1" name="pwd1" lay-verify="required" autocomplete="off" placeholder="请输入原密码" class="layui-input">
-            </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">原密码</label>
+        <div class="layui-input-block">
+          <input
+            type="password"
+            id="pwd1"
+            name="pwd1"
+            lay-verify="required"
+            autocomplete="off"
+            placeholder="请输入原密码"
+            class="layui-input"
+          />
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">新密码</label>
-            <div class="layui-input-block">
-                <input type="password" id="pwd2" name="pwd2" lay-verify="required" autocomplete="off" placeholder="请输入新密码" class="layui-input">
-            </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">新密码</label>
+        <div class="layui-input-block">
+          <input
+            type="password"
+            id="pwd2"
+            name="pwd2"
+            lay-verify="required"
+            autocomplete="off"
+            placeholder="请输入新密码"
+            class="layui-input"
+          />
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">确认密码</label>
-            <div class="layui-input-block">
-                <input type="password" id="pwd3" name="pwd3" lay-verify="required" autocomplete="off" placeholder="请输入确认密码" class="layui-input">
-            </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">确认密码</label>
+        <div class="layui-input-block">
+          <input
+            type="password"
+            id="pwd3"
+            name="pwd3"
+            lay-verify="required"
+            autocomplete="off"
+            placeholder="请输入确认密码"
+            class="layui-input"
+          />
         </div>
+      </div>
     </form>
-</div>
-<!-- 修改密码 -->
+  </div>
+  <!-- 修改密码 -->
 
-<script src="../public/static/layui/layui.js"></script>
-<script src="../public/static/layui/js/index.js" data-main="home"></script>
-<script src="../public/static/layui/js/jquery-3.3.1.min.js"></script>
-<script src="../public/static/layui/js/snowflake.js?snowflake=雪花"></script>
-<script src="../public/static/layui/js/main.js"></script>
-<script>
+  <script src="../public/static/layui/layui.js"></script>
+  <script src="../public/static/layui/js/index.js" data-main="home"></script>
+  <script src="../public/static/lib/js/jquery-3.3.1.min.js"></script>
+  <script src="../public/static/lib/js/snowflake.js?snowflake=雪花"></script>
+  <script src="../public/static/layui/js/main.js"></script>
+  <script>
     var layer = layui.layer;
     var form = layui.form;
 
-    $("#main_cpw").click(function () {
-        index = layer.open({
-            type: 1,
-            title: "修改密码",
-            area: ['350px', '300px'],
-            shade: 0,
-            anim: 1,
-            maxmin: true,
-            content: $('#main_cpw_view'),
-            btn: ['确定', '取消'],
-            yes: function (index, layero) {
-                $.ajax({
-                    url: "/admin/cpw",
-                    type: "POST",
-                    dataType: "json",
-                    data: $('#main_cpw_form').serialize(),
-                    success: function (result) {
-                        if (result.code == 0) {
-                            layer.msg("修改成功");
-                            layer.close(index);
-                            return
-                        }
-                        layer.msg(result.msg);
-                    },
-                    error: function () {
-                        layer.msg("系统异常！");
-                    }
-                });
+    $('#main_cpw').click(function () {
+      index = layer.open({
+        type: 1,
+        title: '修改密码',
+        area: ['350px', '300px'],
+        shade: 0,
+        anim: 1,
+        maxmin: true,
+        content: $('#main_cpw_view'),
+        btn: ['确定', '取消'],
+        yes: function (index, layero) {
+          $.ajax({
+            url: '/admin/cpw',
+            type: 'POST',
+            dataType: 'json',
+            data: $('#main_cpw_form').serialize(),
+            success: function (result) {
+              if (result.code == 0) {
+                layer.msg('修改成功');
+                layer.close(index);
+                return;
+              }
+              layer.msg(result.msg);
             },
-            end: function () {
-                $('#main_cpw_view').hide();//隐藏div
-                $('#main_cpw_form')[0].reset();//重置表单
+            error: function () {
+              layer.msg('系统异常！');
             },
-        });
+          });
+        },
+        end: function () {
+          $('#main_cpw_view').hide(); //隐藏div
+          $('#main_cpw_form')[0].reset(); //重置表单
+        },
+      });
     });
 
-    $("#main_logout").click(function () {
-        layer.confirm("确定要退出吗？", { icon: 3, title: '提示' }, function (index) {
-            window.location = "logout?layui=1";
-            // $.ajax({
-            //         url: "/admin/logout",
-            //         type: "GET",
-            //         success: function (result) {
-            //             window.location = "/admin/login";
-            //         },
-            //         error: function () {
-            //             window.location = "admin/login";
-            //         }
-            //     });
-        });
+    $('#main_logout').click(function () {
+      layer.confirm('确定要退出吗？', { icon: 3, title: '提示' }, function (index) {
+        window.location = 'logout?layui=1';
+        // $.ajax({
+        //         url: "/admin/logout",
+        //         type: "GET",
+        //         success: function (result) {
+        //             window.location = "/admin/login";
+        //         },
+        //         error: function () {
+        //             window.location = "admin/login";
+        //         }
+        //     });
+      });
     });
-</script>
+  </script>
 </html>
 {{end}}

@@ -1,356 +1,407 @@
 {{define "main/console.html"}}
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="../public/static/layui/css/layui.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="../public/static/layui/css/layui.css" />
     <link rel="stylesheet" href="../public/static/layui/css/view.css" />
     <title></title>
-</head>
+  </head>
 
-<body class="layui-view-body">
+  <body class="layui-view-body">
     <div class="layui-content">
-        <div class="layui-row layui-col-space20">
-            <div class="layui-col-sm6 layui-col-md3">
-                <div class="layui-card">
-                    <div class="layui-card-body chart-card">
-                        <div class="chart-header">
-                            <div class="metawrap">
-                                <div class="meta">
-                                    <span>总用户数</span>
-                                </div>
-                                <div class="total">1024</div>
-                            </div>
-                        </div>
-                        <div class="chart-body">
-                            <div class="contentwrap">
-                                tips
-                            </div>
-                        </div>
-                        <div class="chart-footer">
-                            <div class="field">
-                                <span>日注册量</span>
-                                <span>1024</span>
-                            </div>
-                        </div>
-                    </div>
+      <div class="layui-row layui-col-space20">
+        <div class="layui-col-sm6 layui-col-md3">
+          <div class="layui-card">
+            <div class="layui-card-body chart-card">
+              <div class="chart-header">
+                <div class="metawrap">
+                  <div class="meta">
+                    <span>总用户数</span>
+                  </div>
+                  <div class="total">1024</div>
                 </div>
-            </div>
-            <div class="layui-col-sm6 layui-col-md3">
-                <div class="layui-card">
-                    <div class="layui-card-body chart-card">
-                        <div class="chart-header">
-                            <div class="metawrap">
-                                <div class="meta">
-                                    <span>总用户数</span>
-                                </div>
-                                <div class="total">1024</div>
-                            </div>
-                        </div>
-                        <div class="chart-body">
-                            <div class="contentwrap">
-                                tips
-                            </div>
-                        </div>
-                        <div class="chart-footer">
-                            <div class="field">
-                                <span>日注册量</span>
-                                <span>1024</span>
-                            </div>
-                        </div>
-                    </div>
+              </div>
+              <div class="chart-body">
+                <div class="contentwrap">tips</div>
+              </div>
+              <div class="chart-footer">
+                <div class="field">
+                  <span>日注册量</span>
+                  <span>1024</span>
                 </div>
+              </div>
             </div>
-            <div class="layui-col-sm6 layui-col-md3">
-                <div class="layui-card">
-                    <div class="layui-card-body chart-card">
-                        <div class="chart-header">
-                            <div class="metawrap">
-                                <div class="meta">
-                                    <span>总用户数</span>
-                                </div>
-                                <div class="total">1024</div>
-                            </div>
-                        </div>
-                        <div class="chart-body">
-                            <div class="contentwrap">
-                                tips
-                            </div>
-                        </div>
-                        <div class="chart-footer">
-                            <div class="field">
-                                <span>日注册量</span>
-                                <span>1024</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="layui-col-sm6 layui-col-md3">
-                <div class="layui-card">
-                    <div class="layui-card-body chart-card">
-                        <div class="chart-header">
-                            <div class="metawrap">
-                                <div class="meta">
-                                    <span>总用户数</span>
-                                </div>
-                                <div class="total">1024</div>
-                            </div>
-                        </div>
-                        <div class="chart-body">
-                            <div class="contentwrap">
-                                tips
-                            </div>
-                        </div>
-                        <div class="chart-footer">
-                            <div class="field">
-                                <span>日注册量</span>
-                                <span>1024</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="layui-col-sm12 layui-col-md12">
-                <div class="layui-card">
-                    <div class="layui-tab layui-tab-brief">
-                        <ul class="layui-tab-title">
-                            <li class="layui-this">仪表盘</li>
-                            <li>服务器信息</li>
-                        </ul>
-                        <div class="layui-tab-content">
-                            <!-- Tab1 -->
-                            <div class="layui-tab-item layui-show">
-                                <div class="layui-row layui-col-space15">
-                                    <div class="layui-row layui-col-space15">
-                                        <div class="layui-col-md8">
-                                            <div class="layui-card">
-                                                <div class="layui-card-header">
-                                                    <div class="ok-card-title">今日用户活跃量</div>
-                                                </div>
-                                                <div style="width: 100%;height: 400px;" id="echartsView1"></div>
-                                            </div>
-                                        </div>
-
-                                        <div class="layui-col-md4">
-                                            <div class="layui-card">
-                                                <div class="layui-card-header">
-                                                    <div class="ok-card-title">今日用户访问来源</div>
-                                                </div>
-                                                <div style="width: 100%;height: 400px;" id="echartsView2"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="layui-row layui-col-space15">
-                                        <div class="layui-col-md12">
-                                            <div class="layui-card">
-                                                <div class="layui-card-header">
-                                                    <div class="ok-card-title">本周用户访问来源</div>
-                                                </div>
-                                                <div style="width: 100%;height: 400px;" id="echartsView3"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Tab2 -->
-                            <div class="layui-tab-item">
-                                {{ if eq .serverInfo nil }}
-                                <!-- OS -->
-                                <div class="layui-col-sm6 layui-col-md3">
-                                    <div class="layui-card">
-                                        <div class="layui-card-header"><span class="layui-badge layui-bg-cyan">系统信息</span></div>
-                                        <div class="layui-card-body">
-                                            <table class="layui-table">
-                                                <tbody>
-                                                    <tr>
-                                                        <th>操作系统</th>
-                                                        <th>{{.serverInfo.Os.GOOS}}</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>CPU核心数</th>
-                                                        <th>{{.serverInfo.Cpu.Cores}}</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>CPU线程数</th>
-                                                        <th>{{.serverInfo.Os.NumCPU}}</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>GO版本</th>
-                                                        <th>{{.serverInfo.Os.GoVersion}}</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>编译器</th>
-                                                        <th>{{.serverInfo.Os.Compiler}}</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>协程数量</th>
-                                                        <th>{{.serverInfo.Os.NumGoroutine}}</th>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- RAM -->
-                                <div class="layui-col-sm6 layui-col-md3">
-                                    <div class="layui-card">
-                                        <div class="layui-card-header"><span class="layui-badge layui-bg-cyan">内存信息</span></div>
-                                        <div class="layui-card-body">
-                                            <table class="layui-table">
-                                                <tbody>
-                                                    <tr>
-                                                        <th>总量</th>
-                                                        <th>{{.serverInfo.Ram.TotalMB}} MB</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>使用</th>
-                                                        <th>{{.serverInfo.Ram.UsedMB}} MB</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>剩余</th>
-                                                        <th>{{.serverInfo.Ram.FreePercent}}%</th>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- DISK -->
-                                <div class="layui-col-sm6 layui-col-md3">
-                                    <div class="layui-card">
-                                        <div class="layui-card-header"><span class="layui-badge layui-bg-cyan">磁盘信息</span></div>
-                                        <div class="layui-card-body">
-                                            <table class="layui-table">
-                                                <tbody>
-                                                    <tr>
-                                                        <th>总量</th>
-                                                        <th>{{.serverInfo.Disk.TotalGB}} GB</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>使用</th>
-                                                        <th>{{.serverInfo.Disk.UsedGB}} GB</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>剩余</th>
-                                                        <th>{{.serverInfo.Disk.FreePercent}}%</th>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- CPU -->
-                                <div class="layui-col-sm6 layui-col-md3">
-                                    <div class="layui-card">
-                                        <div class="layui-card-header"><span class="layui-badge layui-bg-cyan">CPU使用情况</span></div>
-                                        <div class="layui-card-body">
-                                            {{ range $k, $item := .serverInfo.Cpu.Cpus }}
-                                            <br>
-                                            <div class="layui-progress" lay-showPercent="yes">
-                                                <div class="layui-progress-bar" lay-percent="{{$item}}%"></div>
-                                            </div>
-                                            {{ end }}
-                                        </div>
-                                    </div>
-                                </div>
-                                {{end}}
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+          </div>
         </div>
-    </div>
-</body>
+        <div class="layui-col-sm6 layui-col-md3">
+          <div class="layui-card">
+            <div class="layui-card-body chart-card">
+              <div class="chart-header">
+                <div class="metawrap">
+                  <div class="meta">
+                    <span>总用户数</span>
+                  </div>
+                  <div class="total">1024</div>
+                </div>
+              </div>
+              <div class="chart-body">
+                <div class="contentwrap">tips</div>
+              </div>
+              <div class="chart-footer">
+                <div class="field">
+                  <span>日注册量</span>
+                  <span>1024</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="layui-col-sm6 layui-col-md3">
+          <div class="layui-card">
+            <div class="layui-card-body chart-card">
+              <div class="chart-header">
+                <div class="metawrap">
+                  <div class="meta">
+                    <span>总用户数</span>
+                  </div>
+                  <div class="total">1024</div>
+                </div>
+              </div>
+              <div class="chart-body">
+                <div class="contentwrap">tips</div>
+              </div>
+              <div class="chart-footer">
+                <div class="field">
+                  <span>日注册量</span>
+                  <span>1024</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="layui-col-sm6 layui-col-md3">
+          <div class="layui-card">
+            <div class="layui-card-body chart-card">
+              <div class="chart-header">
+                <div class="metawrap">
+                  <div class="meta">
+                    <span>总用户数</span>
+                  </div>
+                  <div class="total">1024</div>
+                </div>
+              </div>
+              <div class="chart-body">
+                <div class="contentwrap">tips</div>
+              </div>
+              <div class="chart-footer">
+                <div class="field">
+                  <span>日注册量</span>
+                  <span>1024</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-<script src="../public/static/layui/layui.js"></script>
-<script src="../public/static/lib/echarts.min.js"></script>
-<!-- <script src="https://cdn.jsdelivr.net/npm/echarts@5.2.0/dist/echarts.min.js"></script> -->
-<script>
+        <div class="layui-col-sm12 layui-col-md12">
+          <div class="layui-card">
+            <div class="layui-tab layui-tab-brief">
+              <ul class="layui-tab-title">
+                <li class="layui-this">仪表盘</li>
+                <li>服务器信息</li>
+              </ul>
+              <div class="layui-tab-content">
+                <!-- Tab1 -->
+                <div class="layui-tab-item layui-show">
+                  <div class="layui-row layui-col-space15">
+                    <div class="layui-row layui-col-space15">
+                      <div class="layui-col-md8">
+                        <div class="layui-card">
+                          <div class="layui-card-header">
+                            <div class="ok-card-title">今日用户活跃量</div>
+                          </div>
+                          <div style="width: 100%; height: 400px" id="echartsView1"></div>
+                        </div>
+                      </div>
+
+                      <div class="layui-col-md4">
+                        <div class="layui-card">
+                          <div class="layui-card-header">
+                            <div class="ok-card-title">今日用户访问来源</div>
+                          </div>
+                          <div style="width: 100%; height: 400px" id="echartsView2"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="layui-row layui-col-space15">
+                      <div class="layui-col-md12">
+                        <div class="layui-card">
+                          <div class="layui-card-header">
+                            <div class="ok-card-title">本周用户访问来源</div>
+                          </div>
+                          <div style="width: 100%; height: 400px" id="echartsView3"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Tab2 -->
+                <div class="layui-tab-item">
+                  {{ if eq .serverInfo nil }}
+                  <!-- OS -->
+                  <div class="layui-col-sm6 layui-col-md3">
+                    <div class="layui-card">
+                      <div class="layui-card-header">
+                        <span class="layui-badge layui-bg-cyan">系统信息</span>
+                      </div>
+                      <div class="layui-card-body">
+                        <table class="layui-table">
+                          <tbody>
+                            <tr>
+                              <th>操作系统</th>
+                              <th>{{.serverInfo.Os.GOOS}}</th>
+                            </tr>
+                            <tr>
+                              <th>CPU核心数</th>
+                              <th>{{.serverInfo.Cpu.Cores}}</th>
+                            </tr>
+                            <tr>
+                              <th>CPU线程数</th>
+                              <th>{{.serverInfo.Os.NumCPU}}</th>
+                            </tr>
+                            <tr>
+                              <th>GO版本</th>
+                              <th>{{.serverInfo.Os.GoVersion}}</th>
+                            </tr>
+                            <tr>
+                              <th>编译器</th>
+                              <th>{{.serverInfo.Os.Compiler}}</th>
+                            </tr>
+                            <tr>
+                              <th>协程数量</th>
+                              <th>{{.serverInfo.Os.NumGoroutine}}</th>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- RAM -->
+                  <div class="layui-col-sm6 layui-col-md3">
+                    <div class="layui-card">
+                      <div class="layui-card-header">
+                        <span class="layui-badge layui-bg-cyan">内存信息</span>
+                      </div>
+                      <div class="layui-card-body">
+                        <table class="layui-table">
+                          <tbody>
+                            <tr>
+                              <th>总量</th>
+                              <th>{{.serverInfo.Ram.TotalMB}} MB</th>
+                            </tr>
+                            <tr>
+                              <th>使用</th>
+                              <th>{{.serverInfo.Ram.UsedMB}} MB</th>
+                            </tr>
+                            <tr>
+                              <th>剩余</th>
+                              <th>{{.serverInfo.Ram.FreePercent}}%</th>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- DISK -->
+                  <div class="layui-col-sm6 layui-col-md3">
+                    <div class="layui-card">
+                      <div class="layui-card-header">
+                        <span class="layui-badge layui-bg-cyan">磁盘信息</span>
+                      </div>
+                      <div class="layui-card-body">
+                        <table class="layui-table">
+                          <tbody>
+                            <tr>
+                              <th>总量</th>
+                              <th>{{.serverInfo.Disk.TotalGB}} GB</th>
+                            </tr>
+                            <tr>
+                              <th>使用</th>
+                              <th>{{.serverInfo.Disk.UsedGB}} GB</th>
+                            </tr>
+                            <tr>
+                              <th>剩余</th>
+                              <th>{{.serverInfo.Disk.FreePercent}}%</th>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- CPU -->
+                  <div class="layui-col-sm6 layui-col-md3">
+                    <div class="layui-card">
+                      <div class="layui-card-header">
+                        <span class="layui-badge layui-bg-cyan">CPU使用情况</span>
+                      </div>
+                      <div class="layui-card-body">
+                        {{ range $k, $item := .serverInfo.Cpu.Cpus }}
+                        <br />
+                        <div class="layui-progress" lay-showPercent="yes">
+                          <div class="layui-progress-bar" lay-percent="{{$item}}%"></div>
+                        </div>
+                        {{ end }}
+                      </div>
+                    </div>
+                  </div>
+                  {{end}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script src="../public/static/layui/layui.js"></script>
+  <script src="../public/static/lib/js/echarts.min.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/echarts@5.2.0/dist/echarts.min.js"></script> -->
+  <script>
     // https://echarts.apache.org/handbook/zh/get-started/
     // google: echarts异步获取数据
     function getEchartsData1() {
-        let userActiveTodayChartOption = {
-            color: "#03a9f3",
-            xAxis: { type: 'category', data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] },
-            yAxis: { type: 'value' },
-            series: [{ data: [120, 200, 150, 80, 70, 110, 130], type: 'bar' }]
-        };
-        return userActiveTodayChartOption;
+      let userActiveTodayChartOption = {
+        color: '#03a9f3',
+        xAxis: { type: 'category', data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] },
+        yAxis: { type: 'value' },
+        series: [{ data: [120, 200, 150, 80, 70, 110, 130], type: 'bar' }],
+      };
+      return userActiveTodayChartOption;
     }
 
     function getEchartsData2() {
-        let userSourceTodayChartOption = {
-            title: { show: false, text: '用户访问来源', subtext: '纯属虚构', x: 'center' },
-            tooltip: { trigger: 'item', formatter: "{a} <br/>{b} : {c} ({d}%)" },
-            legend: { orient: 'vertical', left: 'left', data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎'] },
-            series: [
-                {
-                    name: '访问来源', type: 'pie', radius: '55%', center: ['50%', '60%'],
-                    data: [{ value: 335, name: '直接访问' }, { value: 310, name: '邮件营销' }, { value: 234, name: '联盟广告' }, { value: 135, name: '视频广告' }, { value: 1548, name: '搜索引擎' }],
-                    itemStyle: { emphasis: { shadowBlur: 10, shadowOffsetX: 0, shadowColor: 'rgba(0, 0, 0, 0.5)' } }
-                }
-            ]
-        };
-        return userSourceTodayChartOption;
+      let userSourceTodayChartOption = {
+        title: { show: false, text: '用户访问来源', subtext: '纯属虚构', x: 'center' },
+        tooltip: { trigger: 'item', formatter: '{a} <br/>{b} : {c} ({d}%)' },
+        legend: {
+          orient: 'vertical',
+          left: 'left',
+          data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎'],
+        },
+        series: [
+          {
+            name: '访问来源',
+            type: 'pie',
+            radius: '55%',
+            center: ['50%', '60%'],
+            data: [
+              { value: 335, name: '直接访问' },
+              { value: 310, name: '邮件营销' },
+              { value: 234, name: '联盟广告' },
+              { value: 135, name: '视频广告' },
+              { value: 1548, name: '搜索引擎' },
+            ],
+            itemStyle: {
+              emphasis: { shadowBlur: 10, shadowOffsetX: 0, shadowColor: 'rgba(0, 0, 0, 0.5)' },
+            },
+          },
+        ],
+      };
+      return userSourceTodayChartOption;
     }
 
     function getEchartsData3() {
-        let userSourceWeekChartOption = {
-            "title": { "text": "" },
-            "tooltip": { "trigger": "axis", "axisPointer": { "type": "cross", "label": { "backgroundColor": "#6a7985" } } },
-            "legend": { "data": ["邮件营销", "联盟广告", "视频广告", "直接访问", "搜索引擎"] },
-            "toolbox": { "feature": { "saveAsImage": {} } },
-            "grid": { "left": "3%", "right": "4%", "bottom": "3%", "containLabel": true },
-            "xAxis": [{ "type": "category", "boundaryGap": false, "data": ["周一", "周二", "周三", "周四", "周五", "周六", "周日"] }],
-            "yAxis": [{ "type": "value" }],
-            "series": [
-                { "name": "邮件营销", "type": "line", "stack": "总量", "areaStyle": {}, "data": [120, 132, 101, 134, 90, 230, 210] },
-                { "name": "联盟广告", "type": "line", "stack": "总量", "areaStyle": {}, "data": [220, 182, 191, 234, 290, 330, 310] },
-                { "name": "视频广告", "type": "line", "stack": "总量", "areaStyle": {}, "data": [150, 232, 201, 154, 190, 330, 410] },
-                { "name": "直接访问", "type": "line", "stack": "总量", "areaStyle": { "normal": {} }, "data": [320, 332, 301, 334, 390, 330, 320] },
-                { "name": "搜索引擎", "type": "line", "stack": "总量", "label": { "normal": { "show": true, "position": "top" } }, "areaStyle": { "normal": {} }, "data": [820, 932, 901, 934, 1290, 1330, 1320] }
-            ]
-        };
-        return userSourceWeekChartOption;
+      let userSourceWeekChartOption = {
+        title: { text: '' },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: { type: 'cross', label: { backgroundColor: '#6a7985' } },
+        },
+        legend: { data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎'] },
+        toolbox: { feature: { saveAsImage: {} } },
+        grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
+        xAxis: [
+          {
+            type: 'category',
+            boundaryGap: false,
+            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+          },
+        ],
+        yAxis: [{ type: 'value' }],
+        series: [
+          {
+            name: '邮件营销',
+            type: 'line',
+            stack: '总量',
+            areaStyle: {},
+            data: [120, 132, 101, 134, 90, 230, 210],
+          },
+          {
+            name: '联盟广告',
+            type: 'line',
+            stack: '总量',
+            areaStyle: {},
+            data: [220, 182, 191, 234, 290, 330, 310],
+          },
+          {
+            name: '视频广告',
+            type: 'line',
+            stack: '总量',
+            areaStyle: {},
+            data: [150, 232, 201, 154, 190, 330, 410],
+          },
+          {
+            name: '直接访问',
+            type: 'line',
+            stack: '总量',
+            areaStyle: { normal: {} },
+            data: [320, 332, 301, 334, 390, 330, 320],
+          },
+          {
+            name: '搜索引擎',
+            type: 'line',
+            stack: '总量',
+            label: { normal: { show: true, position: 'top' } },
+            areaStyle: { normal: {} },
+            data: [820, 932, 901, 934, 1290, 1330, 1320],
+          },
+        ],
+      };
+      return userSourceWeekChartOption;
     }
 
     function initEchartsView1() {
-        let myChart = echarts.init(document.getElementById('echartsView1'));
-        myChart.setOption(getEchartsData1());
-        window.onresize = function () {
-            myChart.resize();
-        };
+      let myChart = echarts.init(document.getElementById('echartsView1'));
+      myChart.setOption(getEchartsData1());
+      window.onresize = function () {
+        myChart.resize();
+      };
     }
 
     function initEchartsView2() {
-        let myChart = echarts.init(document.getElementById('echartsView2'));
-        myChart.setOption(getEchartsData2());
-        window.onresize = function () {
-            myChart.resize();
-        };
+      let myChart = echarts.init(document.getElementById('echartsView2'));
+      myChart.setOption(getEchartsData2());
+      window.onresize = function () {
+        myChart.resize();
+      };
     }
 
     function initEchartsView3() {
-        let myChart = echarts.init(document.getElementById('echartsView3'));
-        myChart.setOption(getEchartsData3());
-        window.onresize = function () {
-            myChart.resize();
-        };
+      let myChart = echarts.init(document.getElementById('echartsView3'));
+      myChart.setOption(getEchartsData3());
+      window.onresize = function () {
+        myChart.resize();
+      };
     }
 
     initEchartsView1();
     initEchartsView2();
     initEchartsView3();
-</script>
-
+  </script>
 </html>
 {{end}}

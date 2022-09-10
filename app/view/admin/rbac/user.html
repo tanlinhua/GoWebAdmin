@@ -1,21 +1,19 @@
 {{define "rbac/user.html"}}
 <!DOCTYPE html>
 <html lang="zh-CN">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="../../public/static/layui/css/layui.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="../../public/static/layui/css/layui.css" />
     <link rel="stylesheet" href="../../public/static/layui/css/view.css" />
-    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico" />
     <title>用户管理</title>
-</head>
+  </head>
 
-<body class="layui-view-body">
+  <body class="layui-view-body">
     <div class="layui-content">
-
-        <!-- <div class="layui-page-header">
+      <!-- <div class="layui-page-header">
             <div class="pagewrap">
                 <span class="layui-breadcrumb">
                     <a href="">首页</a>
@@ -25,110 +23,158 @@
             </div>
         </div> -->
 
-        <div class="layui-row">
-            <div class="layui-card">
-                <div class="layui-card-body">
-
-                    <div class="layui-form layui-form-item layui-form-pane">
-                        <div class="layui-inline">
-                            <label class="layui-form-label">用户名</label>
-                            <div class="layui-input-inline">
-                                <input type="text" placeholder="支持模糊查询" autocomplete="off" class="layui-input" id="searchInput" name="searchInput">
-                            </div>
-                        </div>
-
-                        <div class="layui-inline">
-                            <label class="layui-form-label">角色</label>
-                            <div class="layui-input-inline" style="width: 120px;">
-                                <select id="select_role_id" name="select_role_id" lay-search lay-verify="required">
-                                    <option value=""></option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="layui-inline">
-                            <label class="layui-form-label">登陆时间</label>
-                            <div class="layui-input-inline">
-                                <input type="text" class="layui-input" id="select_datetime" name="select_datetime" placeholder="开始时间 - 结束时间" autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="layui-inline">
-                            <button class="layui-btn layui-btn-blue" onclick="return false;" data-type="reload" id="searchBtn">查询</button>
-                        </div>
-                    </div>
-
-                    <table id="dataDable" lay-filter="dataDable"></table>
-
+      <div class="layui-row">
+        <div class="layui-card">
+          <div class="layui-card-body">
+            <div class="layui-form layui-form-item layui-form-pane">
+              <div class="layui-inline">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-inline">
+                  <input
+                    type="text"
+                    placeholder="支持模糊查询"
+                    autocomplete="off"
+                    class="layui-input"
+                    id="searchInput"
+                    name="searchInput"
+                  />
                 </div>
-            </div>
-        </div>
+              </div>
 
+              <div class="layui-inline">
+                <label class="layui-form-label">角色</label>
+                <div class="layui-input-inline" style="width: 120px">
+                  <select
+                    id="select_role_id"
+                    name="select_role_id"
+                    lay-search
+                    lay-verify="required"
+                  >
+                    <option value=""></option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="layui-inline">
+                <label class="layui-form-label">登陆时间</label>
+                <div class="layui-input-inline">
+                  <input
+                    type="text"
+                    class="layui-input"
+                    id="select_datetime"
+                    name="select_datetime"
+                    placeholder="开始时间 - 结束时间"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+              <div class="layui-inline">
+                <button
+                  class="layui-btn layui-btn-blue"
+                  onclick="return false;"
+                  data-type="reload"
+                  id="searchBtn"
+                >
+                  查询
+                </button>
+              </div>
+            </div>
+
+            <table id="dataDable" lay-filter="dataDable"></table>
+          </div>
+        </div>
+      </div>
     </div>
-</body>
+  </body>
 
-<!-- 新增&编辑 视图 -->
-<div id="layer_view" style="margin: 5%;" hidden>
-    <form class="layui-form layui-form-pane" id="layer_fomr_id" method="post" lay-filter="layer_form_filter">
-        <input type="text" id="user_id" name="id" hidden>
-        <div class="layui-form-item">
-            <label class="layui-form-label">用户名</label>
-            <div class="layui-input-block">
-                <input type="text" id="user_name" name="user_name" lay-verify="required" placeholder="5~30位字符" autocomplete="off" class="layui-input">
-            </div>
+  <!-- 新增&编辑 视图 -->
+  <div id="layer_view" style="margin: 5%" hidden>
+    <form
+      class="layui-form layui-form-pane"
+      id="layer_fomr_id"
+      method="post"
+      lay-filter="layer_form_filter"
+    >
+      <input type="text" id="user_id" name="id" hidden />
+      <div class="layui-form-item">
+        <label class="layui-form-label">用户名</label>
+        <div class="layui-input-block">
+          <input
+            type="text"
+            id="user_name"
+            name="user_name"
+            lay-verify="required"
+            placeholder="5~30位字符"
+            autocomplete="off"
+            class="layui-input"
+          />
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">密码</label>
-            <div class="layui-input-block">
-                <input type="password" id="password" name="password" lay-verify="required" placeholder="不小于6位数" autocomplete="off" class="layui-input">
-            </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">密码</label>
+        <div class="layui-input-block">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            lay-verify="required"
+            placeholder="不小于6位数"
+            autocomplete="off"
+            class="layui-input"
+          />
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">角色</label>
-            <div class="layui-input-block">
-                <select id="select_view_role" name="role" lay-search lay-verify="required">
-                    <option value=""></option>
-                </select>
-            </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">角色</label>
+        <div class="layui-input-block">
+          <select id="select_view_role" name="role" lay-search lay-verify="required">
+            <option value=""></option>
+          </select>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">上级ID</label>
-            <div class="layui-input-block">
-                <select id="select_pid" name="pid" lay-search>
-                    <option value=""></option>
-                </select>
-            </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">上级ID</label>
+        <div class="layui-input-block">
+          <select id="select_pid" name="pid" lay-search>
+            <option value=""></option>
+          </select>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">状态</label>
-            <div class="layui-input-block">
-                <select id="select_status" name="status" lay-verify="required">
-                    <option value="1">启用</option>
-                    <option value="0">禁用</option>
-                </select>
-            </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-block">
+          <select id="select_status" name="status" lay-verify="required">
+            <option value="1">启用</option>
+            <option value="0">禁用</option>
+          </select>
         </div>
+      </div>
     </form>
-</div>
+  </div>
 
-<!-- 表格行工具栏 -->
-<script type="text/html" id="barHandle">
-<div class="layui-btn-group">
-    <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="edit">编辑</button>
-    <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</button>
-</div>
-</script>
+  <!-- 表格行工具栏 -->
+  <script type="text/html" id="barHandle">
+    <div class="layui-btn-group">
+      <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="edit">编辑</button>
+      <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</button>
+    </div>
+  </script>
 
-<!-- 表格头部工具栏 -->
-<script type="text/html" id="tableToolBar">
-<div class="layui-btn-container">
-    <button class="layui-btn layui-btn-green" onclick="addAdmin();return false;"><i class="layui-icon layui-icon-add-circle"></i> 新增</button>
-    <button class="layui-btn layui-btn-warm" onclick="reloadTable();return false;"><i class="layui-icon layui-icon-refresh-3"></i> 加载</button>
-</div>
-</script>
+  <!-- 表格头部工具栏 -->
+  <script type="text/html" id="tableToolBar">
+    <div class="layui-btn-container">
+      <button class="layui-btn layui-btn-green" onclick="addAdmin();return false;">
+        <i class="layui-icon layui-icon-add-circle"></i> 新增
+      </button>
+      <button class="layui-btn layui-btn-warm" onclick="reloadTable();return false;">
+        <i class="layui-icon layui-icon-refresh-3"></i> 加载
+      </button>
+    </div>
+  </script>
 
-<script src="../../public/static/layui/layui.js"></script>
-<script src="../../public/static/layui/js/jquery-3.3.1.min.js"></script>
-<script>
+  <script src="../../public/static/layui/layui.js"></script>
+  <script src="../../public/static/lib/js/jquery-3.3.1.min.js"></script>
+  <script>
     var table = layui.table;
     var form = layui.form;
     var layer = layui.layer;
@@ -137,234 +183,246 @@
 
     //初始化日期
     layui.laydate.render({
-        elem: '#select_datetime',
-        type: 'datetime',
-        range: true
+      elem: '#select_datetime',
+      type: 'datetime',
+      range: true,
     });
 
     //获取角色信息并赋值下拉框
     $.ajax({
-        url: "/admin/role/get",
-        type: "GET",
-        dataType: "json",
-        success: function (result) {
-            if (result.code == 0) {
-                for (var i = 0; i < result.count; i++) {
-                    $("#select_view_role").append(new Option(result.data[i].role_name, result.data[i].id));
-                    $("#select_role_id").append(new Option(result.data[i].role_name, result.data[i].id));
-                }
-                layui.form.render("select");
-            } else {
-                layer.msg(result.msg);
-            }
-        },
-        error: function () {
-            layer.msg("获取角色数据异常！");
+      url: '/admin/role/get',
+      type: 'GET',
+      dataType: 'json',
+      success: function (result) {
+        if (result.code == 0) {
+          for (var i = 0; i < result.count; i++) {
+            $('#select_view_role').append(new Option(result.data[i].role_name, result.data[i].id));
+            $('#select_role_id').append(new Option(result.data[i].role_name, result.data[i].id));
+          }
+          layui.form.render('select');
+        } else {
+          layer.msg(result.msg);
         }
+      },
+      error: function () {
+        layer.msg('获取角色数据异常！');
+      },
     });
 
     //获取用户信息并赋值下拉框
     $.ajax({
-        url: "/admin/adm/get",
-        type: "GET",
-        dataType: "json",
-        success: function (result) {
-            if (result.code == 0) {
-                for (var i = 0; i < result.count; i++) {
-                    $("#select_pid").append(new Option(result.data[i].user_name, result.data[i].id));
-                }
-                layui.form.render("select");
-            } else {
-                layer.msg(result.msg);
-            }
-        },
-        error: function () {
-            layer.msg("获取用户数据异常！");
+      url: '/admin/adm/get',
+      type: 'GET',
+      dataType: 'json',
+      success: function (result) {
+        if (result.code == 0) {
+          for (var i = 0; i < result.count; i++) {
+            $('#select_pid').append(new Option(result.data[i].user_name, result.data[i].id));
+          }
+          layui.form.render('select');
+        } else {
+          layer.msg(result.msg);
         }
+      },
+      error: function () {
+        layer.msg('获取用户数据异常！');
+      },
     });
 
     //表格渲染
     table.render({
-        elem: '#dataDable',
-        url: '/admin/adm/get',
-        // totalRow: true, // 是否开启合计行区域
-        cols: [[
-            { field: 'id', title: 'ID', sort: true, /*totalRowText: "合计"*/ },
-            { field: 'user_name', title: '用户名', /*totalRow: true,*/ },
-            { field: 'role_name', title: '角色' },
-            { field: 'pid', title: '上级ID' },
-            { field: 'last_login_ip', title: '最后登陆IP' },
-            { field: 'created_at', title: '创建时间' },
-            { field: 'updated_at', title: '更新时间' },
-            { field: 'last_login_time', title: '最后登陆时间' },
-            {
-                field: 'status', title: '状态', width: 95, templet: function (data) {
-                    var tpl1 = '<input type="checkbox" name="status" value="' + data.id + '" lay-skin="switch" lay-text="正常|禁用" lay-filter="statusCheckbox">'
-                    var tpl2 = '<input type="checkbox" name="status" value="' + data.id + '" lay-skin="switch" lay-text="正常|禁用" lay-filter="statusCheckbox" checked>';
-                    if (data.status == 1) {
-                        return tpl2;
-                    } else {
-                        return tpl1;
-                    }
-                }
+      elem: '#dataDable',
+      url: '/admin/adm/get',
+      // totalRow: true, // 是否开启合计行区域
+      cols: [
+        [
+          { field: 'id', title: 'ID', sort: true /*totalRowText: "合计"*/ },
+          { field: 'user_name', title: '用户名' /*totalRow: true,*/ },
+          { field: 'role_name', title: '角色' },
+          { field: 'pid', title: '上级ID' },
+          { field: 'last_login_ip', title: '最后登陆IP' },
+          { field: 'created_at', title: '创建时间' },
+          { field: 'updated_at', title: '更新时间' },
+          { field: 'last_login_time', title: '最后登陆时间' },
+          {
+            field: 'status',
+            title: '状态',
+            width: 95,
+            templet: function (data) {
+              var tpl1 =
+                '<input type="checkbox" name="status" value="' +
+                data.id +
+                '" lay-skin="switch" lay-text="正常|禁用" lay-filter="statusCheckbox">';
+              var tpl2 =
+                '<input type="checkbox" name="status" value="' +
+                data.id +
+                '" lay-skin="switch" lay-text="正常|禁用" lay-filter="statusCheckbox" checked>';
+              if (data.status == 1) {
+                return tpl2;
+              } else {
+                return tpl1;
+              }
             },
-            { width: 120, title: '操作', toolbar: '#barHandle' }
-        ]],
-        toolbar: "#tableToolBar",
-        defaultToolbar: ['filter', 'exports', 'print'],
-        page: true,
-        limits: [10, 13, 20, 50, 100, 1000, 10000],
-        // limit: 13,
-        id: 'tableReloadId',
-        done: function (res) { layer.close(loading); },
-        escape: true, // 是否开启 xss 字符过滤（默认 false）layui 2.6.8 新增
-        // height: 'full-231', // full- 固定语法,数字标识: 表格容器距离浏览器顶部和底部的距离“和”
+          },
+          { width: 120, title: '操作', toolbar: '#barHandle' },
+        ],
+      ],
+      toolbar: '#tableToolBar',
+      defaultToolbar: ['filter', 'exports', 'print'],
+      page: true,
+      limits: [10, 13, 20, 50, 100, 1000, 10000],
+      // limit: 13,
+      id: 'tableReloadId',
+      done: function (res) {
+        layer.close(loading);
+      },
+      escape: true, // 是否开启 xss 字符过滤（默认 false）layui 2.6.8 新增
+      // height: 'full-231', // full- 固定语法,数字标识: 表格容器距离浏览器顶部和底部的距离“和”
     });
 
     //监听Checkbox操作
     form.on('switch(statusCheckbox)', function (obj) {
-        var state = 0;
-        if (obj.elem.checked == true) {
-            state = 1;
-        }
-        $.ajax({
-            url: "/admin/adm/update",
-            type: "POST",
-            dataType: "json",
-            data: { id: this.value, status: state },
-            success: function (result) {
-                if (result.code == 0) {
-                    layer.msg("修改成功");
-                } else {
-                    layer.msg(result.msg);
-                }
-            },
-            error: function () {
-                layer.msg("系统异常！");
-            }
-        });
+      var state = 0;
+      if (obj.elem.checked == true) {
+        state = 1;
+      }
+      $.ajax({
+        url: '/admin/adm/update',
+        type: 'POST',
+        dataType: 'json',
+        data: { id: this.value, status: state },
+        success: function (result) {
+          if (result.code == 0) {
+            layer.msg('修改成功');
+          } else {
+            layer.msg(result.msg);
+          }
+        },
+        error: function () {
+          layer.msg('系统异常！');
+        },
+      });
     });
 
     //查询并表格重载
     $('#searchBtn').on('click', function () {
-        let role_id = $('#select_role_id').val();
-        let searchInput = $('#searchInput').val();
-        let currpage = 1;//$('.layui-laypage-em').next().text(); //当前页
-        let datetime_val = $('#select_datetime').val();
-        let dt_arr = datetime_val.split(" - ");
+      let role_id = $('#select_role_id').val();
+      let searchInput = $('#searchInput').val();
+      let currpage = 1; //$('.layui-laypage-em').next().text(); //当前页
+      let datetime_val = $('#select_datetime').val();
+      let dt_arr = datetime_val.split(' - ');
 
-        table.reload('tableReloadId', {
-            page: {
-                curr: currpage
-            },
-            where: {
-                search: searchInput,
-                role: role_id,
-                t1: dt_arr[0],
-                t2: dt_arr[1],
-            },
-        });
+      table.reload('tableReloadId', {
+        page: {
+          curr: currpage,
+        },
+        where: {
+          search: searchInput,
+          role: role_id,
+          t1: dt_arr[0],
+          t2: dt_arr[1],
+        },
+      });
     });
 
     //新增管理员
     function addAdmin() {
-        openLayerView('新增管理员', '/admin/adm/add');
-    };
+      openLayerView('新增管理员', '/admin/adm/add');
+    }
 
     //监听行工具事件
     table.on('tool(dataDable)', function (obj) {
-        var data = obj.data;
-        if (obj.event === 'del') {
-            layer.confirm('真的删除吗?', function (index) {
-                deleteUser(data.id);
-            });
-        } else if (obj.event === 'edit') {
-            openLayerView('修改管理员', '/admin/adm/update', data);
-        }
+      var data = obj.data;
+      if (obj.event === 'del') {
+        layer.confirm('真的删除吗?', function (index) {
+          deleteUser(data.id);
+        });
+      } else if (obj.event === 'edit') {
+        openLayerView('修改管理员', '/admin/adm/update', data);
+      }
     });
 
     //打开弹出层(新增&编辑)
     function openLayerView(title, url, data) {
-        layer.open({
-            type: 1,
-            title: title,
-            area: '500px',
-            shade: 0,
-            anim: 2,
-            scrollbar: false,
-            maxmin: true,
-            content: $('#layer_view'),
-            btn: ['提交', '取消'],
-            success: function (layero, index) {
-                layero.find('.layui-layer-content').css('overflow', 'visible');//隐藏点击下拉框的时候layer的滚动条
-                if (data) {
-                    form.val('layer_form_filter', {
-                        id: data.id,
-                        user_name: data.user_name,
-                        role: data.role,
-                        pid: data.pid,
-                        status: data.status,
-                    });
-                    $('#user_name').prop('disabled', true);
-                }
+      layer.open({
+        type: 1,
+        title: title,
+        area: '500px',
+        shade: 0,
+        anim: 2,
+        scrollbar: false,
+        maxmin: true,
+        content: $('#layer_view'),
+        btn: ['提交', '取消'],
+        success: function (layero, index) {
+          layero.find('.layui-layer-content').css('overflow', 'visible'); //隐藏点击下拉框的时候layer的滚动条
+          if (data) {
+            form.val('layer_form_filter', {
+              id: data.id,
+              user_name: data.user_name,
+              role: data.role,
+              pid: data.pid,
+              status: data.status,
+            });
+            $('#user_name').prop('disabled', true);
+          }
+        },
+        yes: function (index, layero) {
+          $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: 'JSON',
+            data: $('#layer_fomr_id').serialize(),
+            success: function (result) {
+              if (result.code == 0) {
+                layer.msg('成功');
+                layer.close(index);
+                reloadTable();
+                return;
+              }
+              layer.msg(result.msg);
             },
-            yes: function (index, layero) {
-                $.ajax({
-                    url: url,
-                    type: "POST",
-                    dataType: "JSON",
-                    data: $('#layer_fomr_id').serialize(),
-                    success: function (result) {
-                        if (result.code == 0) {
-                            layer.msg("成功");
-                            layer.close(index);
-                            reloadTable();
-                            return
-                        }
-                        layer.msg(result.msg);
-                    },
-                    error: function () {
-                        layer.msg("系统异常！");
-                    }
-                });
+            error: function () {
+              layer.msg('系统异常！');
             },
-            end: function () {
-                $('#layer_view').hide();//隐藏div
-                $('#layer_fomr_id')[0].reset();//重置表单
-                $('#user_name').prop('disabled', false);
-            },
-        });
+          });
+        },
+        end: function () {
+          $('#layer_view').hide(); //隐藏div
+          $('#layer_fomr_id')[0].reset(); //重置表单
+          $('#user_name').prop('disabled', false);
+        },
+      });
     }
 
     //删除管理员
     function deleteUser(id) {
-        $.ajax({
-            url: "/admin/adm/del",
-            type: "POST",
-            dataType: "json",
-            data: { id: id },
-            success: function (result) {
-                if (result.code == 0) {
-                    layer.msg("成功")
-                    reloadTable();
-                } else {
-                    layer.msg(result.msg);
-                }
-            },
-            error: function () {
-                layer.msg("系统异常！");
-            }
-        });
+      $.ajax({
+        url: '/admin/adm/del',
+        type: 'POST',
+        dataType: 'json',
+        data: { id: id },
+        success: function (result) {
+          if (result.code == 0) {
+            layer.msg('成功');
+            reloadTable();
+          } else {
+            layer.msg(result.msg);
+          }
+        },
+        error: function () {
+          layer.msg('系统异常！');
+        },
+      });
     }
 
     //重载表格
     function reloadTable() {
-        let currpage = $('.layui-laypage-em').next().text();
-        table.reload('tableReloadId', {
-            page: { curr: currpage }
-        });
+      let currpage = $('.layui-laypage-em').next().text();
+      table.reload('tableReloadId', {
+        page: { curr: currpage },
+      });
     }
-</script>
-
+  </script>
 </html>
 {{end}}

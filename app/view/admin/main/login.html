@@ -2,122 +2,127 @@
 
 <!DOCTYPE html>
 <html lang="zh-CN">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="../public/static/layui/css/layui.css">
-    <link rel="stylesheet" href="../public/static/layui/css/login.css">
-    <link rel="icon" href="/favicon.ico">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="../public/static/layui/css/layui.css" />
+    <link rel="stylesheet" href="../public/static/layui/css/login.css" />
+    <link rel="icon" href="/favicon.ico" />
     <title>Login</title>
-</head>
+  </head>
 
-<body class="login-wrap">
+  <body class="login-wrap">
     <div class="login-container">
-        <form class="login-form">
-            <div class="input-group">
-                <input type="text" id="username" class="input-field" autocomplete="off">
-                <label for="username" class="input-label">
-                    <span class="label-title">用户名</span>
-                </label>
-            </div>
-            <div class="input-group">
-                <input type="password" id="password" class="input-field" autocomplete="off">
-                <label for="password" class="input-label">
-                    <span class="label-title">密码</span>
-                </label>
-            </div>
-            {{ if eq .GoogleAuth 1 }}
-            <div class="input-group">
-                <input type="text" id="g_code" class="input-field" style="flex:1" autocomplete="off">
-                <label for="g_code" class="input-label">
-                    <span class="label-title">安全码</span>
-                </label>
-            </div>
-            {{ else }}
-            <input type="text" id="g_code" value="0" hidden>
-            {{ end }}
-            <div class="input-group" style="display: flex; padding-right: 0;">
-                <input type="text" id="code" class="input-field" style="flex:1" autocomplete="off">
-                <label for="code" class="input-label">
-                    <span class="label-title">验证码</span>
-                </label>
-                <image src="" onclick="getCaptcha();return false;" id="captcha" style="width:145px;z-index:999;"></image>
-            </div>
-            <button type="button" id="btn_submit" onclick="login();return false;" class="login-button">登录<i class="ai ai-enter"></i></button>
-        </form>
+      <form class="login-form">
+        <div class="input-group">
+          <input type="text" id="username" class="input-field" autocomplete="off" />
+          <label for="username" class="input-label">
+            <span class="label-title">用户名</span>
+          </label>
+        </div>
+        <div class="input-group">
+          <input type="password" id="password" class="input-field" autocomplete="off" />
+          <label for="password" class="input-label">
+            <span class="label-title">密码</span>
+          </label>
+        </div>
+        {{ if eq .GoogleAuth 1 }}
+        <div class="input-group">
+          <input type="text" id="g_code" class="input-field" style="flex: 1" autocomplete="off" />
+          <label for="g_code" class="input-label">
+            <span class="label-title">安全码</span>
+          </label>
+        </div>
+        {{ else }}
+        <input type="text" id="g_code" value="0" hidden />
+        {{ end }}
+        <div class="input-group" style="display: flex; padding-right: 0">
+          <input type="text" id="code" class="input-field" style="flex: 1" autocomplete="off" />
+          <label for="code" class="input-label">
+            <span class="label-title">验证码</span>
+          </label>
+          <image
+            src=""
+            onclick="getCaptcha();return false;"
+            id="captcha"
+            style="width: 145px; z-index: 999"
+          ></image>
+        </div>
+        <button type="button" id="btn_submit" onclick="login();return false;" class="login-button">
+          登录<i class="ai ai-enter"></i>
+        </button>
+      </form>
     </div>
-</body>
+  </body>
 
-<script src="../public/static/layui/layui.js"></script>
-<script src="../public/static/layui/js/jquery-3.3.1.min.js"></script>
-<script src="../public/static/layui/js/index.js" data-main="login"></script>
-<script>
+  <script src="../public/static/layui/layui.js"></script>
+  <script src="../public/static/lib/js/jquery-3.3.1.min.js"></script>
+  <script src="../public/static/layui/js/index.js" data-main="login"></script>
+  <script>
     var layer = layui.layer;
 
     document.onkeydown = function (e) {
-        if (!e) e = window.event;
-        if ((e.keyCode || e.which) === 13) {
-            document.getElementById("btn_submit").click();
-        }
+      if (!e) e = window.event;
+      if ((e.keyCode || e.which) === 13) {
+        document.getElementById('btn_submit').click();
+      }
     };
 
-    var curCaptId = "";
+    var curCaptId = '';
     function getCaptcha() {
-        $.ajax({
-            type: "GET",
-            url: "/admin/captcha",
-            data: {},
-            dataType: "JSON",
-            success: function (result) {
-                if (result.code != 0) {
-                    layer.msg(result.msg);
-                    return;
-                }
-                curCaptId = result.data.id;
-                document.getElementById("captcha").src = result.data.base64;
-            }
-        });
+      $.ajax({
+        type: 'GET',
+        url: '/admin/captcha',
+        data: {},
+        dataType: 'JSON',
+        success: function (result) {
+          if (result.code != 0) {
+            layer.msg(result.msg);
+            return;
+          }
+          curCaptId = result.data.id;
+          document.getElementById('captcha').src = result.data.base64;
+        },
+      });
     }
     getCaptcha();
 
     function login() {
-        var user_name = $('#username').val();
-        var password = $('#password').val();
-        var code = $('#code').val();
-        var g_code = $('#g_code').val();
+      var user_name = $('#username').val();
+      var password = $('#password').val();
+      var code = $('#code').val();
+      var g_code = $('#g_code').val();
 
-        if (user_name == "" || password == "" || code == "") {
-            layer.msg("请检查输入");
-            return;
-        }
-        $.ajax({
-            url: '/admin/check',
-            method: 'post',
-            data: {
-                user_name: user_name,
-                password: password,
-                code: code,
-                g_code: g_code,
-                cid: curCaptId,
-            },
-            dataType: 'JSON',
-            success: function (res) {
-                if (res.code === 0) {
-                    window.location.href = "/admin/main";
-                } else {
-                    layer.msg(res.msg);
-                    $("#captcha").click();
-                }
-            },
-            error: function (data) {
-                layer.msg('联系管理员检查错误');
-                console.log(data);
-            }
-        });
+      if (user_name == '' || password == '' || code == '') {
+        layer.msg('请检查输入');
+        return;
+      }
+      $.ajax({
+        url: '/admin/check',
+        method: 'post',
+        data: {
+          user_name: user_name,
+          password: password,
+          code: code,
+          g_code: g_code,
+          cid: curCaptId,
+        },
+        dataType: 'JSON',
+        success: function (res) {
+          if (res.code === 0) {
+            window.location.href = '/admin/main';
+          } else {
+            layer.msg(res.msg);
+            $('#captcha').click();
+          }
+        },
+        error: function (data) {
+          layer.msg('联系管理员检查错误');
+          console.log(data);
+        },
+      });
     }
-</script>
-
+  </script>
 </html>
 {{end}}

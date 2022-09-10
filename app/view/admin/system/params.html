@@ -1,21 +1,19 @@
 {{define "system/params.html"}}
 <!DOCTYPE html>
 <html lang="zh-CN">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="../../public/static/layui/css/layui.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="../../public/static/layui/css/layui.css" />
     <link rel="stylesheet" href="../../public/static/layui/css/view.css" />
-    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico" />
     <title>管理后台</title>
-</head>
+  </head>
 
-<body class="layui-view-body">
+  <body class="layui-view-body">
     <div class="layui-content">
-
-        <!-- <div class="layui-page-header">
+      <!-- <div class="layui-page-header">
             <div class="pagewrap">
                 <span class="layui-breadcrumb">
                     <a href="">首页</a>
@@ -25,63 +23,73 @@
             </div>
         </div> -->
 
-        <div class="layui-row">
-            <div class="layui-card">
-                <div class="layui-card-body">
-
-                    <div class="layui-form layui-form-item layui-form-pane">
-                        <div class="layui-inline">
-                            <label class="layui-form-label">键</label>
-                            <div class="layui-input-inline">
-                                <input type="text" placeholder="支持模糊查询" autocomplete="off" class="layui-input" id="paramsKey" name="paramsKey">
-                            </div>
-                        </div>
-
-                        <div class="layui-inline">
-                            <button class="layui-btn layui-btn-blue" onclick="return false;" data-type="reload" id="searchParams">查询</button>
-                        </div>
-                    </div>
-
-                    <table id="sys_params" lay-filter="sys_params"></table>
-
+      <div class="layui-row">
+        <div class="layui-card">
+          <div class="layui-card-body">
+            <div class="layui-form layui-form-item layui-form-pane">
+              <div class="layui-inline">
+                <label class="layui-form-label">键</label>
+                <div class="layui-input-inline">
+                  <input
+                    type="text"
+                    placeholder="支持模糊查询"
+                    autocomplete="off"
+                    class="layui-input"
+                    id="paramsKey"
+                    name="paramsKey"
+                  />
                 </div>
+              </div>
+
+              <div class="layui-inline">
+                <button
+                  class="layui-btn layui-btn-blue"
+                  onclick="return false;"
+                  data-type="reload"
+                  id="searchParams"
+                >
+                  查询
+                </button>
+              </div>
             </div>
+
+            <table id="sys_params" lay-filter="sys_params"></table>
+          </div>
         </div>
-
+      </div>
     </div>
+  </body>
 
-</body>
+  <!-- 行工具栏 -->
+  <script type="text/html" id="barSysParams">
+    <div class="layui-btn-group">
+      <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="edit">编辑</button>
+      <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</button>
+    </div>
+  </script>
 
-<!-- 行工具栏 -->
-<script type="text/html" id="barSysParams">
-<div class="layui-btn-group">
-    <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="edit">编辑</button>
-    <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</button>
-</div>
-</script>
-
-<script src="../../public/static/layui/layui.js"></script>
-<script>
+  <script src="../../public/static/layui/layui.js"></script>
+  <script>
     var HtmlUtil = {
-        /*1.用浏览器内部转换器实现html转码*/
-        htmlEncode: function (html) {
-            var temp = document.createElement("div");
-            (temp.textContent != undefined) ? (temp.textContent = html) : (temp.innerText = html);
-            var output = temp.innerHTML;
-            temp = null;
-            return output;
-        },
-        /*2.用浏览器内部转换器实现html解码*/
-        htmlDecode: function (text) {
-            var temp = document.createElement("div");
-            temp.innerHTML = text;
-            var output = temp.innerText || temp.textContent;
-            temp = null;
-            return output;
-        }
+      /*1.用浏览器内部转换器实现html转码*/
+      htmlEncode: function (html) {
+        var temp = document.createElement('div');
+        temp.textContent != undefined ? (temp.textContent = html) : (temp.innerText = html);
+        var output = temp.innerHTML;
+        temp = null;
+        return output;
+      },
+      /*2.用浏览器内部转换器实现html解码*/
+      htmlDecode: function (text) {
+        var temp = document.createElement('div');
+        temp.innerHTML = text;
+        var output = temp.innerText || temp.textContent;
+        temp = null;
+        return output;
+      },
     };
-</script>
-<script>
+  </script>
+  <script>
     var element = layui.element;
     var table = layui.table;
     var form = layui.form;
@@ -90,133 +98,142 @@
 
     //表格渲染
     table.render({
-        elem: '#sys_params',
-        url: '/admin/params/get',
-        cols: [[
-            { field: 'id', title: 'ID', sort: true },
-            { field: 'key', title: '键' },
-            { field: 'value', title: '值', edit: 'text' },
-            { field: 'remarks', title: '备注' },
-            { width: 120, title: '操作', toolbar: '#barSysParams' }
-        ]],
-        page: true,
-        limits: [10, 15, 20, 50, 100],
-        // limit: 15,
-        id: 'paramsReload',
-        done: function (res) { layer.close(index); },
-        escape: true, // 是否开启 xss 字符过滤（默认 false）layui 2.6.8 新增
-        // height: 'full-212', // full- 固定语法,数字标识: 表格容器距离浏览器顶部和底部的距离“和”
+      elem: '#sys_params',
+      url: '/admin/params/get',
+      cols: [
+        [
+          { field: 'id', title: 'ID', sort: true },
+          { field: 'key', title: '键' },
+          { field: 'value', title: '值', edit: 'text' },
+          { field: 'remarks', title: '备注' },
+          { width: 120, title: '操作', toolbar: '#barSysParams' },
+        ],
+      ],
+      page: true,
+      limits: [10, 15, 20, 50, 100],
+      // limit: 15,
+      id: 'paramsReload',
+      done: function (res) {
+        layer.close(index);
+      },
+      escape: true, // 是否开启 xss 字符过滤（默认 false）layui 2.6.8 新增
+      // height: 'full-212', // full- 固定语法,数字标识: 表格容器距离浏览器顶部和底部的距离“和”
     });
 
     //查询并表格重载
-    var $ = layui.$, active = {
+    var $ = layui.$,
+      active = {
         reload: function () {
-            var paramsKey = $('#paramsKey');
-            let currpage = 1;//$('.layui-laypage-em').next().text(); //当前页
-            //执行重载
-            table.reload('paramsReload', {
-                page: {
-                    curr: currpage
-                },
-                where: {
-                    search: paramsKey.val() //附加检索条件
-                },
-                done: function (res) { layer.close(index); },
-            });
-        }
-    };
+          var paramsKey = $('#paramsKey');
+          let currpage = 1; //$('.layui-laypage-em').next().text(); //当前页
+          //执行重载
+          table.reload('paramsReload', {
+            page: {
+              curr: currpage,
+            },
+            where: {
+              search: paramsKey.val(), //附加检索条件
+            },
+            done: function (res) {
+              layer.close(index);
+            },
+          });
+        },
+      };
     $('#searchParams').on('click', function () {
-        var type = $(this).data('type');
-        active[type] ? active[type].call(this) : '';
+      var type = $(this).data('type');
+      active[type] ? active[type].call(this) : '';
     });
 
     //监听单元格编辑
     table.on('edit(sys_params)', function (obj) {
-        var val = obj.value       //修改后的值
-            , data = obj.data       //所在行所有键值
-            , field = obj.field;    //字段名
+      var val = obj.value, //修改后的值
+        data = obj.data, //所在行所有键值
+        field = obj.field; //字段名
 
-        $.ajax({
-            url: "/admin/params/update",
-            type: "POST",
-            dataType: "json",
-            data: { id: data.id, value: val },
-            success: function (result) {
-                if (result.code == 0) {
-                    layer.msg("成功");
-                    reloadTable();
-                } else {
-                    layer.msg(result.msg);
-                }
-            },
-            error: function () {
-                layer.msg("系统异常！");
-            }
-        });
+      $.ajax({
+        url: '/admin/params/update',
+        type: 'POST',
+        dataType: 'json',
+        data: { id: data.id, value: val },
+        success: function (result) {
+          if (result.code == 0) {
+            layer.msg('成功');
+            reloadTable();
+          } else {
+            layer.msg(result.msg);
+          }
+        },
+        error: function () {
+          layer.msg('系统异常！');
+        },
+      });
     });
 
     //监听行工具事件
     table.on('tool(sys_params)', function (obj) {
-        var data = obj.data;
-        if (obj.event === 'del') {
-            layer.confirm('真的删除吗?', function (index) {
-                $.ajax({
-                    url: "/admin/params/del",
-                    type: "POST",
-                    dataType: "json",
-                    data: { id: data.id },
-                    success: function (result) {
-                        if (result.code == 0) {
-                            layer.msg("成功")
-                            reloadTable();
-                        } else {
-                            layer.msg(result.msg);
-                        }
-                    },
-                    error: function () {
-                        layer.msg("系统异常！");
-                    }
-                });
+      var data = obj.data;
+      if (obj.event === 'del') {
+        layer.confirm('真的删除吗?', function (index) {
+          $.ajax({
+            url: '/admin/params/del',
+            type: 'POST',
+            dataType: 'json',
+            data: { id: data.id },
+            success: function (result) {
+              if (result.code == 0) {
+                layer.msg('成功');
+                reloadTable();
+              } else {
+                layer.msg(result.msg);
+              }
+            },
+            error: function () {
+              layer.msg('系统异常！');
+            },
+          });
+        });
+      } else if (obj.event === 'edit') {
+        layer.prompt(
+          {
+            formType: 2,
+            shade: 0,
+            title: '修改值',
+            value: HtmlUtil.htmlDecode(data.value),
+          },
+          function (val, index) {
+            $.ajax({
+              url: '/admin/params/update',
+              type: 'POST',
+              dataType: 'json',
+              data: { id: data.id, value: val },
+              success: function (result) {
+                if (result.code == 0) {
+                  layer.msg('修改成功');
+                  reloadTable();
+                } else {
+                  layer.msg(result.msg);
+                }
+              },
+              error: function () {
+                layer.msg('系统异常！');
+              },
             });
-        } else if (obj.event === 'edit') {
-            layer.prompt({
-                formType: 2,
-                shade: 0,
-                title: '修改值',
-                value: HtmlUtil.htmlDecode(data.value)
-            }, function (val, index) {
-                $.ajax({
-                    url: "/admin/params/update",
-                    type: "POST",
-                    dataType: "json",
-                    data: { id: data.id, value: val },
-                    success: function (result) {
-                        if (result.code == 0) {
-                            layer.msg("修改成功");
-                            reloadTable();
-                        } else {
-                            layer.msg(result.msg);
-                        }
-                    },
-                    error: function () {
-                        layer.msg("系统异常！");
-                    }
-                });
-                layer.close(index);
-            });
-        }
+            layer.close(index);
+          }
+        );
+      }
     });
 
     //重载表格
     function reloadTable() {
-        let currpage = $('.layui-laypage-em').next().text();
-        table.reload('paramsReload', {
-            page: {
-                curr: currpage
-            }
-        });
+      let currpage = $('.layui-laypage-em').next().text();
+      table.reload('paramsReload', {
+        page: {
+          curr: currpage,
+        },
+      });
     }
-</script>
-
+  </script>
 </html>
 {{end}}

@@ -1,21 +1,19 @@
 {{define "rbac/role.html"}}
 <!DOCTYPE html>
 <html lang="zh-CN">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="../../public/static/layui/css/layui.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="../../public/static/layui/css/layui.css" />
     <link rel="stylesheet" href="../../public/static/layui/css/view.css" />
-    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico" />
     <title>角色管理</title>
-</head>
+  </head>
 
-<body class="layui-view-body">
+  <body class="layui-view-body">
     <div class="layui-content">
-
-        <!-- <div class="layui-page-header">
+      <!-- <div class="layui-page-header">
             <div class="pagewrap">
                 <span class="layui-breadcrumb">
                     <a href="">首页</a>
@@ -25,279 +23,320 @@
             </div>
         </div> -->
 
-        <div class="layui-row">
-            <div class="layui-card">
-                <div class="layui-card-body">
-
-                    <div class="layui-form layui-form-item layui-form-pane">
-
-                        <div class="layui-inline">
-                            <label class="layui-form-label">名称</label>
-                            <div class="layui-input-inline">
-                                <input type="text" placeholder="支持模糊查询" autocomplete="off" class="layui-input" id="searchKey" name="searchKey">
-                            </div>
-                        </div>
-                        <div class="layui-inline">
-                            <button class="layui-btn layui-btn-blue" onclick="return false;" data-type="reload" id="btn_search">查询</button>
-                            <button class="layui-btn layui-btn-green" onclick="addRole();return false;" id="addBtn">新增</button>
-                        </div>
-                    </div>
-
-                    <table id="table_role_id" lay-filter="table_role_id"></table>
-
+      <div class="layui-row">
+        <div class="layui-card">
+          <div class="layui-card-body">
+            <div class="layui-form layui-form-item layui-form-pane">
+              <div class="layui-inline">
+                <label class="layui-form-label">名称</label>
+                <div class="layui-input-inline">
+                  <input
+                    type="text"
+                    placeholder="支持模糊查询"
+                    autocomplete="off"
+                    class="layui-input"
+                    id="searchKey"
+                    name="searchKey"
+                  />
                 </div>
+              </div>
+              <div class="layui-inline">
+                <button
+                  class="layui-btn layui-btn-blue"
+                  onclick="return false;"
+                  data-type="reload"
+                  id="btn_search"
+                >
+                  查询
+                </button>
+                <button
+                  class="layui-btn layui-btn-green"
+                  onclick="addRole();return false;"
+                  id="addBtn"
+                >
+                  新增
+                </button>
+              </div>
             </div>
-        </div>
 
+            <table id="table_role_id" lay-filter="table_role_id"></table>
+          </div>
+        </div>
+      </div>
     </div>
-</body>
+  </body>
 
-<!-- 新增&编辑 视图 -->
-<div id="layer_view" style="margin: 5%;" hidden>
-    <form class="layui-form layui-form-pane" id="layer_view_form" method="post" lay-filter="example">
-        <input type="text" id="layer_view_id" name="id" hidden>
-        <div class="layui-form-item" id="role_name_div">
-            <label class="layui-form-label">角色名称</label>
-            <div class="layui-input-block">
-                <input type="text" id="role_name" name="role_name" lay-verify="required" placeholder="小于40位字符" autocomplete="off" class="layui-input">
-            </div>
+  <!-- 新增&编辑 视图 -->
+  <div id="layer_view" style="margin: 5%" hidden>
+    <form
+      class="layui-form layui-form-pane"
+      id="layer_view_form"
+      method="post"
+      lay-filter="example"
+    >
+      <input type="text" id="layer_view_id" name="id" hidden />
+      <div class="layui-form-item" id="role_name_div">
+        <label class="layui-form-label">角色名称</label>
+        <div class="layui-input-block">
+          <input
+            type="text"
+            id="role_name"
+            name="role_name"
+            lay-verify="required"
+            placeholder="小于40位字符"
+            autocomplete="off"
+            class="layui-input"
+          />
         </div>
-        <div class="layui-form-item" id="role_desc_div">
-            <label class="layui-form-label">角色描述</label>
-            <div class="layui-input-block">
-                <input type="text" id="role_desc" name="role_desc" lay-verify="required" placeholder="小于40位字符" autocomplete="off" class="layui-input">
-            </div>
+      </div>
+      <div class="layui-form-item" id="role_desc_div">
+        <label class="layui-form-label">角色描述</label>
+        <div class="layui-input-block">
+          <input
+            type="text"
+            id="role_desc"
+            name="role_desc"
+            lay-verify="required"
+            placeholder="小于40位字符"
+            autocomplete="off"
+            class="layui-input"
+          />
         </div>
-        <div class="layui-form-item">
-            <div id="layer_view_tree" class="demo-tree-more"></div>
-        </div>
+      </div>
+      <div class="layui-form-item">
+        <div id="layer_view_tree" class="demo-tree-more"></div>
+      </div>
     </form>
-</div>
+  </div>
 
-<!-- 行工具栏 -->
-<script type="text/html" id="barTpl">
-<div class="layui-btn-group">
-    <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="edit">编辑</button>
-    <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</button>
-</div>
-</script>
+  <!-- 行工具栏 -->
+  <script type="text/html" id="barTpl">
+    <div class="layui-btn-group">
+      <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="edit">编辑</button>
+      <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</button>
+    </div>
+  </script>
 
-<script src="../../public/static/layui/layui.js"></script>
-<script>
-    var element = layui.element, table = layui.table, form = layui.form;
-    var tree = layui.tree, util = layui.util
+  <script src="../../public/static/layui/layui.js"></script>
+  <script>
+    var element = layui.element,
+      table = layui.table,
+      form = layui.form;
+    var tree = layui.tree,
+      util = layui.util;
 
     //表格渲染
     table.render({
-        elem: '#table_role_id',
-        url: '/admin/role/get',
-        cols: [[
-            { field: 'id', title: 'ID', sort: true },
-            { field: 'role_name', title: '角色名称' },
-            { field: 'role_desc', title: '描述', },
-            { width: 120, title: '操作', toolbar: '#barTpl' }
-        ]],
-        page: true,
-        limits: [10, 15, 20, 50, 100],
-        // limit: 15,
-        escape: true, // 是否开启 xss 字符过滤（默认 false）layui 2.6.8 新增
-        // height: 'full-212', // full- 固定语法,数字标识: 表格容器距离浏览器顶部和底部的距离“和”
-        id: 'table_role_r_id',
+      elem: '#table_role_id',
+      url: '/admin/role/get',
+      cols: [
+        [
+          { field: 'id', title: 'ID', sort: true },
+          { field: 'role_name', title: '角色名称' },
+          { field: 'role_desc', title: '描述' },
+          { width: 120, title: '操作', toolbar: '#barTpl' },
+        ],
+      ],
+      page: true,
+      limits: [10, 15, 20, 50, 100],
+      // limit: 15,
+      escape: true, // 是否开启 xss 字符过滤（默认 false）layui 2.6.8 新增
+      // height: 'full-212', // full- 固定语法,数字标识: 表格容器距离浏览器顶部和底部的距离“和”
+      id: 'table_role_r_id',
     });
 
     //查询并表格重载
-    var $ = layui.$, active = {
+    var $ = layui.$,
+      active = {
         reload: function () {
-            var searchKey = $('#searchKey');
-            let currpage = 1;//$('.layui-laypage-em').next().text(); //当前页
-            //执行重载
-            table.reload('table_role_r_id', {
-                page: {
-                    curr: currpage
-                }
-                , where: {
-                    search: searchKey.val() //附加检索条件
-                }
-            });
-        }
-    };
+          var searchKey = $('#searchKey');
+          let currpage = 1; //$('.layui-laypage-em').next().text(); //当前页
+          //执行重载
+          table.reload('table_role_r_id', {
+            page: {
+              curr: currpage,
+            },
+            where: {
+              search: searchKey.val(), //附加检索条件
+            },
+          });
+        },
+      };
     $('#btn_search').on('click', function () {
-        var type = $(this).data('type');
-        active[type] ? active[type].call(this) : '';
+      var type = $(this).data('type');
+      active[type] ? active[type].call(this) : '';
     });
 
     //监听行工具事件
     table.on('tool(table_role_id)', function (obj) {
-        var data = obj.data;
-        if (obj.event === 'del') {
-            layer.confirm('真的删除吗?', function (index) {
-                $.ajax({
-                    url: "/admin/role/del",
-                    type: "POST",
-                    dataType: "json",
-                    data: { id: data.id },
-                    success: function (result) {
-                        if (result.code == 0) {
-                            layer.msg("成功")
-                            reloadTable();
-                        } else {
-                            layer.msg(result.msg);
-                        }
-                    },
-                    error: function () {
-                        layer.msg("系统异常！");
-                    }
-                });
-            });
-        } else if (obj.event === 'edit') {
-            index = layer.open({
-                type: 1,
-                title: "编辑权限",
-                area: ['400px', '700px'],
-                shade: 0,
-                anim: 2,
-                scrollbar: false,
-                maxmin: true,
-                content: $('#layer_view'),
-                btn: ['提交', '取消'],
-                success: function (layero, index) {
-                    $("#layer_view_id").val(data.id);
-                    $("#role_name").val(data.role_name);
-                    $("#role_desc").val(data.role_desc);
-                    initTree(data.id);
-                },
-                yes: function (index, layero) {
-                    var roleid = $("#layer_view_id").val()
-                    var role_name = $("#role_name").val()
-                    var role_desc = $("#role_desc").val()
-                    var checkedData = tree.getChecked("tree_id_1");
-                    var per_id = getTreeCheckedIds(checkedData);
-                    per_id = per_id.slice(0, per_id.length - 1)
+      var data = obj.data;
+      if (obj.event === 'del') {
+        layer.confirm('真的删除吗?', function (index) {
+          $.ajax({
+            url: '/admin/role/del',
+            type: 'POST',
+            dataType: 'json',
+            data: { id: data.id },
+            success: function (result) {
+              if (result.code == 0) {
+                layer.msg('成功');
+                reloadTable();
+              } else {
+                layer.msg(result.msg);
+              }
+            },
+            error: function () {
+              layer.msg('系统异常！');
+            },
+          });
+        });
+      } else if (obj.event === 'edit') {
+        index = layer.open({
+          type: 1,
+          title: '编辑权限',
+          area: ['400px', '700px'],
+          shade: 0,
+          anim: 2,
+          scrollbar: false,
+          maxmin: true,
+          content: $('#layer_view'),
+          btn: ['提交', '取消'],
+          success: function (layero, index) {
+            $('#layer_view_id').val(data.id);
+            $('#role_name').val(data.role_name);
+            $('#role_desc').val(data.role_desc);
+            initTree(data.id);
+          },
+          yes: function (index, layero) {
+            var roleid = $('#layer_view_id').val();
+            var role_name = $('#role_name').val();
+            var role_desc = $('#role_desc').val();
+            var checkedData = tree.getChecked('tree_id_1');
+            var per_id = getTreeCheckedIds(checkedData);
+            per_id = per_id.slice(0, per_id.length - 1);
 
-                    $.ajax({
-                        url: "/admin/role/update",
-                        type: "POST",
-                        dataType: "json",
-                        data: { id: roleid, role_name: role_name, role_desc: role_desc, per_id: per_id },
-                        success: function (result) {
-                            if (result.code == 0) {
-                                layer.msg("修改成功");
-                                layer.close(index);
-                                reloadTable();
-                                return
-                            }
-                            layer.msg(result.msg);
-                        },
-                        error: function () {
-                            layer.msg("系统异常！");
-                        }
-                    });
-                },
-                end: function () {
-                    $('#layer_view').hide();//隐藏div
-                    $('#layer_view_form')[0].reset();//重置表单
-                },
+            $.ajax({
+              url: '/admin/role/update',
+              type: 'POST',
+              dataType: 'json',
+              data: { id: roleid, role_name: role_name, role_desc: role_desc, per_id: per_id },
+              success: function (result) {
+                if (result.code == 0) {
+                  layer.msg('修改成功');
+                  layer.close(index);
+                  reloadTable();
+                  return;
+                }
+                layer.msg(result.msg);
+              },
+              error: function () {
+                layer.msg('系统异常！');
+              },
             });
-        }
+          },
+          end: function () {
+            $('#layer_view').hide(); //隐藏div
+            $('#layer_view_form')[0].reset(); //重置表单
+          },
+        });
+      }
     });
 
     //初始化tree
     function initTree(roleId) {
-        $.ajax({
-            url: "/admin/per/get",
-            type: "GET",
-            dataType: "json",
-            data: { roleid: roleId },
-            success: function (result) {
-                if (result.code == 0) {
-                    tree.render({
-                        elem: "#layer_view_tree",
-                        data: result.data,
-                        showCheckbox: true,  //是否显示复选框
-                        id: "tree_id_1"
-                    });
-                } else {
-                    layer.msg(result.msg);
-                }
-            },
-            error: function () {
-                layer.msg("系统异常！");
-            }
-        });
+      $.ajax({
+        url: '/admin/per/get',
+        type: 'GET',
+        dataType: 'json',
+        data: { roleid: roleId },
+        success: function (result) {
+          if (result.code == 0) {
+            tree.render({
+              elem: '#layer_view_tree',
+              data: result.data,
+              showCheckbox: true, //是否显示复选框
+              id: 'tree_id_1',
+            });
+          } else {
+            layer.msg(result.msg);
+          }
+        },
+        error: function () {
+          layer.msg('系统异常！');
+        },
+      });
     }
 
     //新增角色
     function addRole() {
-        index = layer.open({
-            type: 1,
-            title: "新增角色",
-            area: ['400px', '700px'],
-            shade: 0,
-            anim: 2,
-            scrollbar: false,
-            maxmin: true,
-            content: $('#layer_view'),
-            btn: ['提交', '取消'],
-            success: function (layero, index) {
-                initTree(0);
+      index = layer.open({
+        type: 1,
+        title: '新增角色',
+        area: ['400px', '700px'],
+        shade: 0,
+        anim: 2,
+        scrollbar: false,
+        maxmin: true,
+        content: $('#layer_view'),
+        btn: ['提交', '取消'],
+        success: function (layero, index) {
+          initTree(0);
+        },
+        yes: function (index, layero) {
+          var role_name = $('#role_name').val();
+          var role_desc = $('#role_desc').val();
+          var checkedData = tree.getChecked('tree_id_1');
+          var per_id = getTreeCheckedIds(checkedData);
+          per_id = per_id.slice(0, per_id.length - 1);
+          $.ajax({
+            url: '/admin/role/add',
+            type: 'POST',
+            dataType: 'json',
+            data: { role_name: role_name, role_desc: role_desc, per_id: per_id },
+            success: function (result) {
+              if (result.code == 0) {
+                layer.msg('新增成功');
+                layer.close(index);
+                reloadTable();
+                return;
+              }
+              layer.msg(result.msg);
             },
-            yes: function (index, layero) {
-                var role_name = $("#role_name").val();
-                var role_desc = $("#role_desc").val();
-                var checkedData = tree.getChecked("tree_id_1");
-                var per_id = getTreeCheckedIds(checkedData);
-                per_id = per_id.slice(0, per_id.length - 1)
-                $.ajax({
-                    url: "/admin/role/add",
-                    type: "POST",
-                    dataType: "json",
-                    data: { role_name: role_name, role_desc: role_desc, per_id: per_id },
-                    success: function (result) {
-                        if (result.code == 0) {
-                            layer.msg("新增成功");
-                            layer.close(index);
-                            reloadTable();
-                            return
-                        }
-                        layer.msg(result.msg);
-                    },
-                    error: function () {
-                        layer.msg("系统异常！");
-                    }
-                });
+            error: function () {
+              layer.msg('系统异常！');
             },
-            end: function () {
-                $('#layer_view').hide();//隐藏div
-                $('#layer_view_form')[0].reset();//重置表单
-            },
-        });
-    };
+          });
+        },
+        end: function () {
+          $('#layer_view').hide(); //隐藏div
+          $('#layer_view_form')[0].reset(); //重置表单
+        },
+      });
+    }
 
     function getTreeCheckedIds(json) {
-        var ids = "";
-        for (var index in json) {
-            pid = json[index].id;
-            ids += pid + ",";
+      var ids = '';
+      for (var index in json) {
+        pid = json[index].id;
+        ids += pid + ',';
 
-            if (json[index].children != undefined && json[index].children.length != 0) {
-                cid = getTreeCheckedIds(json[index].children);
-                ids += cid;
-            }
-
+        if (json[index].children != undefined && json[index].children.length != 0) {
+          cid = getTreeCheckedIds(json[index].children);
+          ids += cid;
         }
-        return ids;
+      }
+      return ids;
     }
 
     //重载表格
     function reloadTable() {
-        let currpage = $('.layui-laypage-em').next().text();
-        table.reload('table_role_r_id', {
-            page: {
-                curr: currpage
-            }
-        });
+      let currpage = $('.layui-laypage-em').next().text();
+      table.reload('table_role_r_id', {
+        page: {
+          curr: currpage,
+        },
+      });
     }
-</script>
-
+  </script>
 </html>
 {{end}}
