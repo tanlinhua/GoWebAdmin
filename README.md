@@ -111,7 +111,10 @@ layui 官网将于 2021年10月13日 进行下线。
 [github](https://github.com/sentsin/layui)
 [gitee](https://gitee.com/sentsin/layui)
 
-[LayuiMini组件参考](http://layuimini.99php.cn/)
+组件参考
+
+[pearadmin](http://www.pearadmin.com/)
+[LayuiMini](http://layuimini.99php.cn/)
 
 ## Vue后台框架
 
