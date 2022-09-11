@@ -5,27 +5,24 @@ import (
 	"fmt"
 	"io/ioutil"
 	"math"
-	"os"
 	"time"
 
 	"github.com/gin-gonic/gin"
-	retalog "github.com/lestrrat-go/file-rotatelogs"
+	rotate "github.com/lestrrat-go/file-rotatelogs"
 	"github.com/rifflock/lfshook"
 	"github.com/sirupsen/logrus"
 )
 
-// uber-zap -> https://blog.csdn.net/weixin_43881017/article/details/111277435
-
 // 自定义日志中间件
 func Logger(tag string) gin.HandlerFunc {
-	filePath := "runtime/log/" + tag + "/"
-	// linkName := "latest_log_" + tag + ".log" // 最新日志的软链接
+	dir := "runtime/log/" + tag + "/"
+	p := dir + "%Y%m%d.log"
 
-	logWriter, _ := retalog.New(
-		filePath+"%Y%m%d.log",
-		retalog.WithMaxAge(7*24*time.Hour),
-		retalog.WithRotationTime(24*time.Hour),
-		// retalog.WithLinkName(linkName),
+	logWriter, _ := rotate.New(
+		p,
+		rotate.WithMaxAge(7*24*time.Hour),
+		rotate.WithRotationTime(24*time.Hour), // 日志切割时间
+		rotate.WithRotationSize(10*1024*1024), // 日志切割大小M
 	)
 	writeMap := lfshook.WriterMap{
 		logrus.InfoLevel:  logWriter,
@@ -35,11 +32,11 @@ func Logger(tag string) gin.HandlerFunc {
 		logrus.ErrorLevel: logWriter,
 		logrus.PanicLevel: logWriter,
 	}
-	Hook := lfshook.NewHook(writeMap, &logrus.TextFormatter{TimestampFormat: "2006-01-02 15:04:05"})
-
+	// &logrus.TextFormatter
+	hook := lfshook.NewHook(writeMap, &logrus.JSONFormatter{TimestampFormat: "2006-01-02 15:04:05"})
 	logger := logrus.New()
 	logger.SetLevel(logrus.DebugLevel)
-	logger.AddHook(Hook)
+	logger.AddHook(hook)
 
 	return func(c *gin.Context) {
 		startTime := time.Now()
@@ -49,10 +46,6 @@ func Logger(tag string) gin.HandlerFunc {
 
 		stopTime := time.Since(startTime)
 		spendTime := fmt.Sprintf("%d ms", int(math.Ceil(float64(stopTime.Nanoseconds())/1000000.0)))
-		hostName, err := os.Hostname()
-		if err != nil {
-			hostName = "unknown"
-		}
 		statusCode := c.Writer.Status()
 		clientIp := c.ClientIP()
 		userAgent := c.Request.UserAgent()
@@ -64,15 +57,14 @@ func Logger(tag string) gin.HandlerFunc {
 		path := c.Request.RequestURI
 
 		entry := logger.WithFields(logrus.Fields{
-			"HostName":    hostName,
-			"RunTime":     spendTime,
-			"IP":          clientIp,
-			"ReqBody":     string(body),
-			"ReqMethod":   method,
-			"ReqURI":      path,
-			"RspDataSize": dataSize,
-			"RspStatus":   statusCode,
-			"UA":          userAgent,
+			"path":      path,
+			"method":    method,
+			"body":      string(body),
+			"run_time":  spendTime,
+			"ip":        clientIp,
+			"resp_size": dataSize,
+			"resp_code": statusCode,
+			"ua":        userAgent,
 		})
 
 		if len(c.Errors) > 0 {

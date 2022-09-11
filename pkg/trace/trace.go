@@ -3,7 +3,7 @@ package trace
 import (
 	"time"
 
-	retalog "github.com/lestrrat-go/file-rotatelogs"
+	rotate "github.com/lestrrat-go/file-rotatelogs"
 	"github.com/rifflock/lfshook"
 	"github.com/sirupsen/logrus"
 )
@@ -25,12 +25,14 @@ func Warn(msg string) {
 }
 
 func writer(msg string, level string) {
-	filePath := "runtime/" + level + "/"
+	dir := "runtime/" + level + "/"
+	p := dir + "%Y%m%d.log"
 
-	logWriter, _ := retalog.New(
-		filePath+"%Y%m%d.log",
-		retalog.WithMaxAge(7*24*time.Hour),
-		retalog.WithRotationTime(24*time.Hour),
+	logWriter, _ := rotate.New(
+		p,
+		rotate.WithMaxAge(7*24*time.Hour),
+		rotate.WithRotationTime(24*time.Hour), // 日志切割时间
+		rotate.WithRotationSize(10*1024*1024), // 日志切割大小M
 	)
 	writeMap := lfshook.WriterMap{
 		logrus.InfoLevel:  logWriter,
@@ -40,11 +42,14 @@ func writer(msg string, level string) {
 		logrus.ErrorLevel: logWriter,
 		logrus.PanicLevel: logWriter,
 	}
-	Hook := lfshook.NewHook(writeMap, &logrus.TextFormatter{TimestampFormat: "2006-01-02 15:04:05"})
+	// &logrus.TextFormatter
+	hook := lfshook.NewHook(writeMap, &logrus.JSONFormatter{TimestampFormat: "2006-01-02 15:04:05"})
 
 	logger := logrus.New()
 	logger.SetLevel(logrus.DebugLevel)
-	logger.AddHook(Hook)
+	logger.AddHook(hook)
+
+	// fuck new obj
 
 	entry := logger.WithFields(logrus.Fields{
 		"trace": msg,
