@@ -14,7 +14,7 @@ func TestSend(t *testing.T) {
 		Subject:  "subject",
 		Body:     "body",
 	}
-	err := Send(options)
+	err := options.Send()
 	if err != nil {
 		t.Error("Mail Send error", err)
 		return

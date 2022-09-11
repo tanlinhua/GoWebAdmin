@@ -18,7 +18,7 @@ type Options struct {
 	Body     string // 邮件内容
 }
 
-func Send(o *Options) error {
+func (o *Options) Send() error {
 
 	m := gomail.NewMessage()
 
