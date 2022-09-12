@@ -48,10 +48,7 @@ func initAdmMiddleware(e *gin.Engine) {
 
 // 静态资源
 func initAdmResources(e *gin.Engine) {
-	// e.Static("assets", "view/static/assets")
-	// e.StaticFile("favicon.ico", "view/static/favicon.ico")
-	// e.LoadHTMLGlob("view/admin/**/*")
-
+	// Layui (打包到程序中)
 	tpl := template.Must(template.New("").ParseFS(view.Admin, "admin/**/*"))
 	e.SetHTMLTemplate(tpl)
 
@@ -66,16 +63,25 @@ func initAdmResources(e *gin.Engine) {
 		c.Data(http.StatusOK, "image/x-icon", file)
 	})
 
-	// vue.1
-	// e.Static("static/js", "vue/static/js")
-	// e.Static("static/css", "vue/static/css")
-	// e.Static("static/gif", "vue/static/gif")
-	// e.Static("static/png", "vue/static/png")
-	// e.StaticFile("/favicon.ico", "vue/favicon.ico")
-	// e.LoadHTMLGlob("vue/index.html")
+	// vue.1 (不打包到程序中)
+	// e.Static("static/js", "vue/admin/static/js")
+	// e.Static("static/css", "vue/admin/static/css")
+	// e.Static("static/gif", "vue/admin/static/gif")
+	// e.Static("static/png", "vue/admin/static/png")
+	// e.StaticFile("/favicon.ico", "vue/admin/favicon.ico")
+	// e.LoadHTMLGlob("vue/admin/index.html")
 	// e.GET("admin", func(c *gin.Context) {
 	// 	c.HTML(200, "index.html", nil)
 	// })
+
+	// vue.2 (todo: 打包到程序中,嵌入太多go:embed,没太大含义)
+	// tpl := template.Must(template.New("").ParseFS(vue.HTML, "*")) // vue.HTML dist根目录
+	// e.SetHTMLTemplate(tpl)
+	// s := e.Group("static")
+	// s.Use(middleware.StaticFileHandler())
+	// {
+	// 	s.StaticFS("", http.FS(vue.Static)) vue.HTML dist/static根目录
+	// }
 }
 
 // 路由配置 -> ADMIN
