@@ -48,45 +48,7 @@ kill -9 pid
 
 3. [nodejs pm2](https://cloud.tencent.com/developer/article/1677403)
 
-### BT破解
-```shell
-sed -i "s|if (bind_user == 'True') {|if (bind_user == 'REMOVED') {|g" /www/server/panel/BTPanel/static/js/index.js
-rm -rf /www/server/panel/data/bind.pl
-```
-
-### [WEB安全](docs/一些笔记/学习笔记/Web安全.md)
-
-- [Web安全学习笔记](https://github.com/LyleMi/Learn-Web-Hacking)
-- [在线阅读](https://websec.readthedocs.io/zh/latest/)
-
-### jsdelivr+github cdn
-```
-https://cdn.jsdelivr.net/gh/用户名称/仓库名称@版本号/目录  
-https://github.com/TurboWay/imgstore/blob/master/bigscreen/corp.jpg  
-生成链接↓  
-https://cdn.jsdelivr.net/gh/TurboWay/imgstore@master/bigscreen/corp.jpg 
-```
-
-## 初始化Vue管理后台HTTP服务
-```go
-func InitVueAdminServer() {
-	e := gin.New()
-	e.Use(gin.Recovery())
-    
-	e.Static("js", "vue/admin/js")
-	e.Static("css", "vue/admin/css")
-	e.Static("fonts", "vue/admin/fonts")
-	e.Static("img", "vue/admin/img")
-	e.StaticFile("admin/favicon.ico", "vue/admin/favicon.ico")
-	e.LoadHTMLGlob("vue/admin/index.html")
-	e.GET("admin", func(c *gin.Context) {
-		c.HTML(200, "index.html", nil)
-	})
-	e.Run(config.AdminPort)
-}
-```
-
-## Layui
+### Layui
 ```
 Layui重要公告
 
@@ -120,6 +82,19 @@ layui 官网将于 2021年10月13日 进行下线。
 
 [Pear-Admin-Layui](https://gitee.com/pear-admin/Pear-Admin-Layui) 已fork
 -> VsCode Live Server -> 开发工具-表单构建
+
+## [WEB安全](docs/一些笔记/学习笔记/Web安全.md)
+
+- [Web安全学习笔记](https://github.com/LyleMi/Learn-Web-Hacking)
+- [在线阅读](https://websec.readthedocs.io/zh/latest/)
+
+## jsdelivr+github cdn
+```
+https://cdn.jsdelivr.net/gh/用户名称/仓库名称@版本号/目录  
+https://github.com/TurboWay/imgstore/blob/master/bigscreen/corp.jpg  
+生成链接↓  
+https://cdn.jsdelivr.net/gh/TurboWay/imgstore@master/bigscreen/corp.jpg 
+```
 
 ## Vue后台框架
 
