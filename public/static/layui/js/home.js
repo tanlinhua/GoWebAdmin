@@ -32,6 +32,25 @@ layui.define(['element', 'layer'], function (exports) {
     return isDevice('mobile');
   };
 
+  // 首页面包屑
+  var changeBreadcrumb = function () {
+    setTimeout(function () {
+      var breadcrumbHTML = '';
+      var activeMenu = document.querySelector('.layui-this');
+      if (activeMenu) {
+        var parentBreadcrumb = activeMenu.parentNode.parentNode.querySelector('em').textContent;
+        var childBreadcrumb = activeMenu.textContent;
+        breadcrumbHTML =
+          '<span class="layui-breadcrumb"><a href="">' +
+          parentBreadcrumb +
+          '</a><span lay-separator="">/</span><a href=""><cite>' +
+          childBreadcrumb +
+          '</cite></a></span>';
+      }
+      document.querySelector('.layui-nav-breadcrumb').innerHTML = breadcrumbHTML;
+    }, 0);
+  };
+
   var Tab = function (el) {
     this.el = el;
     this.urls = [];
@@ -120,6 +139,8 @@ layui.define(['element', 'layer'], function (exports) {
           .removeClass('layui-nav-itemed');
       }
       iframeIndex = i;
+
+      changeBreadcrumb();
     });
 
     tabs.onDelete(function (data) {

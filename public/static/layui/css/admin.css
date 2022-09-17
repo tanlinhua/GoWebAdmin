@@ -381,8 +381,21 @@ body,
   color: transparent !important;
 }
 
-/**==================锁屏样式 Start==================*/
+/*首页面包屑*/
+.layui-layout-left {
+  display: flex;
+  align-items: center;
+}
+.layui-nav-breadcrumb {
+  position: relative;
+  top: -1px;
+  margin-left: 15px;
+}
+.layui-breadcrumb {
+  visibility: visible;
+}
 
+/**==================锁屏样式 Start==================*/
 .lock-screen {
   position: fixed;
   z-index: 99999999;
