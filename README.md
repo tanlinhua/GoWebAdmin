@@ -37,6 +37,17 @@ go mod why -m all					#分析所有依赖的依赖链
 go mod tidy							#整理依赖
 ```
 
+### 漏洞检测
+```
+安装
+$ go install golang.org/x/vuln/cmd/govulncheck@latest
+使用
+$ govulncheck ./...
+官网
+https://pkg.go.dev/vuln
+https://go.dev/security/vuln/database
+```
+
 ### 部署
 1. nohup
 ```shell
