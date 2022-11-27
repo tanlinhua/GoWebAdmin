@@ -1,0 +1,49 @@
+<mxfile host="65bd71144e">
+    <diagram id="NBbYCUMTf5sh5HazeCXM" name="第 1 页">
+        <mxGraphModel dx="711" dy="696" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="Success" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;strokeColor=none;strokeWidth=1;fillColor=#33A64C;fontColor=#ffffff;whiteSpace=wrap;align=left;verticalAlign=middle;fontStyle=0;fontSize=14;spacingLeft=10;" parent="1" vertex="1">
+                    <mxGeometry x="260" y="480" width="85" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="" style="shape=triangle;direction=south;fillColor=#ffffff;strokeColor=none;perimeter=none;" parent="2" vertex="1">
+                    <mxGeometry x="1" y="0.5" width="10" height="5" relative="1" as="geometry">
+                        <mxPoint x="-17" y="-2.5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="4" value="" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;fillColor=#ffffff;strokeColor=#999999;" parent="1" vertex="1">
+                    <mxGeometry x="260" y="523" width="170" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="Action" style="fillColor=none;strokeColor=none;align=left;spacing=20;fontSize=14;" parent="4" vertex="1">
+                    <mxGeometry width="170" height="30" relative="1" as="geometry">
+                        <mxPoint y="10" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="6" value="Another action" style="fillColor=none;strokeColor=none;align=left;spacing=20;fontSize=14;" parent="4" vertex="1">
+                    <mxGeometry width="170" height="30" relative="1" as="geometry">
+                        <mxPoint y="40" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="7" value="Something else here" style="fillColor=none;strokeColor=none;align=left;spacing=20;fontSize=14;" parent="4" vertex="1">
+                    <mxGeometry width="170" height="30" relative="1" as="geometry">
+                        <mxPoint y="70" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="8" value="" style="shape=line;strokeColor=#999999;perimeter=none;resizeWidth=1;" parent="4" vertex="1">
+                    <mxGeometry width="170" height="10" relative="1" as="geometry">
+                        <mxPoint y="100" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="9" value="Separated link" style="fillColor=none;strokeColor=none;align=left;spacing=20;fontSize=14;" parent="4" vertex="1">
+                    <mxGeometry width="170" height="30" relative="1" as="geometry">
+                        <mxPoint y="110" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="10" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="1">
+                    <mxGeometry x="315" y="230" width="60" height="80" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
