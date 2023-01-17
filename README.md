@@ -1,23 +1,25 @@
-# go web项目通用模板
+# go web 项目通用模板
 
 ## TODO
 
-
 ## 一些记录
 
-### VSCode插件安装报错解决方案：
+### VSCode 插件安装报错解决方案：
+
 ```shell
 # 开启Go module，Go 1.13 以上默认启用，可跳过此步
 go env -w GO111MODULE=on
 # 设置代理
 go env -w GOPROXY=https://goproxy.cn,direct
 ```
+
 ```
 composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
 npm config set registry  https://registry.npmmirror.com
 ```
 
 ### 交叉编译
+
 ```shell
 Windwos
 SET CGO_ENABLED=0		#交叉编译不支持 CGO 所以要禁用它
@@ -30,6 +32,7 @@ CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build main.go
 ```
 
 ### go mod
+
 ```shell
 go get -u							#工程目录下执行,更新所有依赖包
 go get -u github.com/gin-gonic/gin	#只更新这一个依赖包
@@ -38,6 +41,7 @@ go mod tidy							#整理依赖
 ```
 
 ### 漏洞检测
+
 ```
 安装
 $ go install golang.org/x/vuln/cmd/govulncheck@latest
@@ -49,17 +53,21 @@ https://go.dev/security/vuln/database
 ```
 
 ### 部署
+
 1. nohup
+
 ```shell
 nohup ./main >> /www/wwwroot/log/main.nohup.log 2>&1 &
 ps -ef|grep main
 kill -9 pid
 ```
+
 2. [Supervisor](docs/一些笔记/部署/Supervisor.md)
 
 3. [nodejs pm2](https://cloud.tencent.com/developer/article/1677403)
 
 ### Layui
+
 ```
 Layui重要公告
 
@@ -81,6 +89,7 @@ layui 官网将于 2021年10月13日 进行下线。
 
 —— 贤心
 ```
+
 [github](https://github.com/sentsin/layui)
 [gitee](https://gitee.com/sentsin/layui)
 
@@ -91,23 +100,24 @@ layui 官网将于 2021年10月13日 进行下线。
 
 快速构建表单
 
-[Pear-Admin-Layui](https://gitee.com/pear-admin/Pear-Admin-Layui) 已fork
+[Pear-Admin-Layui](https://gitee.com/pear-admin/Pear-Admin-Layui) 已 fork
 -> VsCode Live Server -> 开发工具-表单构建
 
-## [WEB安全](docs/一些笔记/学习笔记/Web安全.md)
+## [WEB 安全](docs/一些笔记/学习笔记/Web安全.md)
 
-- [Web安全学习笔记](https://github.com/LyleMi/Learn-Web-Hacking)
+- [Web 安全学习笔记](https://github.com/LyleMi/Learn-Web-Hacking)
 - [在线阅读](https://websec.readthedocs.io/zh/latest/)
 
 ## jsdelivr+github cdn
+
 ```
-https://cdn.jsdelivr.net/gh/用户名称/仓库名称@版本号/目录  
-https://github.com/TurboWay/imgstore/blob/master/bigscreen/corp.jpg  
-生成链接↓  
-https://cdn.jsdelivr.net/gh/TurboWay/imgstore@master/bigscreen/corp.jpg 
+https://cdn.jsdelivr.net/gh/用户名称/仓库名称@版本号/目录
+https://github.com/TurboWay/imgstore/blob/master/bigscreen/corp.jpg
+生成链接↓
+https://cdn.jsdelivr.net/gh/TurboWay/imgstore@master/bigscreen/corp.jpg
 ```
 
-## Vue后台框架
+## Vue 后台框架
 
 > [GinVueAdmin.Web](https://github.com/flipped-aurora/gin-vue-admin)
 
@@ -125,10 +135,9 @@ https://cdn.jsdelivr.net/gh/TurboWay/imgstore@master/bigscreen/corp.jpg
 
 > [Creative Tim](https://github.com/creativetimofficial)
 
-## 一些库👇
+## 一些库 👇
 
-> [合集1](https://learnku.com/articles/56078)
-> [合集2](https://learnku.com/articles/41230)
+> [合集 1](https://learnku.com/articles/56078) > [合集 2](https://learnku.com/articles/41230)
 
 > [Go 开发者路线图](https://github.com/Alikhll/golang-developer-roadmap/blob/master/i18n/zh-CN/ReadMe-zh-CN.md)
 
@@ -138,9 +147,9 @@ https://cdn.jsdelivr.net/gh/TurboWay/imgstore@master/bigscreen/corp.jpg
 
 > [QrCode](https://github.com/skip2/go-qrcode)
 
-> [Json解析.gjson](https://github.com/tidwall/gjson)
+> [Json 解析.gjson](https://github.com/tidwall/gjson)
 
-> [Json解析.fastjson](https://github.com/valyala/fastjson)
+> [Json 解析.fastjson](https://github.com/valyala/fastjson)
 
 > [FCM](https://github.com/maddevsio/fcm)
 
@@ -162,9 +171,9 @@ https://cdn.jsdelivr.net/gh/TurboWay/imgstore@master/bigscreen/corp.jpg
 
 > [微服务.rpcx](https://github.com/smallnest/rpcx)
 
-> [getty网络框架](https://github.com/AlexStocks/getty-examples)
+> [getty 网络框架](https://github.com/AlexStocks/getty-examples)
 
-> [gnet网络框架](https://github.com/panjf2000/gnet)
+> [gnet 网络框架](https://github.com/panjf2000/gnet)
 
 > [协程池](https://github.com/panjf2000/ants)
 
@@ -176,8 +185,7 @@ https://cdn.jsdelivr.net/gh/TurboWay/imgstore@master/bigscreen/corp.jpg
 
 > [异步任务框架](https://github.com/RichardKnop/machinery)
 
-> [(APNs)Apple Push Notification Service |](https://github.com/sideshow/apns2)
-> [| APNs Demo](https://github.com/Finb/bark-server/tree/master/apns)
+> [(APNs)Apple Push Notification Service |](https://github.com/sideshow/apns2) > [| APNs Demo](https://github.com/Finb/bark-server/tree/master/apns)
 
 > [简单易用的各种数据结构](https://github.com/emirpasic/gods)
 
@@ -185,7 +193,7 @@ https://cdn.jsdelivr.net/gh/TurboWay/imgstore@master/bigscreen/corp.jpg
 
 > [chromedp](https://github.com/chromedp/chromedp)
 
-> [今日头条rpc框架 Kitex](https://www.cloudwego.io/zh/)
+> [今日头条 rpc 框架 Kitex](https://www.cloudwego.io/zh/)
 
 > [分布式事务管理器](https://github.com/yedf/dtm)
 
@@ -211,11 +219,13 @@ https://cdn.jsdelivr.net/gh/TurboWay/imgstore@master/bigscreen/corp.jpg
 
 > [lancet-工具函数库](https://github.com/duke-git/lancet)
 
+> [2D 游戏引擎](github.com/hajimehoshi/ebiten)
+
 ## 一些值得学习的项目
 
-> 阅读Gin,Gorm,ants的源码
+> 阅读 Gin,Gorm,ants 的源码
 
-> [设计模式 Golang实现](https://github.com/senghoo/golang-design-pattern)
+> [设计模式 Golang 实现](https://github.com/senghoo/golang-design-pattern)
 
 > [Go 语言实现的快速、稳定、内嵌的 k-v 数据库。](https://github.com/roseduan/rosedb)
 
