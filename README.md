@@ -202,6 +202,8 @@ https://cdn.jsdelivr.net/gh/TurboWay/imgstore@master/bigscreen/corp.jpg
 
 > [2D 游戏引擎](github.com/hajimehoshi/ebiten)
 
+> [Rice-将静态文件打包到 Go 应用程序中](https://github.com/GeertJohan/go.rice)
+
 ## 一些值得学习的项目
 
 > 阅读 Gin,Gorm,ants 的源码
